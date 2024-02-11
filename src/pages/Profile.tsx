@@ -13,22 +13,35 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProfileCourses } from "./ProfileCourses";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { JobModel } from "../models/Jobs";
 import axios from "axios";
+import { BookedJobs } from "../models/BookedJobs";
+import { http } from "../util/config";
 
 type Props = {};
 
 const Profile = (props: Props) => {
   const { userLogin } = useSelector((state: RootState) => state.userReducer);
-  const [bookedJobs, setBookedJobs] = useState<JobModel[]> ([])
+  const [bookedJobs, setBookedJobs] = useState<BookedJobs[]> ([])
 
-  const getApiBookedJobs = () => {
-    
+  const getApiBookedJobs = async () => {
+
+    try {
+      const res = await http.get('thue-cong-viec/lay-danh-sach-da-thue')
+      console.log(res.data.content)
+      setBookedJobs(res.data.content)
+    } catch (err) {
+      alert(err)
+    }
+
   }
+
+  useEffect(()=>{
+    getApiBookedJobs()
+  },[])
 
   return (
     <div className="bg-gray-100 py-8 px-14 ">
@@ -145,6 +158,11 @@ const Profile = (props: Props) => {
         </Grid>
         <Grid item >
           <Container>
+          {bookedJobs?.map((job : BookedJobs) => {
+            return (
+              <ProfileCourses job={job}/>
+            )
+          })}
           <ProfileCourses />
           <ProfileCourses />
           <ProfileCourses />

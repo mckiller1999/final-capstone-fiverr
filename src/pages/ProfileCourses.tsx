@@ -8,10 +8,13 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { BookedJobs } from "../models/BookedJobs";
 
-type Props = {};
+type Props = {
+  job?: BookedJobs
+};
 
-export const ProfileCourses = (props: Props) => {
+export const ProfileCourses = ({job}: Props) => {
   return (
     <div>
       <Card sx={{ maxWidth: 800, display:"flex", direction:'row', gap: 2  }} className="px-4 mt-4" >
@@ -24,6 +27,7 @@ export const ProfileCourses = (props: Props) => {
         <Box>
         <CardContent>
           <Typography gutterBottom variant="h6" component="div">
+            {job?.maCongViec}
             Front End Programming with ReactJS
           </Typography>
           <Typography variant="body2" color="text.secondary">

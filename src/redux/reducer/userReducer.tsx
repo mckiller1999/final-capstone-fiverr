@@ -13,6 +13,7 @@ import {
 } from "../../util/config";
 
 import { history } from "../../index";
+import { Alert } from "@mui/material";
 
 export interface user {
   email: "";
@@ -140,7 +141,6 @@ export const registerApiAction = (userRegister: UserRegister) => {
 
       localStorage.setItem(ACCESS_TOKEN, res.data.content.accessToken);
       localStorage.setItem(USERLOGIN, JSON.stringify(res.data.content));
-      // const action = ;
       dispatch(registerAction(res.data.content));
       alert("Register successfully")
       history.push("/login");

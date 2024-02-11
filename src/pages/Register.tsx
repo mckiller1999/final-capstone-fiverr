@@ -8,6 +8,7 @@ import { AppDispatch } from "../redux/store";
 import {
   Button,
   Checkbox,
+  Container,
   FormControlLabel,
   FormLabel,
   InputLabel,
@@ -18,7 +19,9 @@ import {
   RadioGroup,
   Select,
   SelectChangeEvent,
+  Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import { Dispatch } from "@reduxjs/toolkit";
 
@@ -36,32 +39,30 @@ const MenuProps = {
 };
 
 const skills = [
-  'Data visualization',
-  'User experience (UX) design',
-  'Agile software development',
-  'System software development',
-  'E-commerce',
-  'Leadership',
-  'Public speaking',
-  'Organization',
-  'Search engine optimization (SEO)',
-  'Scrum software development',
+  "Data visualization",
+  "User experience (UX) design",
+  "Agile software development",
+  "System software development",
+  "E-commerce",
+  "Leadership",
+  "Public speaking",
+  "Organization",
+  "Search engine optimization (SEO)",
+  "Scrum software development",
 ];
 
 const certifications = [
-  'Data visualization',
-  'User experience (UX) design',
-  'Agile software development',
-  'System software development',
-  'E-commerce',
-  'Leadership',
-  'Public speaking',
-  'Organization',
-  'Search engine optimization (SEO)',
-  'Scrum software development',
+  "Data visualization",
+  "User experience (UX) design",
+  "Agile software development",
+  "System software development",
+  "E-commerce",
+  "Leadership",
+  "Public speaking",
+  "Organization",
+  "Search engine optimization (SEO)",
+  "Scrum software development",
 ];
-
-
 
 const Register = (props: Props) => {
   const [skillsList, setSkillsList] = React.useState<string[]>([]);
@@ -72,7 +73,7 @@ const Register = (props: Props) => {
     } = event;
     setSkillsList(
       // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
+      typeof value === "string" ? value.split(",") : value
     );
   };
 
@@ -84,12 +85,11 @@ const Register = (props: Props) => {
     } = event;
     setCertList(
       // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
+      typeof value === "string" ? value.split(",") : value
     );
   };
 
-
-  const dispatch : Dispatch<any> = useDispatch();
+  const dispatch: Dispatch<any> = useDispatch();
   const initialValues: UserRegister = {
     id: 0,
     name: "",
@@ -119,128 +119,166 @@ const Register = (props: Props) => {
     // submit form to BE
 
     onSubmit: async (values) => {
-      alert(values);
-      console.log("values,actions", { values });
-      // const action = registerApiAction(values);
+      // alert(values);
+      // console.log("values,actions", { values });
       dispatch(registerApiAction(values));
     },
   });
 
   // render form and use formik & yup
   return (
-    <div className="flex-col">
-      Register
-      <form action="" onSubmit={formik.handleSubmit} noValidate>
-        <TextField
-          className="form-control"
-          label="Name"
-          type="text"
-          name="name"
-          required
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.name}
-        ></TextField>
-        {formik.errors.name && formik.touched.name ? (
-          <div className="text-red-700">{formik.errors.name}</div>
-        ) : null}
-
-        <TextField
-          className="form-control"
-          label="Email address"
-          type="email"
-          placeholder="email@gmail.com"
-          name="email"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.email}
-          required
-        ></TextField>
-        {formik.errors.email && formik.touched.email ? (
-          <div className="text-red-700">{formik.errors.email}</div>
-        ) : null}
-
-        <TextField
-          className="form-control"
-          label="Password"
-          type="password"
-          name="password"
-          required
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
-        ></TextField>
-        {formik.errors.password && formik.touched.password ? (
-          <div className="text-red-700">{formik.errors.password}</div>
-        ) : null}
-
-        <TextField
-          label="Password confirm"
-          className="form-control"
-          type="password"
-          name="passwordConfirm"
-          required
-        ></TextField>
-
-        <TextField
-          label="Phone"
-          className="form-control"
-          type="tel"
-          name="phone"
-          required
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.phone}
-        ></TextField>
-        {formik.errors.phone && formik.touched.phone ? (
-          <div className="text-red-700">{formik.errors.phone}</div>
-        ) : null}
-
-        <TextField
-          label="Birthday"
-          className="form-control"
-          type="text"
-          name="birthday"
-          required
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.birthday}
-        ></TextField>
-        {formik.errors.birthday && formik.touched.birthday ? (
-          <div className="text-red-700">{formik.errors.birthday}</div>
-        ) : null}
-
-        <div>
-          <FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>
-          <RadioGroup
-            aria-labelledby="demo-controlled-radio-buttons-group"
-            name="controlled-radio-buttons-group"
-            value={formik.values.gender}
-            onChange={formik.handleChange}
+    <div>
+      <Container sx={{ width: "900px" }}>
+        <Stack direction="column" className="py-6">
+          <Typography variant="h5" className="mb-2">
+            Register
+          </Typography>
+          <form
+            className="flex flex-col gap-4"
+            action=""
+            onSubmit={formik.handleSubmit}
+            noValidate
           >
-            <FormControlLabel
-              value={true}
-              control={<Radio />}
-              label="Female"
-            />
-            <FormControlLabel value={false} control={<Radio />} label="Male" />
-          </RadioGroup>
-        </div>
+            <Stack direction="row" gap={2}>
+              <TextField
+                sx={{width:"100%"}}
+                className="form-control"
+                label="Name"
+                type="text"
+                name="name"
+                required
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.name}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
+              ></TextField>
+              {/* {formik.errors.name && formik.touched.name ? (
+                <div className="text-red-700">{formik.errors.name}</div>
+              ) : null} */}
 
-        <TextField
-          className="form-control"
-          label="Role"
-          type="text"
-          name="role"
-          required
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.role}
-        ></TextField>
-        {formik.errors.role && formik.touched.role ? (
-          <div className="text-red-700">{formik.errors.role}</div>
-        ) : null}
-                {/* <TextField
+              <TextField
+              sx={{width:"100%"}}
+                className="form-control"
+                label="Email address"
+                type="email"
+                placeholder="email@gmail.com"
+                name="email"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+                required
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+              ></TextField>
+              {/* {formik.errors.email && formik.touched.email ? (
+                <div className="text-red-700">{formik.errors.email}</div>
+              ) : null} */}
+            </Stack>
+
+            <Stack direction="row" gap={2}>
+              <TextField
+              sx={{width:"100%"}}
+                className="form-control"
+                label="Password"
+                type="password"
+                name="password"
+                required
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+                error={formik.touched.password && Boolean(formik.errors.password)}
+                helperText={formik.touched.password && formik.errors.password}
+              ></TextField>
+              {/* {formik.errors.password && formik.touched.password ? (
+                <div className="text-red-700">{formik.errors.password}</div>
+              ) : null} */}
+
+              <TextField
+              sx={{width:"100%"}}
+                label="Password confirm"
+                className="form-control"
+                type="password"
+                name="passwordConfirm"
+                required
+              ></TextField>
+            </Stack>
+
+            <Stack direction="row" gap={2}>
+              <TextField
+              sx={{width:"100%"}}
+                label="Phone"
+                className="form-control"
+                type="tel"
+                name="phone"
+                required
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.phone}
+                error={formik.touched.phone && Boolean(formik.errors.phone)}
+                helperText={formik.touched.phone && formik.errors.phone}
+              ></TextField>
+              {/* {formik.errors.phone && formik.touched.phone ? (
+                <div className="text-red-700">{formik.errors.phone}</div>
+              ) : null} */}
+
+              <TextField
+              sx={{width:"100%"}}
+                label="Birthday"
+                className="form-control"
+                type="text"
+                name="birthday"
+                required
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.birthday}
+                error={formik.touched.birthday && Boolean(formik.errors.birthday)}
+                helperText={formik.touched.birthday && formik.errors.birthday}
+              ></TextField>
+              {/* {formik.errors.birthday && formik.touched.birthday ? (
+                <div className="text-red-700">{formik.errors.birthday}</div>
+              ) : null} */}
+            </Stack>
+
+            <div>
+              <FormLabel id="demo-controlled-radio-buttons-group">
+                Gender
+              </FormLabel>
+              <RadioGroup
+                aria-labelledby="demo-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                value={formik.values.gender}
+                onChange={formik.handleChange}
+              >
+                <FormControlLabel
+                  value={true}
+                  control={<Radio />}
+                  label="Female"
+                />
+                <FormControlLabel
+                  value={false}
+                  control={<Radio />}
+                  label="Male"
+                />
+              </RadioGroup>
+            </div>
+
+            <TextField
+              className="form-control"
+              label="Role"
+              type="text"
+              name="role"
+              required
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.role}
+              error={formik.touched.role && Boolean(formik.errors.role)}
+              helperText={formik.touched.role && formik.errors.role}
+            ></TextField>
+            {/* {formik.errors.role && formik.touched.role ? (
+              <div className="text-red-700">{formik.errors.role}</div>
+            ) : null} */}
+            {/* <TextField
           className="form-control"
           label="Skill"
           type="text"
@@ -254,46 +292,47 @@ const Register = (props: Props) => {
           <div className="text-red-700">{formik.errors.skill}</div>
         ) : null} */}
 
-<InputLabel id="demo-multiple-checkbox-label">Skills</InputLabel>
-        <Select
-          labelId="demo-multiple-checkbox-label"
-          id="demo-multiple-checkbox"
-          multiple
-          value={formik.values.skill = skillsList}
-          onChange={handleChangeSkill}
-          input={<OutlinedInput label="Tag" />}
-          renderValue={(selected) => selected.join(', ')}
-          MenuProps={MenuProps}
-        >
-          {skills.map((name) => (
-            <MenuItem key={name} value={name}>
-              <Checkbox checked={skillsList.indexOf(name) > -1} />
-              <ListItemText primary={name} />
-            </MenuItem>
-          ))}
-        </Select>
+            <InputLabel id="demo-multiple-checkbox-label">Skills</InputLabel>
+            <Select
+              labelId="demo-multiple-checkbox-label"
+              id="demo-multiple-checkbox"
+              multiple
+              value={(formik.values.skill = skillsList)}
+              onChange={handleChangeSkill}
+              input={<OutlinedInput label="Tag" />}
+              renderValue={(selected) => selected.join(", ")}
+              MenuProps={MenuProps}
+            >
+              {skills.map((name) => (
+                <MenuItem key={name} value={name}>
+                  <Checkbox checked={skillsList.indexOf(name) > -1} />
+                  <ListItemText primary={name} />
+                </MenuItem>
+              ))}
+            </Select>
 
+            <InputLabel id="demo-multiple-checkbox-label">
+              Certifications
+            </InputLabel>
+            <Select
+              labelId="demo-multiple-checkbox-label"
+              id="demo-multiple-checkbox"
+              multiple
+              value={(formik.values.certification = certList)}
+              onChange={handleChangeCert}
+              input={<OutlinedInput label="Tag" />}
+              renderValue={(selected) => selected.join(", ")}
+              MenuProps={MenuProps}
+            >
+              {certifications.map((name) => (
+                <MenuItem key={name} value={name}>
+                  <Checkbox checked={certList.indexOf(name) > -1} />
+                  <ListItemText primary={name} />
+                </MenuItem>
+              ))}
+            </Select>
 
-        <InputLabel id="demo-multiple-checkbox-label">Certifications</InputLabel>
-        <Select
-          labelId="demo-multiple-checkbox-label"
-          id="demo-multiple-checkbox"
-          multiple
-          value={formik.values.certification = certList}
-          onChange={handleChangeCert}
-          input={<OutlinedInput label="Tag" />}
-          renderValue={(selected) => selected.join(', ')}
-          MenuProps={MenuProps}
-        >
-          {certifications.map((name) => (
-            <MenuItem key={name} value={name}>
-              <Checkbox checked={certList.indexOf(name) > -1} />
-              <ListItemText primary={name} />
-            </MenuItem>
-          ))}
-        </Select>
-
-{/* 
+            {/* 
 
         <TextField
           className="form-control"
@@ -308,15 +347,17 @@ const Register = (props: Props) => {
         {formik.errors.certification && formik.touched.certification ? (
           <div className="text-red-700">{formik.errors.certification}</div>
         ) : null} */}
-        <Button
-          variant="contained"
-          type="submit"
-          className="btn btn-primary"
-          value="Submit"
-        >
-          Submit
-        </Button>
-      </form>
+            <Button
+              variant="contained"
+              type="submit"
+              className="btn btn-primary"
+              value="Submit"
+            >
+              Sign up
+            </Button>
+          </form>
+        </Stack>
+      </Container>
     </div>
   );
 };
