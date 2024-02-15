@@ -1,13 +1,16 @@
 import { ErrorMessage, useFormik } from "formik";
 import React from "react";
 import * as yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { http } from "../utils/Config";
 import { UserRegister, registerApiAction } from "../redux/reducer/userReducer";
-import { AppDispatch } from "../redux/store";
+import { AppDispatch, RootState } from "../redux/store";
 import {
+  Backdrop,
+  Box,
   Button,
   Checkbox,
+  CircularProgress,
   Container,
   FormControlLabel,
   FormLabel,
@@ -65,6 +68,8 @@ const certifications = [
 ];
 
 const Register = (props: Props) => {
+
+  const {isBackDropOpen} = useSelector((state:RootState) => state.backdropReducer)
   const [skillsList, setSkillsList] = React.useState<string[]>([]);
 
   const handleChangeSkill = (event: SelectChangeEvent<typeof skillsList>) => {
@@ -128,13 +133,25 @@ const Register = (props: Props) => {
   // render form and use formik & yup
   return (
     <div>
-      <Container sx={{ width: "900px" }}>
-        <Stack direction="column" className="py-6">
-          <Typography variant="h5" className="mb-2">
-            Register
+      <div className="flex flex-row w-full" >
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isBackDropOpen}
+        // onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+        <Box 
+        className='bg-green-800 w-1/2'>
+          <Typography variant="h2" className="text-white py-12 px-16">Find and hire perfect freelancers today</Typography>
+          <img src="/img/imgbg.png"></img>
+        </Box>
+        <Stack direction="column" className="py-6  w-1/2 px-32 py-8">
+          <Typography variant="h4" className="mb-6" sx={{textAlign: 'center'}}>
+            Create an account
           </Typography>
           <form
-            className="flex flex-col gap-4"
+            className="flex flex-col gap-4 mt-6"
             action=""
             onSubmit={formik.handleSubmit}
             noValidate
@@ -352,12 +369,13 @@ const Register = (props: Props) => {
               type="submit"
               className="btn btn-primary"
               value="Submit"
+              sx={{width: 400, height: 50, alignSelf:'center'}}
             >
               Sign up
             </Button>
           </form>
         </Stack>
-      </Container>
+      </div>
     </div>
   );
 };

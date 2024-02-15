@@ -14,6 +14,7 @@ import {
 
 import { history } from "../../index";
 import { Alert } from "@mui/material";
+import { setBackDropClose, setBackDropOpen } from "./backdropReducer";
 
 export interface user {
   email: "";
@@ -126,8 +127,11 @@ export const logoutActionApi = () => {
   };
 };
 
-export const registerApiAction = (userRegister: UserRegister) => {
+
+
+export const registerApiAction = (userRegister: UserRegister ) => {
   return async (dispatch: AppDispatch) => {
+    dispatch(setBackDropOpen())
     const token = ACCESS_TOKEN_CYBER;
     try {
       const res = await axios({
@@ -138,16 +142,18 @@ export const registerApiAction = (userRegister: UserRegister) => {
         method: "POST",
         data: userRegister,
       })
-
       localStorage.setItem(ACCESS_TOKEN, res.data.content.accessToken);
       localStorage.setItem(USERLOGIN, JSON.stringify(res.data.content));
       dispatch(registerAction(res.data.content));
+      
       alert("Register successfully")
       history.push("/login");
     } catch (err:any) {
       if (err.response?.status === 404) {
         alert("something wrong please try again");
       }
+    } finally {
+      dispatch(setBackDropClose())
     }
   };
 };

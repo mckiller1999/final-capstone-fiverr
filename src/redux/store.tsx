@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducer/userReducer";
+import backdropReducer from "./reducer/backdropReducer";
 // ...
 
 export const store = configureStore({
   reducer: {
     userReducer,
+    backdropReducer,
   },
 });
 
