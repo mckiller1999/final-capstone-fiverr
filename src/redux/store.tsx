@@ -1,10 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducer/userReducer";
+import backdropReducer from "./reducer/backdropReducer";
+import userEditFormReducer from "./reducer/userEditFormReducer";
 // ...
 
 export const store = configureStore({
   reducer: {
     userReducer,
+    backdropReducer,
+    userEditFormReducer,
   },
 });
 

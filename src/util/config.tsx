@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const ACCESS_TOKEN_CYBER = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA1NyIsIkhldEhhblN0cmluZyI6IjE1LzA2LzIwMjQiLCJIZXRIYW5UaW1lIjoiMTcxODQwOTYwMDAwMCIsIm5iZiI6MTY4ODkyMjAwMCwiZXhwIjoxNzE4NTU3MjAwfQ.vY7VplGBpsG599RYLEeMeajQNALOV5QUJ2dGV6Ow_q4`;
 
 export const USERLOGIN = "userLogin";
@@ -24,3 +26,23 @@ export const { saveStorage, getStorage, saveStorageJson, getStorageJson } = {
     return null;
   },
 };
+
+export const http = axios.create({
+  baseURL: "https://fiverrnew.cybersoft.edu.vn/api/",
+  timeout: 30000,
+});
+
+// request
+http.interceptors.request.use(
+  (config: any) => {
+    config.headers = {
+      ...config.headers,
+      token: `${localStorage.getItem(ACCESS_TOKEN)}`,
+      tokenCybersoft: ` ${ACCESS_TOKEN_CYBER}`,
+    };
+    return config;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);

@@ -14,10 +14,19 @@ import {
 
 import { history } from "../../index";
 
+import { setBackDropClose, setBackDropOpen } from "./backdropReducer";
+
 export interface user {
   email: "";
   name: "";
   id: "";
+  password: "",
+  phone: "",
+  birthday: "",
+  gender: true,
+  role: "",
+  skill: [],
+  certification: []
 }
 
 export interface UserLogin {
@@ -26,10 +35,36 @@ export interface UserLogin {
 }
 export interface UserReducerState {
   userLogin: UserLogin | null;
+  userRegister: UserRegister;
+}
+
+export interface UserRegister {
+  id: number,
+  name: string,
+  email: string,
+  password: string,
+  phone: string,
+  birthday: string,
+  gender: boolean,
+  role: string,
+  skill: string[]|undefined,
+  certification: string[]|undefined,
 }
 
 const initialState: UserReducerState = {
   userLogin: getStorageJson(USERLOGIN),
+  userRegister: {
+  id: 0,
+  name: "",
+  email: "",
+  password: "",
+  phone: "",
+  birthday: "",
+  gender: true,
+  role: "",
+  skill: [],
+  certification: []
+  }
 };
 
 const userReducer = createSlice({
@@ -42,10 +77,13 @@ const userReducer = createSlice({
     logoutAction: (state) => {
       state.userLogin = null;
     },
+    registerAction: (state, action: PayloadAction<UserRegister>) => {
+      state.userRegister = action.payload;
+    }
   },
 });
 
-export const { loginAction, logoutAction } = userReducer.actions;
+export const { loginAction, logoutAction, registerAction } = userReducer.actions;
 
 export default userReducer.reducer;
 
@@ -95,3 +133,35 @@ export const logoutActionApi = () => {
     }
   };
 };
+
+
+
+export const registerApiAction = (userRegister: UserRegister ) => {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setBackDropOpen())
+    const token = ACCESS_TOKEN_CYBER;
+    try {
+      const res = await axios({
+        headers: {
+          tokenCybersoft: ` ${token}`,
+        },
+        url: "https://fiverrnew.cybersoft.edu.vn/api/auth/signup",
+        method: "POST",
+        data: userRegister,
+      })
+      localStorage.setItem(ACCESS_TOKEN, res.data.content.accessToken);
+      localStorage.setItem(USERLOGIN, JSON.stringify(res.data.content));
+      dispatch(registerAction(res.data.content));
+      
+      alert("Register successfully")
+      history.push("/login");
+    } catch (err:any) {
+      if (err.response?.status === 404) {
+        alert("something wrong please try again");
+      }
+    } finally {
+      dispatch(setBackDropClose())
+    }
+  };
+};
+

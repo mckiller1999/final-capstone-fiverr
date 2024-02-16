@@ -12,7 +12,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Search from "./pages/Search";
-import Profile from "./pages/Profile";
+import Profile from "./pages/Profile/Profile";
 import Detail from "./pages/Detail";
 import Job from "./pages/Job";
 import HomeTemplate from "./templates/HomeTemplate";
