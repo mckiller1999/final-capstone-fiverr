@@ -20,6 +20,13 @@ export interface user {
   email: "";
   name: "";
   id: "";
+  password: "",
+  phone: "",
+  birthday: "",
+  gender: true,
+  role: "",
+  skill: [],
+  certification: []
 }
 
 export interface UserLogin {
@@ -40,14 +47,14 @@ export interface UserRegister {
   birthday: string,
   gender: boolean,
   role: string,
-  skill: string[],
-  certification: string[]
+  skill: string[]|undefined,
+  certification: string[]|undefined,
 }
 
 const initialState: UserReducerState = {
   userLogin: getStorageJson(USERLOGIN),
   userRegister: {
-    id: 0,
+  id: 0,
   name: "",
   email: "",
   password: "",

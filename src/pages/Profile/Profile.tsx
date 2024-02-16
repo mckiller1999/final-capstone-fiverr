@@ -14,17 +14,20 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { ProfileCourses } from "./ProfileCourses";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { ProfileCourses } from "../ProfileCourses";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 import axios from "axios";
-import { BookedJobs } from "../models/BookedJobs";
-import { http } from "../util/config";
+import { BookedJobs } from "../../models/BookedJobs";
+import { http } from "../../util/config";
+import UserProfileEdit from "./UserProfileEdit";
+import { openEditForm } from "../../redux/reducer/userEditFormReducer";
 
 type Props = {};
 
 const Profile = (props: Props) => {
   const { userLogin } = useSelector((state: RootState) => state.userReducer);
+  console.log("userLogin", userLogin)
   const [bookedJobs, setBookedJobs] = useState<BookedJobs[]> ([])
 
   const getApiBookedJobs = async () => {
@@ -43,8 +46,13 @@ const Profile = (props: Props) => {
     getApiBookedJobs()
   },[])
 
+  const dispatch = useDispatch()
+
+  
+  
   return (
     <div className="bg-gray-100 py-8 px-14 ">
+      <UserProfileEdit/>
       <Grid container columnGap={4} className="flex justify-center">
         <Grid item xs={3}>
           <Container className="bg-white py-6"> 
@@ -55,7 +63,7 @@ const Profile = (props: Props) => {
               sx={{ width: 100, height: 100 }}
             />
             <Typography align="center" variant="subtitle1">{userLogin?.user.name}</Typography>
-            <IconButton aria-label="delete">
+            <IconButton onClick={()=>{dispatch(openEditForm())}} aria-label="edit">
               <EditIcon />
             </IconButton>
            </Box>

@@ -1,156 +1,100 @@
-import { ErrorMessage, useFormik } from "formik";
-import React from "react";
+import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormLabel, InputLabel, ListItemText, MenuItem, OutlinedInput, Radio, RadioGroup, Select, SelectChangeEvent, Stack, TextField } from '@mui/material';
+import { Dispatch } from '@reduxjs/toolkit';
+import React from 'react'
+import { UserRegister } from '../../redux/reducer/userReducer';
+import { useFormik } from 'formik';
 import * as yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
-// import { http } from "../utils/Config";
-import { UserRegister, registerApiAction } from "../redux/reducer/userReducer";
-import { AppDispatch, RootState } from "../redux/store";
-import {
-  Backdrop,
-  Box,
-  Button,
-  Checkbox,
-  CircularProgress,
-  Container,
-  FormControlLabel,
-  FormLabel,
-  InputLabel,
-  ListItemText,
-  MenuItem,
-  OutlinedInput,
-  Radio,
-  RadioGroup,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { Dispatch } from "@reduxjs/toolkit";
+import { certifications, skills } from '../Register';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { closeEditForm } from '../../redux/reducer/userEditFormReducer';
 
-type Props = {};
 
+type Props = {}
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
     },
-  },
-};
-
-export const skills = [
-  "Data visualization",
-  "User experience (UX) design",
-  "Agile software development",
-  "System software development",
-  "E-commerce",
-  "Leadership",
-  "Public speaking",
-  "Organization",
-  "Search engine optimization (SEO)",
-  "Scrum software development",
-];
-
-export const certifications = [
-  "Data visualization",
-  "User experience (UX) design",
-  "Agile software development",
-  "System software development",
-  "E-commerce",
-  "Leadership",
-  "Public speaking",
-  "Organization",
-  "Search engine optimization (SEO)",
-  "Scrum software development",
-];
-
-const Register = (props: Props) => {
-
-  const {isBackDropOpen} = useSelector((state:RootState) => state.backdropReducer)
-  const [skillsList, setSkillsList] = React.useState<string[]>([]);
-
-  const handleChangeSkill = (event: SelectChangeEvent<typeof skillsList>) => {
-    const {
-      target: { value },
-    } = event;
-    setSkillsList(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
   };
 
-  const [certList, setCertList] = React.useState<string[]>([]);
+const UserProfileEdit = (props: Props) => {
 
-  const handleChangeCert = (event: SelectChangeEvent<typeof certList>) => {
-    const {
-      target: { value },
-    } = event;
-    setCertList(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
+    const isModalOpen = useSelector((state:RootState) => state.userEditFormReducer.isUserEditOpen)
+    
 
-  const dispatch: Dispatch<any> = useDispatch();
-  const initialValues: UserRegister = {
-    id: 0,
-    name: "",
-    email: "",
-    password: "",
-    phone: "",
-    birthday: "",
-    gender: true,
-    role: "",
-    skill: [],
-    certification: [],
-  };
-  const formik = useFormik({
-    initialValues: initialValues,
-    validationSchema: yup.object({
-      name: yup.string().required("Name is required"),
-      email: yup.string().email("Invalid email").required("Email is required"),
-      password: yup.string().required("Password is required"),
-      // passwordConfirm: yup.string().required("Confirm password is required"),
-      phone: yup.string().required("Phone is required"),
-      birthday: yup.string().required("Birthday is required"),
-      gender: yup.boolean().required("Gender is required"),
-      role: yup.string().required("Role is required"),
-      skill: yup.array().required("Role is required"),
-      certification: yup.array().required("Certification is required"),
-    }),
-    // submit form to BE
+    const { userLogin } = useSelector((state: RootState) => state.userReducer);
+    const [skillsList, setSkillsList] = React.useState<string[]|undefined>(userLogin?.user.skill);
 
-    onSubmit: async (values) => {
-      // alert(values);
-      // console.log("values,actions", { values });
-      dispatch(registerApiAction(values));
-    },
-  });
-
-  // render form and use formik & yup
+    const handleChangeSkill = (event: SelectChangeEvent<typeof skillsList>) => {
+      const {
+        target: { value },
+      } = event;
+      setSkillsList(
+        // On autofill we get a stringified value.
+        typeof value === "string" ? value.split(",") : value
+      );
+    };
+  
+    const [certList, setCertList] = React.useState<string[]|undefined>(userLogin?.user.certification);
+  
+    const handleChangeCert = (event: SelectChangeEvent<typeof certList>) => {
+      const {
+        target: { value },
+      } = event;
+      setCertList(
+        // On autofill we get a stringified value.
+        typeof value === "string" ? value.split(",") : value
+      );
+    };
+  
+    const dispatch: Dispatch<any> = useDispatch();
+    
+    const initialValues: UserRegister = {
+      id: Number(userLogin?.user.id),
+      name: `${userLogin?.user.name}`,
+      email: `${userLogin?.user.email}`,
+      password: `${userLogin?.user.password}`,
+      phone: `${userLogin?.user.phone}`,
+      birthday: `${userLogin?.user.birthday}`,
+      gender: Boolean(userLogin?.user.gender),
+      role: `${userLogin?.user.role}`,
+      skill: userLogin?.user.skill,
+      certification: userLogin?.user.certification,
+    };
+    const formik = useFormik({
+      initialValues: initialValues,
+      validationSchema: yup.object({
+        name: yup.string().required("Name is required"),
+        email: yup.string().email("Invalid email").required("Email is required"),
+        password: yup.string().required("Password is required"),
+        // passwordConfirm: yup.string().required("Confirm password is required"),
+        phone: yup.string().required("Phone is required"),
+        birthday: yup.string().required("Birthday is required"),
+        gender: yup.boolean().required("Gender is required"),
+        role: yup.string().required("Role is required"),
+        skill: yup.array().required("Role is required"),
+        certification: yup.array().required("Certification is required"),
+      }),
+      // submit form to BE
+  
+      onSubmit: async (values) => {
+        console.log("form data",values )
+      },
+    });
+  
   return (
     <div>
-      <div className="flex flex-row w-full" >
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={isBackDropOpen}
-        // onClick={handleClose}
+          <Dialog
+        open={Boolean(isModalOpen)}
       >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-        <Box 
-        className='bg-green-800 w-1/2'>
-          <Typography variant="h2" className="text-white py-12 px-16">Find and hire perfect freelancers today</Typography>
-          <img src="/img/imgbg.png"></img>
-        </Box>
-        <Stack direction="column" className="py-6  w-1/2 px-32 py-8">
-          <Typography variant="h4" className="mb-6" sx={{textAlign: 'center'}}>
-            Create an account
-          </Typography>
-          <form
+        <DialogTitle>Edit Your Profile</DialogTitle>
+        <DialogContent>
+        <form
             className="flex flex-col gap-4 mt-6"
             action=""
             onSubmit={formik.handleSubmit}
@@ -296,7 +240,7 @@ const Register = (props: Props) => {
             >
               {skills.map((name) => (
                 <MenuItem key={name} value={name}>
-                  <Checkbox checked={skillsList.indexOf(name) > -1} />
+                  <Checkbox checked={(skillsList??[]).indexOf(name) > -1} />
                   <ListItemText primary={name} />
                 </MenuItem>
               ))}
@@ -317,26 +261,21 @@ const Register = (props: Props) => {
             >
               {certifications.map((name) => (
                 <MenuItem key={name} value={name}>
-                  <Checkbox checked={certList.indexOf(name) > -1} />
+                  <Checkbox checked={(certList??[]).indexOf(name) > -1} />
                   <ListItemText primary={name} />
                 </MenuItem>
               ))}
             </Select>
-
-            <Button
-              variant="contained"
-              type="submit"
-              className="btn btn-primary"
-              value="Submit"
-              sx={{width: 400, height: 50, alignSelf:'center'}}
-            >
-              Sign up
-            </Button>
+                    <DialogActions>
+          <Button onClick={()=>{dispatch(closeEditForm())}} >Cancel</Button>
+          <Button variant='contained' type="submit">Save Change</Button>
+        </DialogActions>
           </form>
-        </Stack>
-      </div>
-    </div>
-  );
-};
+        </DialogContent>
 
-export default Register;
+      </Dialog>
+    </div>
+  )
+}
+
+export default UserProfileEdit
