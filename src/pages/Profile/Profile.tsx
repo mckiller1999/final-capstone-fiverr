@@ -2,6 +2,7 @@ import { Add, Delete, HomeRepairServiceOutlined } from "@mui/icons-material";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PersonIcon from '@mui/icons-material/Person';
 import EditIcon from "@mui/icons-material/Edit";
+import LogoutIcon from '@mui/icons-material/Logout';
 import {
   Avatar,
   Box,
@@ -16,12 +17,13 @@ import {
 import React, { useEffect, useState } from "react";
 import { ProfileCourses } from "../ProfileCourses";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { AppDispatch, RootState } from "../../redux/store";
 import axios from "axios";
 import { BookedJobs } from "../../models/BookedJobs";
 import { http } from "../../util/config";
 import UserProfileEdit from "./UserProfileEdit";
 import { openEditForm } from "../../redux/reducer/userEditFormReducer";
+import { logoutActionApi } from "../../redux/reducer/userReducer";
 
 type Props = {};
 
@@ -46,7 +48,7 @@ const Profile = (props: Props) => {
     getApiBookedJobs()
   },[])
 
-  const dispatch = useDispatch()
+  const dispatch:AppDispatch = useDispatch()
 
   
   
@@ -87,6 +89,10 @@ const Profile = (props: Props) => {
               <Typography variant="subtitle2">May 2021</Typography>
             </Stack>
             {/* Stack */}
+            <Divider></Divider>
+            <Button variant="outlined" color="error" size="small" startIcon={<LogoutIcon />} onClick={()=>{dispatch(logoutActionApi())}}>
+                Log out
+              </Button>
           </Container>
           <Container className="bg-white mt-6 py-4">
             <Stack direction="row" spacing={2} className="flex justify-between my-2">

@@ -1,7 +1,7 @@
 import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormLabel, InputLabel, ListItemText, MenuItem, OutlinedInput, Radio, RadioGroup, Select, SelectChangeEvent, Stack, TextField } from '@mui/material';
 import { Dispatch } from '@reduxjs/toolkit';
 import React from 'react'
-import { UserRegister } from '../../redux/reducer/userReducer';
+import { updateUserProfile, user} from '../../redux/reducer/userReducer';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { certifications, skills } from '../Register';
@@ -54,17 +54,17 @@ const UserProfileEdit = (props: Props) => {
   
     const dispatch: Dispatch<any> = useDispatch();
     
-    const initialValues: UserRegister = {
-      id: Number(userLogin?.user.id),
-      name: `${userLogin?.user.name}`,
-      email: `${userLogin?.user.email}`,
-      password: `${userLogin?.user.password}`,
-      phone: `${userLogin?.user.phone}`,
-      birthday: `${userLogin?.user.birthday}`,
-      gender: Boolean(userLogin?.user.gender),
-      role: `${userLogin?.user.role}`,
-      skill: userLogin?.user.skill,
-      certification: userLogin?.user.certification,
+    const initialValues: user = {
+      id: userLogin?.user.id|| "",
+      name: userLogin?.user.name || "",
+      email: userLogin?.user.email || "",
+      password: userLogin?.user.password || "",
+      phone: userLogin?.user.phone || "",
+      birthday: userLogin?.user.birthday || "",
+      gender: true,
+      role: userLogin?.user.role || "",
+      skill: userLogin?.user.skill || [],
+      certification: userLogin?.user.certification || [],
     };
     const formik = useFormik({
       initialValues: initialValues,
@@ -82,8 +82,9 @@ const UserProfileEdit = (props: Props) => {
       }),
       // submit form to BE
   
-      onSubmit: async (values) => {
+      onSubmit: async (values: user) => {
         console.log("form data",values )
+        dispatch(updateUserProfile(values))
       },
     });
   
@@ -214,6 +215,7 @@ const UserProfileEdit = (props: Props) => {
             </div>
 
             <TextField
+            disabled
               className="form-control"
               label="Role"
               type="text"
@@ -232,7 +234,7 @@ const UserProfileEdit = (props: Props) => {
               labelId="demo-multiple-checkbox-label"
               id="demo-multiple-checkbox"
               multiple
-              value={(formik.values.skill = skillsList)}
+              value={skillsList}
               onChange={handleChangeSkill}
               input={<OutlinedInput label="Tag" />}
               renderValue={(selected) => selected.join(", ")}
@@ -253,7 +255,7 @@ const UserProfileEdit = (props: Props) => {
               labelId="demo-multiple-checkbox-label"
               id="demo-multiple-checkbox"
               multiple
-              value={(formik.values.certification = certList)}
+              value={certList}
               onChange={handleChangeCert}
               input={<OutlinedInput label="Tag" />}
               renderValue={(selected) => selected.join(", ")}

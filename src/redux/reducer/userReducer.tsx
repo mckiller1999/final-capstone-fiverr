@@ -1,20 +1,23 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AppDispatch } from "../store";
 import { UserSignInForm } from "../../pages/Login";
-import { Dispatch } from "redux";
+// import { Dispatch } from "redux";
 import axios from "axios";
 import {
   ACCESS_TOKEN,
   ACCESS_TOKEN_CYBER,
   USERLOGIN,
   getStorageJson,
+  http,
   saveStorage,
   saveStorageJson,
 } from "../../util/config";
 
 import { history } from "../../index";
-import { Alert } from "@mui/material";
+// import { Alert } from "@mui/material";
 import { setBackDropClose, setBackDropOpen } from "./backdropReducer";
+// import { useDispatch } from "react-redux";
+import { closeEditForm } from "./userEditFormReducer";
 
 export interface user {
   email: "";
@@ -33,9 +36,11 @@ export interface UserLogin {
   tokenUser: "";
   user: user;
 }
+
 export interface UserReducerState {
   userLogin: UserLogin | null;
   userRegister: UserRegister;
+  // userEdit: user;
 }
 
 export interface UserRegister {
@@ -64,7 +69,21 @@ const initialState: UserReducerState = {
   role: "",
   skill: [],
   certification: []
-  }
+  },
+  // userEdit: {
+    
+  //     email: "",
+  // name: "",
+  // id: "",
+  // password: "",
+  // phone: "",
+  // birthday: "",
+  // gender: true,
+  // role: "",
+  // skill: [],
+  // certification: []
+  //   }
+  
 };
 
 const userReducer = createSlice({
@@ -79,11 +98,16 @@ const userReducer = createSlice({
     },
     registerAction: (state, action: PayloadAction<UserRegister>) => {
       state.userRegister = action.payload;
+    },
+    updateProfileAction: (state, action: PayloadAction<user>) => {
+      if (state.userLogin) {
+        state.userLogin.user = action.payload;
+      }
     }
   },
 });
 
-export const { loginAction, logoutAction, registerAction } = userReducer.actions;
+export const { loginAction, logoutAction, registerAction, updateProfileAction } = userReducer.actions;
 
 export default userReducer.reducer;
 
@@ -107,6 +131,7 @@ export const singinActionApi = (userLoginForm: UserSignInForm) => {
       //localstorge save
       saveStorageJson(USERLOGIN, res.data.content);
       saveStorage(ACCESS_TOKEN, res.data.content.token);
+      history.push("/")
     } catch (error) {
       console.error("Error during login:", error);
       // Xử lý lỗi ở đây nếu cần
@@ -164,4 +189,30 @@ export const registerApiAction = (userRegister: UserRegister ) => {
     }
   };
 };
+
+
+export const updateUserProfile = (userData: user) => {
+  return async (dispatch:AppDispatch) => {
+    dispatch(setBackDropOpen())
+    const token = ACCESS_TOKEN_CYBER;
+    try {
+      const res = await axios({
+        headers: {
+          tokenCybersoft: ` ${token}`,
+        },
+        url: `https://fiverrnew.cybersoft.edu.vn/api/users/${userData.id}`,
+        method: "PUT",
+        data: userData,
+      })
+      alert("Your profile has been updated successfully")
+      dispatch(updateProfileAction(res.data.content))
+      dispatch(closeEditForm())
+    } catch (err) {
+      alert(err)
+    } finally {
+      dispatch(setBackDropClose())
+    }
+  }
+}
+
 
