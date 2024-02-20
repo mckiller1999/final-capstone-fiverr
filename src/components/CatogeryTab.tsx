@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { ACCESS_TOKEN_CYBER } from "../util/config";
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { JobCategoryModel } from '../models/JobDetail';
+import { useNavigate, useParams } from "react-router-dom";
 
 type Props = {};
 
 const CatogeryTab = (props: Props) => {
     const [arrProductJob, setArrProductJob] = useState<JobCategoryModel[]>([]);
+    const [current, setCurrent] = useState('');
+    const navigate = useNavigate();
+
     const getAllProdCateApi = async () => {
         try {
             const token = ACCESS_TOKEN_CYBER;
@@ -19,35 +23,42 @@ const CatogeryTab = (props: Props) => {
                 url: "https://fiverrnew.cybersoft.edu.vn/api/cong-viec/lay-menu-loai-cong-viec",
                 method: "GET",
             });
-            //console.log(res);
             setArrProductJob(res.data.content);
         } catch (error) {
             console.log("Lỗi khi truy xuất dữ liệu:", error);
         }
     };
+
     useEffect(() => {
         getAllProdCateApi();
     }, []);
 
-    const items: MenuProps['items'] = 
+    const items: MenuProps['items'] =
         arrProductJob?.map((prod: JobCategoryModel) => (
             {
                 label: `${prod.tenLoaiCongViec}`,
                 key: `${prod.id}`,
                 children:
-                    prod.dsNhomChiTietLoai[0]?.dsChiTietLoai.map((item) => (
+                    prod.dsNhomChiTietLoai.map((item) => (
                         {
-                            label: `${item.tenChiTiet}`,
-                            key: `${item.id}`
+                            label: `${item.tenNhom}`,
+                            key: `${item.id}`,
+                            children:
+                                prod.dsNhomChiTietLoai[0]?.dsChiTietLoai.map((item) => (
+                                    {
+                                        label: `${item.tenChiTiet}`,
+                                        key: `${item.id}`
+                                    }
+                                )),
                         }
                     )),
             }
         ))
-    ;
-    const [current, setCurrent] = useState('');
-
+        ;
     const onClick: MenuProps['onClick'] = (e) => {
         setCurrent(e.key);
+        console.log(e.key);
+        navigate(`/detail/${e.key}`)
     };
 
     return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;

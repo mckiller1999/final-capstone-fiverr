@@ -4,7 +4,6 @@ import axios from "axios";
 import { ACCESS_TOKEN_CYBER } from "../util/config";
 import CatogeryTab from "../components/CatogeryTab";
 import CardJob from "../components/CardJob";
-import SearchTool from "../components/SearchTool";
 
 type Props = {};
 
@@ -33,10 +32,8 @@ const Job = (props: Props) => {
   useEffect(() => {
     getAllProdApi();
   }, []);
+  
   return <div>
-    <div>
-      <CatogeryTab />
-    </div>
     <div className="container mx-auto mt-5">
       <div className="grid grid-cols-4 gap-4">
         {arrProduct?.map((prod: JobModel) => (
