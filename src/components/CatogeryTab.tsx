@@ -47,7 +47,6 @@ const CatogeryTab = (props: Props) => {
     const [current, setCurrent] = useState('');
 
     const onClick: MenuProps['onClick'] = (e) => {
-        console.log(arrProductJob);
         setCurrent(e.key);
     };
 

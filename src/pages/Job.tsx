@@ -4,12 +4,13 @@ import axios from "axios";
 import { ACCESS_TOKEN_CYBER } from "../util/config";
 import CatogeryTab from "../components/CatogeryTab";
 import CardJob from "../components/CardJob";
+import SearchTool from "../components/SearchTool";
 
 type Props = {};
 
 const Job = (props: Props) => {
   const [arrProduct, setArrProduct] = useState<JobModel[]>([]);
-  console.log(arrProduct);
+  // console.log(arrProduct);
 
   const getAllProdApi = async () => {
     try {
@@ -21,8 +22,9 @@ const Job = (props: Props) => {
         url: "https://fiverrnew.cybersoft.edu.vn/api/cong-viec",
         method: "GET",
       });
-      //console.log(res);
       setArrProduct(res.data.content);
+      console.log(arrProduct);
+      
     } catch (error) {
       console.log("Lỗi khi truy xuất dữ liệu:", error);
     }

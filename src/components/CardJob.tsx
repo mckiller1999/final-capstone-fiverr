@@ -20,6 +20,8 @@ type Props = {
 const CardJob = ({ prod }: Props) => {
     const [favorite, setFavorite] = React.useState(false);
     const handleClickFavorite = () => {
+        console.log(prod);
+        
         setFavorite(!favorite)
     };
     return (
@@ -36,12 +38,12 @@ const CardJob = ({ prod }: Props) => {
                         A
                     </Avatar>
                 }
-                title="Shrimp and Chorizo Paella"
-                subheader="September 14, 2016"
+                title='Anonymos'
+                subheader='Level ???'
             />
             <CardContent>
                 <Typography variant="subtitle2" color="text.secondary">
-                    {prod?.moTaNgan}
+                    {prod?.tenCongViec}
                 </Typography>
                 <div className='mt-3 flex items-center'>
                     <Stack spacing={1}>

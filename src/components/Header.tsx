@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { RootState } from "../redux/store";
+import { useFormik } from "formik";
 
 type Props = {};
 
@@ -27,6 +28,16 @@ const Header = (props: Props) => {
       </NavLink>
     );
   };
+  const navigate = useNavigate();
+  const frm = useFormik({
+    initialValues: {
+      keyword: ''
+    },
+    onSubmit: ({ keyword }) => {
+      // history.push(`/search?keyword=${keyword}`)
+      navigate(`/search?keyword=${keyword}`)
+    }
+  });
 
   return (
     <div>
@@ -68,7 +79,7 @@ const Header = (props: Props) => {
             </NavLink>
           </div>
           <div>
-            <form>
+            <form onSubmit={frm.handleSubmit}>
               <label
                 htmlFor="default-search"
                 className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -94,7 +105,9 @@ const Header = (props: Props) => {
                   </svg>
                 </div>
                 <input
-                  type="search"
+                  type="text"
+                  name="keyword"
+                  onChange={frm.handleChange}
                   id="default-search"
                   className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Search..."
