@@ -41,6 +41,7 @@ const CatogeryTab = (props: Props) => {
                 children:
                     prod.dsNhomChiTietLoai.map((item) => (
                         {
+                            type: 'group',
                             label: `${item.tenNhom}`,
                             key: `${item.id}`,
                             children:

@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 type Props = {};
 
@@ -11,9 +12,7 @@ const HomeTemplate = (props: Props) => {
       <section style={{ minHeight: 550 }}>
         <Outlet />
       </section>
-      <footer className=" bg-gray-800 text-yellow-50 text-center p-20">
-        Footer
-      </footer>
+      <Footer />
     </>
   );
 };
