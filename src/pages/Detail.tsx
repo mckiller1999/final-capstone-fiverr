@@ -5,6 +5,7 @@ import { ACCESS_TOKEN_CYBER } from "../util/config";
 import CardJob from "../components/CardJob";
 import { JobModelByName } from "./Search";
 import BreadcrumbComponent from "../components/Breadcrumb";
+import ShowJobDetail from "../components/ShowJobDetail";
 
 type Props = {};
 
@@ -38,14 +39,8 @@ const Detail = (props: Props) => {
       <div className="ml-5 mt-5">
           <BreadcrumbComponent/>
       </div>
-      <div className="container mx-auto mt-5">
-        <div className="grid grid-cols-4 gap-4">
-          {productDetail?.map((prod: JobModelByName) => (
-            <div className="m-5" key={prod.id}>
-              <CardJob prod={prod.congViec} />
-            </div>
-          ))}
-        </div>
+      <div className="container mx-auto mt-3">
+        <ShowJobDetail/>
       </div>
     </div>
   );

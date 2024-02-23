@@ -38,7 +38,7 @@ const Job = (props: Props) => {
       <div className="grid grid-cols-4 gap-4">
         {arrProduct?.map((prod: JobModel) => (
           <div className="m-5" key={prod.id}>
-            <CardJob prod={prod} />
+            <CardJob data={prod} />
           </div>
         ))}
       </div>
