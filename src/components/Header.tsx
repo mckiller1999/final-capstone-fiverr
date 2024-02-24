@@ -1,11 +1,14 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { RootState } from "../redux/store";
+import { openLoginForm } from "../redux/reducer/loginFormReducer";
 
 type Props = {};
 
 const Header = (props: Props) => {
   const { userLogin } = useSelector((state: RootState) => state.userReducer);
+  const dispatch = useDispatch()
+
   console.log(userLogin);
   const renderLogin = () => {
     if (userLogin?.user) {
@@ -22,6 +25,7 @@ const Header = (props: Props) => {
       <NavLink
         to="/login"
         className="block mt-4 lg:inline-block lg:mt-0 text-blue-gray-300 hover:text-white mr-4"
+        onClick={()=>{dispatch(openLoginForm())}}
       >
         Login
       </NavLink>

@@ -1,25 +1,33 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../redux/store";
-import * as yup from "yup";
-import { singinActionApi } from "../redux/reducer/userReducer";
+
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+
+import { Dialog, DialogContent, IconButton } from "@mui/material";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import { closeLoginForm } from "../redux/reducer/loginFormReducer";
+import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
+import React, { Component } from "react";
+import Slider from "react-slick";
+import { url } from "inspector";
+import "../index.css"
+import "../style.css"
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
+
+var settings = {
+  infinite: true,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 5000,
+  pauseOnHover: true,
+};
 
 type Props = {};
 
@@ -31,111 +39,94 @@ export interface UserSignInForm {
 const Login = (props: Props) => {
   const dispatch: AppDispatch = useDispatch();
 
-  const signInFrm = useFormik<UserSignInForm>({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: yup.object().shape({
-      email: yup
-        .string()
-        .required("email cannot be blank")
-        .email("email is invalid"),
-      password: yup.string().required("password cannot be blank"),
-    }),
-    onSubmit: (values: UserSignInForm) => {
-      const action = singinActionApi(values);
-      dispatch(action);
-    },
-  });
+  const isLoginFormOpen = useSelector(
+    (state: RootState) => state.loginFormReducer.loginFormOpen
+  );
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+  const showRegisterForm = useSelector(
+    (state: RootState) => state.registerFormReducer.registerFormOpen
+  );
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={signInFrm.handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={signInFrm.handleChange}
-              onBlur={signInFrm.handleBlur}
-            />
-            <p className=" text-red-900">
-              {signInFrm.errors.email && signInFrm.errors.email}
-            </p>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={signInFrm.handleChange}
-              onBlur={signInFrm.handleBlur}
-            />
-            <p className=" text-red-900">
-              {signInFrm.errors.password && signInFrm.errors.password}
-            </p>
-
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+    <div>
+      <Dialog open={isLoginFormOpen} maxWidth="lg" PaperProps={{
+        style: {
+          borderRadius: 16,
+        },
+      }}>
+        <div className="flex flex-row" style={{ height: 760 }}>
+          <Box className="w-1/2">
+            <div
+              className="slider-container"
+              style={{ width: "100%", height: "100%" }}
             >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item>
-                <Link href="/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
+              <div style={{ width: "100%", height: "100%" }}>
+                <Slider {...settings}>
+                  <div>
+                    <div
+                      style={{
+                        backgroundImage: `url(/img/imgbg-1.jpg)`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
+                        width: "100%",
+                        height: "760px",
+                      }}
+                    >
+                      <div className="text-center pt-10 px-8 interText500">Hire <span className="fraunces500">top talent</span> and get your projects done</div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div
+                      style={{
+                        backgroundImage: `url(/img/imgbg-3.jpg)`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
+                        width: "100%",
+                        height: "760px",
+                      }}
+                    >
+                      <div className="text-white text-center pt-10 px-8 interText500" >Connect with skilled freelancers. Bring your projects <span className="fraunces500">to life.</span></div>
+
+                    </div>
+                    
+                  </div>
+                  <div>
+                    <div
+                      style={{
+                        backgroundImage: `url(/img/imgbg-5.jpg)`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
+                        width: "100%",
+                        height: "760px",
+                      }}
+                    >
+                      <div className="text-white text-center pt-10 px-8 interText500">From design to coding, find the <span className="fraunces500">perfect freelancer</span> for you</div>
+
+                    </div>
+                  </div>
+                </Slider>
+              </div>
+            </div>
           </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
+
+          <DialogContent className="w-1/2">
+            <IconButton
+              color="default"
+              onClick={() => {
+                dispatch(closeLoginForm());
+              }}
+              
+            >
+              <CloseOutlinedIcon />
+            </IconButton>
+
+            {/* Login Form from here */}
+            {showRegisterForm ? <RegisterForm /> : <LoginForm />}
+          </DialogContent>
+        </div>
+      </Dialog>
+    </div>
   );
 };
 

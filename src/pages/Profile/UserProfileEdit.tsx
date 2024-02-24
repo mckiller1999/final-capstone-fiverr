@@ -1,10 +1,10 @@
 import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormLabel, InputLabel, ListItemText, MenuItem, OutlinedInput, Radio, RadioGroup, Select, SelectChangeEvent, Stack, TextField } from '@mui/material';
 import { Dispatch } from '@reduxjs/toolkit';
 import React from 'react'
-import { updateUserProfile, user} from '../../redux/reducer/userReducer';
+import { UserRegister, updateUserProfile, user} from '../../redux/reducer/userReducer';
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import { certifications, skills } from '../Register';
+import { certifications, skills } from '../RegisterForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { closeEditForm } from '../../redux/reducer/userEditFormReducer';
