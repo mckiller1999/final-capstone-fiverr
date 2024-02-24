@@ -13,7 +13,7 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import React, { Component } from "react";
 import Slider from "react-slick";
-import { url } from "inspector";
+
 import "../index.css"
 import "../style.css"
 

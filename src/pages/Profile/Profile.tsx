@@ -24,7 +24,8 @@ import { http } from "../../util/config";
 import UserProfileEdit from "./UserProfileEdit";
 import { openEditForm } from "../../redux/reducer/userEditFormReducer";
 import { logoutActionApi } from "../../redux/reducer/userReducer";
-
+import "../../index.css"
+import "../../style.css"
 type Props = {};
 
 const Profile = (props: Props) => {
@@ -57,34 +58,41 @@ const Profile = (props: Props) => {
       <UserProfileEdit/>
       <Grid container columnGap={4} className="flex justify-center">
         <Grid item xs={3}>
-          <Container className="bg-white py-6"> 
-           <Box sx={{ display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center'}}>
+          <Container className="bg-white py-6" sx={{ display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center', borderRadius: 8, }}> 
+           <Box 
+           sx={{ display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center', borderRadius: 6}}
+           style={{
+            backgroundImage: `url(/img/5465793.jpg)`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            width: "100%",
+            height: "250px",
+          }}>
            <Avatar
               alt="Remy Sharp"
               src="/static/images/avatar/1.jpg"
               sx={{ width: 100, height: 100 }}
             />
-            <Typography align="center" variant="subtitle1">{userLogin?.user.name}</Typography>
+           </Box>
+           <div style={{fontFamily: '"Inter", sans-serif', fontSize: 24, fontWeight: 500, marginTop: 16}}>{userLogin?.user.name}</div>
             <IconButton onClick={()=>{dispatch(openEditForm())}} aria-label="edit">
               <EditIcon />
             </IconButton>
-           </Box>
-           
             <Divider></Divider>
             {/* Stack */}
-            <Stack direction="row" spacing={8} className="flex justify-between my-2 ">
+            <Stack direction="row" spacing={1} className="flex my-2 ">
               <Stack direction="row" spacing={2}>
-                <LocationOnIcon />
-                <Typography variant="body2" color="text.secondary">From</Typography>
+                {/* <LocationOnIcon /> */}
+                <Typography variant="body2" color="text.secondary">From:</Typography>
               </Stack>
               <Typography variant="subtitle2">Vietnam</Typography>
             </Stack>
             {/* Stack */}
             {/* Stack */}
-            <Stack direction="row" spacing={8} className="flex justify-between my-2">
-              <Stack direction="row" spacing={2}>
-                <PersonIcon />
-                <Typography variant="body2" color="text.secondary">Member since</Typography>
+            <Stack direction="row" spacing={1} className="flex justify-between my-2">
+              <Stack direction="row" spacing={1}>
+                {/* <PersonIcon /> */}
+                <Typography variant="body2" color="text.secondary">Member since:</Typography>
               </Stack>
               <Typography variant="subtitle2">May 2021</Typography>
             </Stack>
@@ -94,18 +102,19 @@ const Profile = (props: Props) => {
                 Log out
               </Button>
           </Container>
-          <Container className="bg-white mt-6 py-4">
-            <Stack direction="row" spacing={2} className="flex justify-between my-2">
-              <Typography variant="subtitle1">Description</Typography>
+          <Container className="bg-white mt-6 py-10" sx={{borderRadius: 8}}>
+            <Stack direction="row" spacing={2} className="flex justify-between my-8">
+              <div style={{fontFamily: '"Inter", sans-serif', fontSize: 20, fontWeight: 500}}>Description</div>
               <Button variant="text" size="small">
                 Edit description
               </Button>
             </Stack>
             <Divider></Divider>
 
-            <Stack direction="column" className="my-4">
+            <Stack direction="column" className="my-8">
               <Stack direction="row" className="flex justify-between">
-              <Typography variant="subtitle1">Language</Typography>
+              
+              <div style={{fontFamily: '"Inter", sans-serif', fontSize: 20, fontWeight: 500}}>Language</div>
               <Button variant="text" size="small">
                 Add new
               </Button>
@@ -114,8 +123,10 @@ const Profile = (props: Props) => {
             </Stack>
 
             <Divider></Divider>
-            <Stack direction="column" className="my-4" gap={1}>
-              <Typography variant="subtitle1">Linked Account</Typography>
+            <Stack direction="column" className="my-8" gap={1}>
+              
+              <div style={{fontFamily: '"Inter", sans-serif', fontSize: 20, fontWeight: 500}}>Linked Account</div>
+              
               <Button variant="text" size="small" startIcon={<Add />}>
                 Facebook
               </Button>
@@ -139,9 +150,10 @@ const Profile = (props: Props) => {
               </Button>
             </Stack>
             <Divider></Divider>
-            <Stack direction="column" className="my-4">
+            <Stack direction="column" className="my-8">
               <Stack direction="row" className="flex justify-between">
-              <Typography variant="subtitle1">Skills</Typography>
+              
+              <div style={{fontFamily: '"Inter", sans-serif', fontSize: 20, fontWeight: 500}}>Skills</div>
               <Button variant="text" size="small">
                 Add new
               </Button>
@@ -149,9 +161,10 @@ const Profile = (props: Props) => {
               <Typography variant="subtitle2" className="text-slate-500" color="text.secondary">Add your skills</Typography>
             </Stack>
             <Divider></Divider>
-            <Stack direction="column" className="my-4">
+            <Stack direction="column" className="my-8">
               <Stack direction="row" className="flex justify-between" >
-              <Typography variant="subtitle1">Education</Typography>
+              <div style={{fontFamily: '"Inter", sans-serif', fontSize: 20, fontWeight: 500}}>Education</div>
+              
               <Button variant="text" size="small">
                 Add new
               </Button>
@@ -159,9 +172,10 @@ const Profile = (props: Props) => {
               <Typography variant="subtitle2" color="text.secondary">Add your education</Typography>
             </Stack>
             <Divider></Divider>
-            <Stack direction="column" className="my-4">
+            <Stack direction="column" className="my-8">
               <Stack direction="row" className="flex justify-between" >
-              <Typography variant="subtitle1">Certifications</Typography>
+              
+              <div style={{fontFamily: '"Inter", sans-serif', fontSize: 20, fontWeight: 500}}>Certifications</div>
               <Button variant="text" size="small">
                 Add new
               </Button>

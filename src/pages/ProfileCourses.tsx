@@ -17,25 +17,27 @@ type Props = {
 export const ProfileCourses = ({job}: Props) => {
   return (
     <div>
-      <Card sx={{ maxWidth: 800, display:"flex", direction:'row', gap: 2  }} className="px-4 mt-4" >
+      <Card  elevation={0} sx={{ maxWidth: 800, display:"flex", direction:'row', gap: 2, border: "solid", borderColor:`rgb(226 232 240)`,borderRadius: 4   }} className=" mt-4" >
+        <div></div>
         <CardMedia
           component="img"
           alt="green iguana"
-          sx={{ width: 200 }}
-          image="https://www.w3schools.com/images/w3schools_green.jpg"
+          sx={{ width: 400, height: 200 , borderRadius: 4}}
+          image="/img/imgbg-1.jpg"
+          className="py-2"
         />
         <Box>
         <CardContent>
-          <Typography gutterBottom variant="h6" component="div">
+          <div  style={{fontFamily: '"Inter", sans-serif', fontSize: 24, fontWeight: 500, marginTop: 16, marginBottom: 16}}>
             {job?.maCongViec}
             Front End Programming with ReactJS
-          </Typography>
+          </div>
           <Typography variant="body2" color="text.secondary">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
           </Typography>
         </CardContent>
         <CardActions className="justify-end">
-          <Button size="small" variant="contained" color="success">View details</Button>
+          <Button disableElevation size="small" variant="contained" color="success" sx={{borderRadius: 8}}>View details</Button>
           <Button size="small" variant="outlined">Edit</Button>
           <Button size="small" variant="outlined" color="error">Delete</Button>
         </CardActions>

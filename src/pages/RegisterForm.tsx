@@ -336,10 +336,11 @@ const RegisterForm = (props: Props) => {
 
           <Button
             variant="contained"
+            color="success"
             type="submit"
             className="btn btn-primary"
             value="Submit"
-            sx={{ width: 400, height: 50, alignSelf: "center", marginTop: 2,backgroundColor: `rgb(20 83 45)` }}
+            sx={{ width: 400, height: 50, alignSelf: "center", marginTop: 2,backgroundColor: `rgb(20 83 45)`, borderRadius: 8 }}
             disableElevation
           >
             Sign up

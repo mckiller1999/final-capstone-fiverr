@@ -122,9 +122,10 @@ const LoginForm = (props: Props) => {
             <Button
               
               type="submit"
+              color="success"
               fullWidth
               variant="contained"
-              sx={{width: 400, height: 50, alignSelf: "center", marginTop: 2, backgroundColor: `rgb(20 83 45)` }}
+              sx={{width: 400, height: 50, alignSelf: "center", marginTop: 2, backgroundColor: `rgb(20 83 45)`, borderRadius: 8 }}
               disableElevation
             >
               Sign in
