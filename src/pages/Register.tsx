@@ -1,17 +1,16 @@
-import { ErrorMessage, useFormik } from "formik";
+import { useFormik } from "formik";
 import React from "react";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 // import { http } from "../utils/Config";
 import { UserRegister, registerApiAction } from "../redux/reducer/userReducer";
-import { AppDispatch, RootState } from "../redux/store";
+import { RootState } from "../redux/store";
 import {
   Backdrop,
   Box,
   Button,
   Checkbox,
   CircularProgress,
-  Container,
   FormControlLabel,
   FormLabel,
   InputLabel,
@@ -68,8 +67,9 @@ export const certifications = [
 ];
 
 const Register = (props: Props) => {
-
-  const {isBackDropOpen} = useSelector((state:RootState) => state.backdropReducer)
+  const { isBackDropOpen } = useSelector(
+    (state: RootState) => state.backdropReducer
+  );
   const [skillsList, setSkillsList] = React.useState<string[]>([]);
 
   const handleChangeSkill = (event: SelectChangeEvent<typeof skillsList>) => {
@@ -133,21 +133,26 @@ const Register = (props: Props) => {
   // render form and use formik & yup
   return (
     <div>
-      <div className="flex flex-row w-full" >
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={isBackDropOpen}
-        // onClick={handleClose}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-        <Box 
-        className='bg-green-800 w-1/2'>
-          <Typography variant="h2" className="text-white py-12 px-16">Find and hire perfect freelancers today</Typography>
+      <div className="flex flex-row w-full">
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={isBackDropOpen}
+          // onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        <Box className="bg-green-800 w-1/2">
+          <Typography variant="h2" className="text-white py-12 px-16">
+            Find and hire perfect freelancers today
+          </Typography>
           <img src="/img/imgbg.png"></img>
         </Box>
         <Stack direction="column" className="py-6  w-1/2 px-32 py-8">
-          <Typography variant="h4" className="mb-6" sx={{textAlign: 'center'}}>
+          <Typography
+            variant="h4"
+            className="mb-6"
+            sx={{ textAlign: "center" }}
+          >
             Create an account
           </Typography>
           <form
@@ -158,7 +163,7 @@ const Register = (props: Props) => {
           >
             <Stack direction="row" gap={2}>
               <TextField
-                sx={{width:"100%"}}
+                sx={{ width: "100%" }}
                 className="form-control"
                 label="Name"
                 type="text"
@@ -171,9 +176,8 @@ const Register = (props: Props) => {
                 helperText={formik.touched.name && formik.errors.name}
               ></TextField>
 
-
               <TextField
-              sx={{width:"100%"}}
+                sx={{ width: "100%" }}
                 className="form-control"
                 label="Email address"
                 type="email"
@@ -186,12 +190,11 @@ const Register = (props: Props) => {
                 error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
               ></TextField>
-
             </Stack>
 
             <Stack direction="row" gap={2}>
               <TextField
-              sx={{width:"100%"}}
+                sx={{ width: "100%" }}
                 className="form-control"
                 label="Password"
                 type="password"
@@ -200,12 +203,14 @@ const Register = (props: Props) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
-                error={formik.touched.password && Boolean(formik.errors.password)}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
                 helperText={formik.touched.password && formik.errors.password}
               ></TextField>
 
               <TextField
-              sx={{width:"100%"}}
+                sx={{ width: "100%" }}
                 label="Password confirm"
                 className="form-control"
                 type="password"
@@ -216,7 +221,7 @@ const Register = (props: Props) => {
 
             <Stack direction="row" gap={2}>
               <TextField
-              sx={{width:"100%"}}
+                sx={{ width: "100%" }}
                 label="Phone"
                 className="form-control"
                 type="tel"
@@ -229,9 +234,8 @@ const Register = (props: Props) => {
                 helperText={formik.touched.phone && formik.errors.phone}
               ></TextField>
 
-
               <TextField
-              sx={{width:"100%"}}
+                sx={{ width: "100%" }}
                 label="Birthday"
                 className="form-control"
                 type="text"
@@ -240,10 +244,11 @@ const Register = (props: Props) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.birthday}
-                error={formik.touched.birthday && Boolean(formik.errors.birthday)}
+                error={
+                  formik.touched.birthday && Boolean(formik.errors.birthday)
+                }
                 helperText={formik.touched.birthday && formik.errors.birthday}
               ></TextField>
-
             </Stack>
 
             <div>
@@ -281,7 +286,6 @@ const Register = (props: Props) => {
               error={formik.touched.role && Boolean(formik.errors.role)}
               helperText={formik.touched.role && formik.errors.role}
             ></TextField>
-
 
             <InputLabel id="demo-multiple-checkbox-label">Skills</InputLabel>
             <Select
@@ -328,7 +332,7 @@ const Register = (props: Props) => {
               type="submit"
               className="btn btn-primary"
               value="Submit"
-              sx={{width: 400, height: 50, alignSelf:'center'}}
+              sx={{ width: 400, height: 50, alignSelf: "center" }}
             >
               Sign up
             </Button>
