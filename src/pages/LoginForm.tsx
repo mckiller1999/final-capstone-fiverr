@@ -17,10 +17,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import * as yup from "yup";
 import { singinActionApi } from "../redux/reducer/userReducer";
-import { Dialog, DialogContent, IconButton } from "@mui/material";
+import { Alert, Dialog, DialogContent, IconButton } from "@mui/material";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { closeLoginForm } from "../redux/reducer/loginFormReducer";
 import { openRegisterForm } from "../redux/reducer/registerFormReducer";
+import CheckIcon from '@mui/icons-material/Check';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -53,9 +54,15 @@ const LoginForm = (props: Props) => {
     },
   });
 
+  const isToastOpen = useSelector((state: RootState) => state.toastMessage.isToastMessageOpen)
 
   return (
+    
     <DialogContent>
+      {isToastOpen ?             <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+      Registration is successful, you can now sign in.
+    </Alert> : null }
+
           <div className="interText700">
             Sign in
           </div>

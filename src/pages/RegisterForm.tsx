@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserRegister, registerApiAction } from "../redux/reducer/userReducer";
 import { AppDispatch, RootState } from "../redux/store";
 import {
+  Alert,
   Backdrop,
   Box,
   Button,
@@ -32,6 +33,7 @@ import {
 } from "@mui/material";
 import { Dispatch } from "@reduxjs/toolkit";
 import { closeRegisterForm } from "../redux/reducer/registerFormReducer";
+
 import { openLoginForm } from "../redux/reducer/loginFormReducer";
 
 type Props = {};
@@ -61,16 +63,16 @@ export const skills = [
 ];
 
 export const certifications = [
-  "Data visualization",
-  "User experience (UX) design",
-  "Agile software development",
-  "System software development",
-  "E-commerce",
-  "Leadership",
-  "Public speaking",
-  "Organization",
-  "Search engine optimization (SEO)",
-  "Scrum software development",
+  "Citrix Certification",
+  "Certified in Risk and Information Systems Control (CRISC)",
+  "Cisco Certification ",
+  "Amazon Web Service (AWS) Certified Solutions Architect Certificationt",
+  "Certified Information System Auditor (CISA)",
+  "Microsoft Certified Solutions Expert (MCSE) – Server Infrastructure",
+  "Public Cloudera Certified Developer for Apache Hadoop (CCDH)",
+  "Professional, Web Development Professional) ",
+  "PMP Agile Certified Practitioner (PMI-ACP)",
+  "Harvard Software Engineering Certificate ",
 ];
 
 const RegisterForm = (props: Props) => {
@@ -101,6 +103,17 @@ const RegisterForm = (props: Props) => {
     );
   };
 
+  const [gender, setGender] = React.useState('female');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setGender((event.target as HTMLInputElement).value);
+    
+    const genderBool = gender === 'female' ? true : false
+    
+    formik.values.gender = genderBool
+    
+  };
+  
   const dispatch: Dispatch<any> = useDispatch();
   const initialValues: UserRegister = {
     id: 0,
@@ -131,8 +144,8 @@ const RegisterForm = (props: Props) => {
     // submit form to BE
 
     onSubmit: async (values) => {
-      alert(values);
-      console.log("values,actions", { values });
+      // alert(values);
+      // console.log("values,actions",values);
       dispatch(registerApiAction(values));
     },
   });
@@ -147,6 +160,7 @@ const RegisterForm = (props: Props) => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+
       <DialogContent>
         <div className="interText700">Create an account</div>
         <Grid container className="mt-2" gap={1}>
@@ -272,21 +286,23 @@ const RegisterForm = (props: Props) => {
               row
               aria-labelledby="demo-controlled-radio-buttons-group"
               name="controlled-radio-buttons-group"
-              value={formik.values.gender}
-              onChange={formik.handleChange}
+              value={gender}
+              onChange={handleChange}
             >
               <FormControlLabel
-                value={true}
+                value="female"
                 control={<Radio />}
                 label="Female"
               />
               <FormControlLabel
-                value={false}
+                value="male"
                 control={<Radio />}
                 label="Male"
               />
             </RadioGroup>
           </div>
+
+          {/* // female == true , male == false */}
 
           <FormControl size="small">
             <InputLabel id="demo-multiple-checkbox-label">Skills</InputLabel>

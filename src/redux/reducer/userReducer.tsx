@@ -20,6 +20,7 @@ import { setBackDropClose, setBackDropOpen } from "./backdropReducer";
 import { closeEditForm } from "./userEditFormReducer";
 import { openLoginForm } from "./loginFormReducer";
 import { closeRegisterForm } from "./registerFormReducer";
+import { setToastOpen } from "./toastMessage";
 
 export interface user {
   email: "";
@@ -28,10 +29,10 @@ export interface user {
   password: "",
   phone: "",
   birthday: "",
-  gender: true,
+  gender: boolean,
   role: "",
-  skill: [],
-  certification: []
+  skill: string[],
+  certification: string[]
 }
 
 export interface UserLogin {
@@ -181,8 +182,9 @@ export const registerApiAction = (userRegister: UserRegister ) => {
       localStorage.setItem(USERLOGIN, JSON.stringify(res.data.content));
       dispatch(registerAction(res.data.content));
       
-      alert("Register successfully")
-      // dispatch(openLoginForm());
+      // alert("Register successfully")
+      dispatch(closeRegisterForm());
+      dispatch(setToastOpen());
     } catch (err:any) {
       if (err.response?.status === 404) {
         alert("something wrong please try again");
@@ -196,6 +198,7 @@ export const registerApiAction = (userRegister: UserRegister ) => {
 
 export const updateUserProfile = (userData: user) => {
   return async (dispatch:AppDispatch) => {
+    console.log("dataput", userData)
     dispatch(setBackDropOpen())
     const token = ACCESS_TOKEN_CYBER;
     try {
@@ -208,8 +211,19 @@ export const updateUserProfile = (userData: user) => {
         data: userData,
       })
       alert("Your profile has been updated successfully")
-      dispatch(updateProfileAction(res.data.content))
-      dispatch(closeEditForm())
+
+      const updateProfileLatest = await axios({
+        headers: {
+          tokenCybersoft: ` ${token}`,
+        },
+        url: `https://fiverrnew.cybersoft.edu.vn/api/users/${userData.id}`,
+        method: "GET",
+      })
+
+      // console.log(res.data.content) --> result coming with array being merged
+      console.log("updateProfileLatest.data.content", updateProfileLatest.data.content)
+      dispatch(updateProfileAction(updateProfileLatest.data.content))
+      // dispatch(closeEditForm())
     } catch (err) {
       alert(err)
     } finally {

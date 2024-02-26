@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+import { closeRegisterForm } from "./registerFormReducer";
 
 export interface isLoginFormOpen {
     loginFormOpen: boolean, 
@@ -7,6 +9,8 @@ export interface isLoginFormOpen {
 const initialState: isLoginFormOpen = {
     loginFormOpen: true
 }
+
+
 
 const loginFormReducer = createSlice({
     name: "loginFormReducer",
