@@ -2,6 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducer/userReducer";
 import backdropReducer from "./reducer/backdropReducer";
 import userEditFormReducer from "./reducer/userEditFormReducer";
+import loginFormReducer from "./reducer/loginFormReducer";
+import registerFormReducer from "./reducer/registerFormReducer";
 // ...
 
 export const store = configureStore({
@@ -9,6 +11,8 @@ export const store = configureStore({
     userReducer,
     backdropReducer,
     userEditFormReducer,
+    loginFormReducer,
+    registerFormReducer,
   },
 });
 

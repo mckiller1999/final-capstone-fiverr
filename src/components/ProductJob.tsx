@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { JobModel } from "../models/Jobs";
-import { DsNhomChiTietLoai } from "../models/JobDetail";
 
 type Props = {
   prod?: JobModel;

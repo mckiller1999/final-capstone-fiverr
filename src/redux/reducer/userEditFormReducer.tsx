@@ -6,7 +6,7 @@ export interface isUserEditOpen {
 
 
 const initialState: isUserEditOpen = {
-    isUserEditOpen: true
+    isUserEditOpen: false
 }
 
 const userEditFormReducer = createSlice({

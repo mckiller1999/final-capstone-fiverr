@@ -17,6 +17,8 @@ import { history } from "../../index";
 import { setBackDropClose, setBackDropOpen } from "./backdropReducer";
 // import { useDispatch } from "react-redux";
 import { closeEditForm } from "./userEditFormReducer";
+import { openLoginForm } from "./loginFormReducer";
+import { closeRegisterForm } from "./registerFormReducer";
 
 export interface user {
   email: "";
@@ -29,6 +31,19 @@ export interface user {
   role: "";
   skill: [];
   certification: [];
+}
+
+export interface UserDetail {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  birthday: string;
+  gender: boolean;
+  role: string;
+  skill: string[]; // or Array<string>
+  certification: string[]; // or Array<string>
 }
 
 export interface UserLogin {
@@ -136,6 +151,7 @@ export const singinActionApi = (userLoginForm: UserSignInForm) => {
       saveStorage(ACCESS_TOKEN, res.data.content.token);
       history.push("/");
     } catch (error) {
+      alert("Error during login:");
       console.error("Error during login:", error);
       // Xử lý lỗi ở đây nếu cần
     }
@@ -180,7 +196,7 @@ export const registerApiAction = (userRegister: UserRegister) => {
       dispatch(registerAction(res.data.content));
 
       alert("Register successfully");
-      history.push("/login");
+      // dispatch(openLoginForm());
     } catch (err: any) {
       if (err.response?.status === 404) {
         alert("something wrong please try again");
