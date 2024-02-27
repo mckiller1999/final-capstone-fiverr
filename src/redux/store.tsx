@@ -4,6 +4,7 @@ import backdropReducer from "./reducer/backdropReducer";
 import userEditFormReducer from "./reducer/userEditFormReducer";
 import loginFormReducer from "./reducer/loginFormReducer";
 import registerFormReducer from "./reducer/registerFormReducer";
+import toastMessage from "./reducer/toastMessage";
 // ...
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
     userEditFormReducer,
     loginFormReducer,
     registerFormReducer,
+    toastMessage,
   },
 });
 

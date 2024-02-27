@@ -63,6 +63,9 @@ const UserProfileEdit = (props: Props) => {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+    // if (skillsList !== undefined) {
+    //   formik.values.skill = skillsList
+    // };
   };
 
   const [certList, setCertList] = React.useState<string[] | undefined>(
@@ -77,9 +80,22 @@ const UserProfileEdit = (props: Props) => {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+    // if (certList !== undefined) {
+    //   formik.values.certification = certList
+    // };
   };
 
   const dispatch: Dispatch<any> = useDispatch();
+
+  const [gender, setGender] = React.useState("female");
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setGender((event.target as HTMLInputElement).value);
+
+    const genderBool = gender === "female" ? true : false;
+
+    formik.values.gender = genderBool;
+  };
 
   const initialValues: user = {
     id: userLogin?.user.id || "",
@@ -88,7 +104,7 @@ const UserProfileEdit = (props: Props) => {
     password: userLogin?.user.password || "",
     phone: userLogin?.user.phone || "",
     birthday: userLogin?.user.birthday || "",
-    gender: true,
+    gender: userLogin?.user.gender || true,
     role: userLogin?.user.role || "",
     skill: userLogin?.user.skill || [],
     certification: userLogin?.user.certification || [],
@@ -111,7 +127,7 @@ const UserProfileEdit = (props: Props) => {
 
     onSubmit: async (values: user) => {
       console.log("form data", values);
-      //dispatch(updateUserProfile(values));
+      dispatch(updateUserProfile(values));
     },
   });
 
@@ -223,16 +239,16 @@ const UserProfileEdit = (props: Props) => {
               <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
-                value={formik.values.gender}
-                onChange={formik.handleChange}
+                value={gender}
+                onChange={handleChange}
               >
                 <FormControlLabel
-                  value={true}
+                  value="female"
                   control={<Radio />}
                   label="Female"
                 />
                 <FormControlLabel
-                  value={false}
+                  value="male"
                   control={<Radio />}
                   label="Male"
                 />
@@ -258,7 +274,7 @@ const UserProfileEdit = (props: Props) => {
               labelId="demo-multiple-checkbox-label"
               id="demo-multiple-checkbox"
               multiple
-              value={skillsList}
+              value={(formik.values.skill = skillsList ? skillsList : [])}
               onChange={handleChangeSkill}
               input={<OutlinedInput label="Tag" />}
               renderValue={(selected) => selected.join(", ")}
@@ -279,7 +295,7 @@ const UserProfileEdit = (props: Props) => {
               labelId="demo-multiple-checkbox-label"
               id="demo-multiple-checkbox"
               multiple
-              value={certList}
+              value={(formik.values.certification = certList ? certList : [])}
               onChange={handleChangeCert}
               input={<OutlinedInput label="Tag" />}
               renderValue={(selected) => selected.join(", ")}

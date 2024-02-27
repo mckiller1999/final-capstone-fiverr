@@ -6,13 +6,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 
-import { Dialog, DialogContent, IconButton } from "@mui/material";
+import { Alert, Dialog, DialogContent, IconButton } from "@mui/material";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { closeLoginForm } from "../redux/reducer/loginFormReducer";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import React, { Component } from "react";
 import Slider from "react-slick";
+
 
 import "../index.css"
 import "../style.css"
@@ -49,6 +50,8 @@ const Login = (props: Props) => {
 
   return (
     <div>
+
+
       <Dialog open={isLoginFormOpen} maxWidth="lg" PaperProps={{
         style: {
           borderRadius: 16,

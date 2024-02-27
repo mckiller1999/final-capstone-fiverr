@@ -1,4 +1,4 @@
-import { Add } from "@mui/icons-material";
+import { Add, Delete, HomeRepairServiceOutlined } from "@mui/icons-material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PersonIcon from "@mui/icons-material/Person";
 import EditIcon from "@mui/icons-material/Edit";
@@ -18,20 +18,22 @@ import React, { useEffect, useState } from "react";
 import { ProfileCourses } from "../ProfileCourses";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
-
-import { BookedJobs } from "../../models/BookedJobs";
+import axios from "axios";
+import { BookedJobs, HiredJobs } from "../../models/BookedJobs";
 import { http } from "../../util/config";
 import UserProfileEdit from "./UserProfileEdit";
 import { openEditForm } from "../../redux/reducer/userEditFormReducer";
 import { logoutActionApi } from "../../redux/reducer/userReducer";
 import "../../index.css";
 import "../../style.css";
+import { Tag } from "antd";
+
 type Props = {};
 
 const Profile = (props: Props) => {
   const { userLogin } = useSelector((state: RootState) => state.userReducer);
   console.log("userLogin", userLogin);
-  const [bookedJobs, setBookedJobs] = useState<BookedJobs[]>([]);
+  const [bookedJobs, setBookedJobs] = useState<HiredJobs[]>([]);
 
   const getApiBookedJobs = async () => {
     try {
@@ -235,13 +237,33 @@ const Profile = (props: Props) => {
                   Add new
                 </Button>
               </Stack>
-              <Typography
-                variant="subtitle2"
-                className="text-slate-500"
-                color="text.secondary"
-              >
-                Add your skills
-              </Typography>
+              {!userLogin?.user.skill || userLogin?.user.skill.length == 0 ? (
+                <Typography
+                  variant="subtitle2"
+                  className="text-slate-500"
+                  color="text.secondary"
+                >
+                  Add your skills
+                </Typography>
+              ) : (
+                userLogin?.user.skill.map((item) => {
+                  return (
+                    <div>
+                      <Tag
+                        style={{
+                          fontFamily: '"Inter", sans-serif',
+                          fontSize: 16,
+                          fontWeight: 400,
+                          marginBottom: 8,
+                        }}
+                        color="magenta"
+                      >
+                        {item}
+                      </Tag>
+                    </div>
+                  );
+                })
+              )}
             </Stack>
             <Divider></Divider>
             <Stack direction="column" className="my-8">
@@ -280,20 +302,38 @@ const Profile = (props: Props) => {
                   Add new
                 </Button>
               </Stack>
-              <Typography variant="subtitle2" color="text.secondary">
-                Add your certification
-              </Typography>
+              {(!userLogin?.user.certification ||
+                userLogin?.user.certification.length) == 0 ? (
+                <Typography variant="subtitle2" color="text.secondary">
+                  Add your certification
+                </Typography>
+              ) : (
+                userLogin?.user.certification.map((item) => {
+                  return (
+                    <div>
+                      <Tag
+                        style={{
+                          fontFamily: '"Inter", sans-serif',
+                          fontSize: 16,
+                          fontWeight: 400,
+                          marginBottom: 8,
+                        }}
+                        color="cyan"
+                      >
+                        {item}
+                      </Tag>
+                    </div>
+                  );
+                })
+              )}
             </Stack>
           </Container>
         </Grid>
         <Grid item>
           <Container>
-            {bookedJobs?.map((job: BookedJobs) => {
+            {bookedJobs?.map((job: HiredJobs) => {
               return <ProfileCourses job={job} />;
             })}
-            <ProfileCourses />
-            <ProfileCourses />
-            <ProfileCourses />
           </Container>
         </Grid>
       </Grid>
