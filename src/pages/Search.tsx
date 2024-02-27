@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ACCESS_TOKEN_CYBER } from "../util/config";
 import CardJob from "../components/CardJob";
+import { JobModel } from "../models/Jobs";
 
 export interface JobModelByName {
   avatar: string;
@@ -12,7 +13,7 @@ export interface JobModelByName {
   tenLoaiCongViec: string;
   tenNguoiTao: string;
   tenNhomChiTietLoai: string;
-  congViec: any;
+  congViec: JobModel;
 }
 
 const Search = () => {
@@ -106,7 +107,7 @@ const Search = () => {
         <div className="grid grid-cols-4 gap-4">
           {arrProduct?.map((prod: JobModelByName) => (
             <div className="m-5" key={prod.id}>
-              <CardJob prod={prod.congViec} />
+              <CardJob prod={prod} />
             </div>
           ))}
         </div>

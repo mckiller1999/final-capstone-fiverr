@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { Breadcrumb } from 'antd';
 import { JobModelByName } from '../pages/Search';
 import { getStorageJson } from '../util/config';
@@ -6,33 +5,24 @@ import { getStorageJson } from '../util/config';
 type Props = {};
 
 const BreadcrumbComponent = () => {
-    const [data, setData] = useState<JobModelByName[]>();
-    const getData = () => {
-        const data : JobModelByName[] = getStorageJson('dataBreadcrumb');
-        setData(data);
-    };
-
-    useEffect(()=>{
-        getData()
-    }, []);
-
-    // const data : JobModelByName[] = getData();
-
+    const data: JobModelByName[] = getStorageJson('dataBreadcrumb');
     return (
-        <Breadcrumb
-            separator=">"
-            items={[
-                {
-                    title: `${data}`,
-                },
-                {
-                    title: `$}`,
-                },
-                {
-                    title: `$prod?.tenChiTietLoai`,
-                },
-            ]}
-        />
+        <div>
+            <Breadcrumb
+                separator=">"
+                items={[
+                    {
+                        title: `${data[0].tenLoaiCongViec}`,
+                    },
+                    {
+                        title: `${data[0].tenNhomChiTietLoai}`,
+                    },
+                    {
+                        title: `${data[0].tenChiTietLoai}`,
+                    },
+                ]}
+            />
+        </div>
     );
 };
 
