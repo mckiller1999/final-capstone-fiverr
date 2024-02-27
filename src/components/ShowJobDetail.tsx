@@ -1,14 +1,14 @@
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { JobModel } from '../models/Jobs';
 import { JobModelByName } from '../pages/Search';
 import { getStorageJson } from '../util/config';
-import { Avatar, Space, Rate, Image } from 'antd'
+import { Avatar, Space, Rate} from 'antd'
 
 const ShowJobDetail = () => {
     const data: JobModelByName[] = getStorageJson('dataBreadcrumb');
     const jobDetail: JobModel = data[0].congViec;
     const checkRate = (value: Number) => {
-        if (value == 5) {
+        if (value === 5) {
             return <span className='text-yellow-700'>Top Rated Seller</span>
         } else {
             return ''
@@ -34,14 +34,31 @@ const ShowJobDetail = () => {
             </div>
             <hr className='font-bold border-gray-400' />
             <div className='mt-5 pt-3 mx-auto'>
-                <Image
-                    width={800}
-                    src={jobDetail.hinhAnh}
-                />
+                <img src={jobDetail.hinhAnh} alt="imageproduct" className='w-full' />
+            </div>
+            <div className='mt-5'>
+                <h1 className='text-xl text-gray-600 font-bold mb-3'>About This Gig</h1>
+                <Typography color={'GrayText'}>{jobDetail.moTa}</Typography>
+            </div>
+            <div className='my-5'>
+                <h1 className='text-xl text-gray-600 font-bold mb-3'>About The Seller</h1>
+                <div className='flex'>
+                    <Avatar size={100} src={data[0].avatar} />
+                    <div className='ml-5'>
+                        <div className='flex'>
+                            <span className='font-bold'>{data[0].tenNguoiTao}</span>
+                            {checkRate(jobDetail.saoCongViec)}
+                        </div>
+                        <div className='flex my-3'>
+                            <Rate disabled defaultValue={jobDetail.saoCongViec} />
+                            <span className='ml-2 text-gray-600'>({jobDetail.danhGia})</span>
+                        </div>
+                        <Button variant='outlined'>Contact Me</Button>
+                    </div>
+                </div>
             </div>
             <div>
-                <h1>About This Gig</h1>
-                <Typography>{jobDetail.moTa}</Typography>
+                design comment
             </div>
         </div>
     )
