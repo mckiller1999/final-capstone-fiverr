@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 import { ACCESS_TOKEN_CYBER } from "../../util/config";
@@ -23,7 +23,7 @@ import {
 import { Dispatch } from "@reduxjs/toolkit";
 import { updateUserProfile, user } from "../../redux/reducer/userReducer";
 import { useFormik } from "formik";
-import * as yup from "yup";
+
 import { certifications, skills } from "../RegisterForm";
 import { useDispatch } from "react-redux";
 
@@ -40,7 +40,7 @@ const MenuProps = {
 
 const UserDetail = () => {
   const { id } = useParams<{ id?: string }>(); // Cho phép giá trị id có thể là undefined
-  const [UserDetail, setUserDetail] = useState<user | null>(null);
+  const [UserDetail] = useState<user | null>(null);
 
   const getUserById = async (userId: string) => {
     try {
