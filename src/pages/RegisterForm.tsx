@@ -328,7 +328,7 @@ const RegisterForm = (props: Props) => {
             </RadioGroup>
           </div>
 
-          {/* // female == true , male == false */}
+          
 
           <FormControl size="small">
             <InputLabel id="demo-multiple-checkbox-label">Skills</InputLabel>
