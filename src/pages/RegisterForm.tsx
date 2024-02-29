@@ -2,6 +2,12 @@ import { ErrorMessage, useFormik } from "formik";
 import React from "react";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
+import dayjs, { Dayjs } from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 // import { http } from "../utils/Config";
 import { UserRegister, registerApiAction } from "../redux/reducer/userReducer";
 import { AppDispatch, RootState } from "../redux/store";
@@ -80,6 +86,7 @@ const RegisterForm = (props: Props) => {
     (state: RootState) => state.backdropReducer
   );
   const [skillsList, setSkillsList] = React.useState<string[]>([]);
+  const [birthday, setBirthDay] = React.useState<Dayjs | null>(dayjs('2024-02-26'));
 
   const handleChangeSkill = (event: SelectChangeEvent<typeof skillsList>) => {
     const {
@@ -248,7 +255,7 @@ const RegisterForm = (props: Props) => {
 
           <Stack direction="row" gap={2}>
             <TextField
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", marginTop: 1}}
               label="Phone"
               className="form-control"
               type="tel"
@@ -262,7 +269,7 @@ const RegisterForm = (props: Props) => {
               size="small"
             ></TextField>
 
-            <TextField
+            {/* <TextField
               sx={{ width: "100%" }}
               label="Birthday"
               className="form-control"
@@ -275,7 +282,26 @@ const RegisterForm = (props: Props) => {
               error={formik.touched.birthday && Boolean(formik.errors.birthday)}
               helperText={formik.touched.birthday && formik.errors.birthday}
               size="small"
-            ></TextField>
+            ></TextField> */}
+
+
+<LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DemoContainer sx={{ width: "100%" }} components={['DatePicker', 'DatePicker']}>
+        <DatePicker
+        slotProps={{ textField: { size: 'small' } }}
+          sx={{ width: "100%"}}
+          label="Birthday"
+          // format="DD-MM-YYYY"
+          value={birthday}
+          onChange={(newValue) => {
+            setBirthDay(newValue);
+            formik.values.birthday = birthday?.toString() ? birthday?.toString() : ""
+          }}
+        />
+      </DemoContainer>
+    </LocalizationProvider>
+
+
           </Stack>
 
           <div>

@@ -27,7 +27,7 @@ export interface user {
   id: "";
   password: "";
   phone: "";
-  birthday: "";
+  birthday: string;
   gender: boolean;
   role: "";
   skill: string[];
