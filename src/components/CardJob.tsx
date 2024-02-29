@@ -9,15 +9,14 @@ import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Rating from '@mui/material/Rating';
-// import { Button } from '@mui/material';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { JobModelByName } from '../pages/Search';
 import { useEffect, useState } from 'react';
 import { ACCESS_TOKEN_CYBER, saveStorageJson } from "../util/config";
 import axios from 'axios';
 import Box from '@mui/material/Box';
 import { JobModel } from '../models/Jobs';
-import { Button, CardActionArea } from '@mui/material';
+import { CardActionArea } from '@mui/material';
 
 type Props = {
     prod?: JobModelByName;
@@ -53,7 +52,7 @@ const CardJob = ({ prod, data }: Props) => {
 
     const navigate = useNavigate();
     const handleClickCard = () => {
-        saveStorageJson('dataBreadcrumb', productDetail);
+        saveStorageJson('dataJobDetail', productDetail);
         navigate(`/detail/${prod?.id}`);
     };
 

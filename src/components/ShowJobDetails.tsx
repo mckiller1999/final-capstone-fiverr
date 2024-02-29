@@ -1,13 +1,16 @@
 import { Button, Typography } from "@mui/material";
 import { JobModel } from "../models/Jobs";
 import { JobModelByName } from "../pages/Search";
-import { getStorageJson } from "../util/config";
 import { Avatar, Space, Rate } from "antd";
-import Comment from "./Comment";
 
-const ShowJobDetails = () => {
-  const data: JobModelByName[] = getStorageJson("dataBreadcrumb");
-  const jobDetail: JobModel = data[0].congViec;
+type Props = {
+  prod: JobModelByName[]
+};
+
+const ShowJobDetails = ({ prod }: Props) => {
+  const data = prod;
+  const jobDetail: JobModel = prod[0].congViec;
+
   const checkRate = (value: Number) => {
     if (value === 5) {
       return <span className="text-yellow-700 font-bold">Top Rated</span>;
@@ -69,9 +72,7 @@ const ShowJobDetails = () => {
           </div>
         </div>
       </div>
-      <div>
-        <Comment/>
-      </div>
+
     </div>
   );
 };

@@ -45,9 +45,12 @@ function a11yProps(index: number) {
   };
 };
 
-const CardRentJobs = () => {
-  const data: JobModelByName[] = getStorageJson("dataBreadcrumb");
-  const jobDetail: JobModel = data[0].congViec;
+type Props = {
+  prod: JobModelByName[]
+};
+
+const CardRentJobs = ({ prod }: Props) => {
+  const jobDetail: JobModel = prod[0].congViec;
   const userLogin: UserLogin = getStorageJson(USERLOGIN);
 
   const date = new Date().toLocaleDateString();
