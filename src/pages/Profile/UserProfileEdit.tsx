@@ -1,142 +1,126 @@
-import {
-  Button,
-  Checkbox,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  FormControlLabel,
-  FormLabel,
-  InputLabel,
-  ListItemText,
-  MenuItem,
-  OutlinedInput,
-  Radio,
-  RadioGroup,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  TextField,
-} from "@mui/material";
-import { Dispatch } from "@reduxjs/toolkit";
-import React from "react";
-import {
-  UserRegister,
-  updateUserProfile,
-  user,
-} from "../../redux/reducer/userReducer";
-import { useFormik } from "formik";
+import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormLabel, InputLabel, ListItemText, MenuItem, OutlinedInput, Radio, RadioGroup, Select, SelectChangeEvent, Stack, TextField } from '@mui/material';
+import { Dispatch } from '@reduxjs/toolkit';
+import React from 'react'
+import { UserRegister, updateUserProfile, user} from '../../redux/reducer/userReducer';
+import { useFormik } from 'formik';
 import * as yup from "yup";
-import { certifications, skills } from "../RegisterForm";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { closeEditForm } from "../../redux/reducer/userEditFormReducer";
+import { certifications, skills } from '../RegisterForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { closeEditForm } from '../../redux/reducer/userEditFormReducer';
+import dayjs, { Dayjs } from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-type Props = {};
+
+
+type Props = {}
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
     },
-  },
-};
+  };
 
 const UserProfileEdit = (props: Props) => {
-  const isModalOpen = useSelector(
-    (state: RootState) => state.userEditFormReducer.isUserEditOpen
-  );
 
-  const { userLogin } = useSelector((state: RootState) => state.userReducer);
-  const [skillsList, setSkillsList] = React.useState<string[] | undefined>(
-    userLogin?.user.skill
-  );
+    const isModalOpen = useSelector((state:RootState) => state.userEditFormReducer.isUserEditOpen)
+    
+    const { userLogin } = useSelector((state: RootState) => state.userReducer);
+    const [birthday, setBirthDay] = React.useState<Dayjs | null>(dayjs(userLogin?.user.birthday));
+    const [skillsList, setSkillsList] = React.useState<string[]|undefined>(userLogin?.user.skill);
 
-  const handleChangeSkill = (event: SelectChangeEvent<typeof skillsList>) => {
-    const {
-      target: { value },
-    } = event;
-    setSkillsList(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-    // if (skillsList !== undefined) {
-    //   formik.values.skill = skillsList
-    // };
-  };
+    const handleChangeSkill = (event: SelectChangeEvent<typeof skillsList>) => {
+      const {
+        target: { value },
+      } = event;
+      setSkillsList(
+        // On autofill we get a stringified value.
+        typeof value === "string" ? value.split(",") : value
+      );
+      // if (skillsList !== undefined) {
+      //   formik.values.skill = skillsList
+      // };
+    };
+    
+  
+    const [certList, setCertList] = React.useState<string[]|undefined>(userLogin?.user.certification);
+  
+    const handleChangeCert = (event: SelectChangeEvent<typeof certList>) => {
+      const {
+        target: { value },
+      } = event;
+      setCertList(
+        // On autofill we get a stringified value.
+        typeof value === "string" ? value.split(",") : value
+      );
+      // if (certList !== undefined) {
+      //   formik.values.certification = certList
+      // };
+    };
+  
+    const dispatch: Dispatch<any> = useDispatch();
 
-  const [certList, setCertList] = React.useState<string[] | undefined>(
-    userLogin?.user.certification
-  );
-
-  const handleChangeCert = (event: SelectChangeEvent<typeof certList>) => {
-    const {
-      target: { value },
-    } = event;
-    setCertList(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-    // if (certList !== undefined) {
-    //   formik.values.certification = certList
-    // };
-  };
-
-  const dispatch: Dispatch<any> = useDispatch();
-
-  const [gender, setGender] = React.useState("female");
+    const [gender, setGender] = React.useState('female');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGender((event.target as HTMLInputElement).value);
-
-    const genderBool = gender === "female" ? true : false;
-
-    formik.values.gender = genderBool;
+    
+    const genderBool = gender === 'female' ? true : false
+    
+    formik.values.gender = genderBool
+    
   };
-
-  const initialValues: user = {
-    id: userLogin?.user.id || "",
-    name: userLogin?.user.name || "",
-    email: userLogin?.user.email || "",
-    password: userLogin?.user.password || "",
-    phone: userLogin?.user.phone || "",
-    birthday: userLogin?.user.birthday || "",
-    gender: userLogin?.user.gender || true,
-    role: userLogin?.user.role || "",
-    skill: userLogin?.user.skill || [],
-    certification: userLogin?.user.certification || [],
-  };
-  const formik = useFormik({
-    initialValues: initialValues,
-    validationSchema: yup.object({
-      name: yup.string().required("Name is required"),
-      email: yup.string().email("Invalid email").required("Email is required"),
-      password: yup.string().required("Password is required"),
-      // passwordConfirm: yup.string().required("Confirm password is required"),
-      phone: yup.string().required("Phone is required"),
-      birthday: yup.string().required("Birthday is required"),
-      gender: yup.boolean().required("Gender is required"),
-      role: yup.string().required("Role is required"),
-      skill: yup.array().required("Role is required"),
-      certification: yup.array().required("Certification is required"),
-    }),
-    // submit form to BE
-
-    onSubmit: async (values: user) => {
-      console.log("form data", values);
-      dispatch(updateUserProfile(values));
-    },
-  });
-
+    
+    const initialValues: user = {
+      id: userLogin?.user.id|| "",
+      name: userLogin?.user.name || "",
+      email: userLogin?.user.email || "",
+      password: userLogin?.user.password || "",
+      phone: userLogin?.user.phone || "",
+      birthday: userLogin?.user.birthday || "",
+      gender: userLogin?.user.gender || true,
+      role: userLogin?.user.role || "",
+      skill: userLogin?.user.skill || [],
+      certification: userLogin?.user.certification || [],
+    };
+    const formik = useFormik({
+      initialValues: initialValues,
+      validationSchema: yup.object({
+        name: yup.string().required("Name is required"),
+        email: yup.string().email("Invalid email").required("Email is required"),
+        password: yup.string().required("Password is required"),
+        // passwordConfirm: yup.string().required("Confirm password is required"),
+        phone: yup.string().required("Phone is required"),
+        birthday: yup.string().required("Birthday is required"),
+        gender: yup.boolean().required("Gender is required"),
+        role: yup.string().required("Role is required"),
+        skill: yup.array().required("Role is required"),
+        certification: yup.array().required("Certification is required"),
+      }),
+      // submit form to BE
+  
+      onSubmit: async (values: user) => {
+        console.log("form data",values )
+        dispatch(updateUserProfile(values))
+      },
+    });
+    
+  
   return (
     <div>
-      <Dialog open={Boolean(isModalOpen)}>
+          <Dialog
+        open={Boolean(isModalOpen)}
+      >
         <DialogTitle>Edit Your Profile</DialogTitle>
         <DialogContent>
-          <form
+        <form
             className="flex flex-col gap-4 mt-6"
             action=""
             onSubmit={formik.handleSubmit}
@@ -144,7 +128,7 @@ const UserProfileEdit = (props: Props) => {
           >
             <Stack direction="row" gap={2}>
               <TextField
-                sx={{ width: "100%" }}
+                sx={{width:"100%"}}
                 className="form-control"
                 label="Name"
                 type="text"
@@ -155,10 +139,12 @@ const UserProfileEdit = (props: Props) => {
                 value={formik.values.name}
                 error={formik.touched.name && Boolean(formik.errors.name)}
                 helperText={formik.touched.name && formik.errors.name}
+                size="small"
               ></TextField>
 
+
               <TextField
-                sx={{ width: "100%" }}
+              sx={{width:"100%"}}
                 className="form-control"
                 label="Email address"
                 type="email"
@@ -170,12 +156,14 @@ const UserProfileEdit = (props: Props) => {
                 required
                 error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
+                size="small"
               ></TextField>
+
             </Stack>
 
             <Stack direction="row" gap={2}>
               <TextField
-                sx={{ width: "100%" }}
+              sx={{width:"100%"}}
                 className="form-control"
                 label="Password"
                 type="password"
@@ -184,25 +172,25 @@ const UserProfileEdit = (props: Props) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
-                error={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
+                error={formik.touched.password && Boolean(formik.errors.password)}
                 helperText={formik.touched.password && formik.errors.password}
+                size="small"
               ></TextField>
 
               <TextField
-                sx={{ width: "100%" }}
+              sx={{width:"100%"}}
                 label="Password confirm"
                 className="form-control"
                 type="password"
                 name="passwordConfirm"
                 required
+                size="small"
               ></TextField>
             </Stack>
 
             <Stack direction="row" gap={2}>
               <TextField
-                sx={{ width: "100%" }}
+              sx={{width:"100%"}}
                 label="Phone"
                 className="form-control"
                 type="tel"
@@ -213,10 +201,12 @@ const UserProfileEdit = (props: Props) => {
                 value={formik.values.phone}
                 error={formik.touched.phone && Boolean(formik.errors.phone)}
                 helperText={formik.touched.phone && formik.errors.phone}
+                size="small"
               ></TextField>
 
-              <TextField
-                sx={{ width: "100%" }}
+
+              {/* <TextField
+              sx={{width:"100%"}}
                 label="Birthday"
                 className="form-control"
                 type="text"
@@ -225,11 +215,27 @@ const UserProfileEdit = (props: Props) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.birthday}
-                error={
-                  formik.touched.birthday && Boolean(formik.errors.birthday)
-                }
+                error={formik.touched.birthday && Boolean(formik.errors.birthday)}
                 helperText={formik.touched.birthday && formik.errors.birthday}
-              ></TextField>
+              ></TextField> */}
+
+
+<LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DemoContainer sx={{ width: "100%" }} components={['DatePicker', 'DatePicker']}>
+        <DatePicker
+        slotProps={{ textField: { size: 'small' } }}
+          sx={{ width: "100%"}}
+          label="Birthday"
+          // format="DD-MM-YYYY"
+          value={birthday}
+          onChange={(newValue) => {
+            setBirthDay(newValue);
+            formik.values.birthday = birthday?.toString() ? birthday?.toString() : ""
+          }}
+        />
+      </DemoContainer>
+    </LocalizationProvider>
+
             </Stack>
 
             <div>
@@ -256,7 +262,7 @@ const UserProfileEdit = (props: Props) => {
             </div>
 
             <TextField
-              disabled
+            disabled
               className="form-control"
               label="Role"
               type="text"
@@ -267,7 +273,9 @@ const UserProfileEdit = (props: Props) => {
               value={formik.values.role}
               error={formik.touched.role && Boolean(formik.errors.role)}
               helperText={formik.touched.role && formik.errors.role}
+              size="small"
             ></TextField>
+
 
             <InputLabel id="demo-multiple-checkbox-label">Skills</InputLabel>
             <Select
@@ -279,10 +287,11 @@ const UserProfileEdit = (props: Props) => {
               input={<OutlinedInput label="Tag" />}
               renderValue={(selected) => selected.join(", ")}
               MenuProps={MenuProps}
+              size="small"
             >
               {skills.map((name) => (
                 <MenuItem key={name} value={name}>
-                  <Checkbox checked={(skillsList ?? []).indexOf(name) > -1} />
+                  <Checkbox checked={(skillsList??[]).indexOf(name) > -1} />
                   <ListItemText primary={name} />
                 </MenuItem>
               ))}
@@ -300,31 +309,25 @@ const UserProfileEdit = (props: Props) => {
               input={<OutlinedInput label="Tag" />}
               renderValue={(selected) => selected.join(", ")}
               MenuProps={MenuProps}
+              size="small"
             >
               {certifications.map((name) => (
                 <MenuItem key={name} value={name}>
-                  <Checkbox checked={(certList ?? []).indexOf(name) > -1} />
+                  <Checkbox checked={(certList??[]).indexOf(name) > -1} />
                   <ListItemText primary={name} />
                 </MenuItem>
               ))}
             </Select>
-            <DialogActions>
-              <Button
-                onClick={() => {
-                  dispatch(closeEditForm());
-                }}
-              >
-                Cancel
-              </Button>
-              <Button variant="contained" type="submit">
-                Save Change
-              </Button>
-            </DialogActions>
+                    <DialogActions>
+          <Button onClick={()=>{dispatch(closeEditForm())}} >Cancel</Button>
+          <Button variant='contained' type="submit">Save Change</Button>
+        </DialogActions>
           </form>
         </DialogContent>
+
       </Dialog>
     </div>
-  );
-};
+  )
+}
 
-export default UserProfileEdit;
+export default UserProfileEdit

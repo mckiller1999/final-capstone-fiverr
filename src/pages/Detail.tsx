@@ -44,7 +44,7 @@ const Detail = (props: Props) => {
         <div className="w-1/2">
           <ShowJobDetails />
         </div>
-        <div className="w-1/2">
+        <div className="w-1/2 mx-auto">
           <CardRentJob />
         </div>
       </div>

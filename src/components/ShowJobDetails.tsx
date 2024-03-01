@@ -3,17 +3,20 @@ import { JobModel } from "../models/Jobs";
 import { JobModelByName } from "../pages/Search";
 import { getStorageJson } from "../util/config";
 import { Avatar, Space, Rate } from "antd";
+import Comment from "./Comment";
 
 const ShowJobDetails = () => {
   const data: JobModelByName[] = getStorageJson("dataBreadcrumb");
   const jobDetail: JobModel = data[0].congViec;
   const checkRate = (value: Number) => {
     if (value === 5) {
-      return <span className="text-yellow-700">Top Rated Seller</span>;
+      return <span className="text-yellow-700 font-bold">Top Rated</span>;
     } else {
       return "";
     }
   };
+  const text = jobDetail.moTa.split('\r\n');
+
   return (
     <div className="container mx-auto mt-5">
       <div>
@@ -40,7 +43,12 @@ const ShowJobDetails = () => {
       </div>
       <div className="mt-5">
         <h1 className="text-xl text-gray-600 font-bold mb-3">About This Gig</h1>
-        <Typography color={"GrayText"}>{jobDetail.moTa}</Typography>
+        <div>
+          {text.map((string) => (
+            <Typography key={string} color={"GrayText"} className="pt-1">{string}</Typography>
+          ))}
+        </div>
+
       </div>
       <div className="my-5">
         <h1 className="text-xl text-gray-600 font-bold mb-3">
@@ -50,7 +58,7 @@ const ShowJobDetails = () => {
           <Avatar size={100} src={data[0].avatar} />
           <div className="ml-5">
             <div className="flex">
-              <span className="font-bold">{data[0].tenNguoiTao}</span>
+              <span className="font-bold mr-2">{data[0].tenNguoiTao}</span>
               {checkRate(jobDetail.saoCongViec)}
             </div>
             <div className="flex my-3">
@@ -61,7 +69,9 @@ const ShowJobDetails = () => {
           </div>
         </div>
       </div>
-      <div>design comment</div>
+      <div>
+        <Comment/>
+      </div>
     </div>
   );
 };

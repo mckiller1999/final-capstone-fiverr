@@ -27,6 +27,7 @@ import { logoutActionApi } from "../../redux/reducer/userReducer";
 import "../../index.css";
 import "../../style.css";
 import { Tag } from "antd";
+import EmptyJobs from "../../components/EmptyJobs";
 
 type Props = {};
 
@@ -330,10 +331,11 @@ const Profile = (props: Props) => {
           </Container>
         </Grid>
         <Grid item>
-          <Container>
-            {bookedJobs?.map((job: HiredJobs) => {
-              return <ProfileCourses job={job} />;
-            })}
+        <Container sx={{width:800}}>
+            {(bookedJobs.length == 0) ? <EmptyJobs /> : (bookedJobs?.map((job: HiredJobs) => {
+              return <ProfileCourses key={job.id} job={job} />;
+            }))}
+
           </Container>
         </Grid>
       </Grid>
