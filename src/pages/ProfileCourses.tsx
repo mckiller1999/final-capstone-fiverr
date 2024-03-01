@@ -14,19 +14,10 @@ import { http } from "../util/config";
 
 type Props = {
 job?: HiredJobs
+deleteJobs: (id:number|null) => Promise<void>
 };
 
-export const ProfileCourses = ({job}: Props) => {
-
-
-const deleteJobs = async () => {
-  try {
-    const res =  await http.delete(`thue-cong-viec/${job?.id}`)
-    alert (res.data.message)
-  } catch (err) {
-    alert(err)
-  }
-}
+export const ProfileCourses = ({job, deleteJobs}: Props) => {
 
 
 
@@ -53,7 +44,7 @@ return (
       <CardActions className="justify-end mb-2">
         <Button disableElevation size="small" variant="contained" color="success" sx={{borderRadius: 8}}>View details</Button>
         <Button size="small" variant="outlined">Edit</Button>
-        <Button size="small" variant="outlined" color="error" onClick={()=>{deleteJobs()}}>Delete</Button>
+        <Button size="small" variant="outlined" color="error" onClick={()=>{deleteJobs((job?.id)? job?.id : null)}}>Delete</Button>
       </CardActions>
       </Box>
 
