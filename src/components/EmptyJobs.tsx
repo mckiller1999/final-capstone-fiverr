@@ -1,7 +1,9 @@
 import { Container, Typography } from "@mui/material";
 import React from "react";
 
-type Props = {};
+type Props = {
+    
+};
 
 const  EmptyJobs = (props: Props) => {
   return (

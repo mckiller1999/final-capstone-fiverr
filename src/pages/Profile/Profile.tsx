@@ -46,6 +46,16 @@ const Profile = (props: Props) => {
     }
   };
 
+    const deleteJobs = async (id:number|null) => {
+    try {
+      const res =  await http.delete(`thue-cong-viec/${id}`)
+      alert (res.data.message)
+      getApiBookedJobs()
+    } catch (err) {
+      alert(err)
+    }
+  }
+
   useEffect(() => {
     getApiBookedJobs();
   }, []);
@@ -333,7 +343,7 @@ const Profile = (props: Props) => {
         <Grid item>
         <Container sx={{width:800}}>
             {(bookedJobs.length == 0) ? <EmptyJobs /> : (bookedJobs?.map((job: HiredJobs) => {
-              return <ProfileCourses key={job.id} job={job} />;
+              return <ProfileCourses key={job.id} job={job} deleteJobs={deleteJobs} />;
             }))}
 
           </Container>
