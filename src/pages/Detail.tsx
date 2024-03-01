@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { ACCESS_TOKEN_CYBER } from "../util/config";
+import { ACCESS_TOKEN_CYBER, getStorageJson } from "../util/config";
 import { JobModelByName } from "./Search";
 import BreadcrumbComponent from "../components/Breadcrumb";
 
 import CardRentJob from "../components/CardRentJobs";
 import ShowJobDetails from "../components/ShowJobDetails";
+import Comment from "../components/Comment";
 
 type Props = {};
 
 const Detail = (props: Props) => {
-  const [productDetail, setProductDetail] = useState<JobModelByName[]>([]);
+  const [productDetail, setProductDetail] = useState<JobModelByName[]>(getStorageJson('dataJobDetail'));
   const param = useParams();
+console.log(productDetail);
 
   const getProductDetailApi = async () => {
     try {
@@ -31,22 +33,23 @@ const Detail = (props: Props) => {
 
   useEffect(() => {
     getProductDetailApi();
-  }, [param.id]);
-
-  console.log(productDetail);
+  }, [param]);
 
   return (
     <div>
       <div className="ml-5 mt-5">
-        <BreadcrumbComponent />
+        <BreadcrumbComponent prod={productDetail}/>
       </div>
       <div className="container mx-auto mt-3 flex">
         <div className="w-1/2">
-          <ShowJobDetails />
+          <ShowJobDetails prod={productDetail}/>
         </div>
         <div className="w-1/2 mx-auto">
-          <CardRentJob />
+          <CardRentJob prod={productDetail}/>
         </div>
+      </div>
+      <div>
+        <Comment prod={productDetail}/>
       </div>
     </div>
   );

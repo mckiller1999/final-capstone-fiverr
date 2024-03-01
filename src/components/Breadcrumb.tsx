@@ -1,11 +1,12 @@
 import { Breadcrumb } from 'antd';
 import { JobModelByName } from '../pages/Search';
-import { getStorageJson } from '../util/config';
 
-type Props = {};
+type Props = {
+    prod: JobModelByName[]
+};
 
-const BreadcrumbComponent = () => {
-    const data: JobModelByName[] = getStorageJson('dataBreadcrumb');
+const BreadcrumbComponent = ({ prod }: Props) => {
+    const data = prod;
     return (
         <div>
             <Breadcrumb
