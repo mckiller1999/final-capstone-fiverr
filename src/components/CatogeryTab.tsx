@@ -4,7 +4,7 @@ import { ACCESS_TOKEN_CYBER } from "../util/config";
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { JobCategoryModel } from '../models/JobDetail';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
@@ -58,8 +58,7 @@ const CatogeryTab = (props: Props) => {
         ;
     const onClick: MenuProps['onClick'] = (e) => {
         setCurrent(e.key);
-        console.log(e.key);
-        navigate(`/detail/${e.key}`)
+        navigate(`/job/${e.key}`)
     };
 
     return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;

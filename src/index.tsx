@@ -45,7 +45,9 @@ root.render(
             <Route path=":id" element={<Detail />} />
           </Route>
           <Route path="search" element={<Search />} />
-          <Route path="job" element={<Job />} />
+          <Route path="job">
+            <Route path=":id" element={<Job/>}/>
+          </Route>
           <Route path="*" element={<Navigate to={"/"} />}></Route>
         </Route>
         <Route path="admin" element={<AdminTemplate />}>
