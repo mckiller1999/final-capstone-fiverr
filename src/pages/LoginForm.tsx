@@ -21,7 +21,7 @@ import { Alert, Dialog, DialogContent, IconButton } from "@mui/material";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { closeLoginForm } from "../redux/reducer/loginFormReducer";
 import { openRegisterForm } from "../redux/reducer/registerFormReducer";
-import CheckIcon from '@mui/icons-material/Check';
+import CheckIcon from "@mui/icons-material/Check";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -54,90 +54,97 @@ const LoginForm = (props: Props) => {
     },
   });
 
-  const isToastOpen = useSelector((state: RootState) => state.toastMessage.isToastMessageOpen)
+  const isToastOpen = useSelector(
+    (state: RootState) => state.toastMessage.isToastMessageOpen
+  );
 
   return (
-    
     <DialogContent>
-      {isToastOpen ?             <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-      Registration is successful, you can now sign in.
-    </Alert> : null }
+      {isToastOpen ? (
+        <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+          Registration is successful, you can now sign in.
+        </Alert>
+      ) : null}
 
-          <div className="interText700">
-            Sign in
-          </div>
-          <Grid container className="mt-2" gap={1}>
-              <Grid item>
-                <div className="interBody mb-4">Don't have an account?</div>
-              </Grid>
-              <Grid item>
-              <Link
-  component="button"
-  className="interBody"
-  onClick={() => {
-    dispatch(openRegisterForm());
-  }}
->
-  Join us now
-</Link>
-              </Grid>
-            </Grid>
-          <Box
-            width="100%"
-            component="form"
-            onSubmit={signInFrm.handleSubmit}
-            noValidate
-            
+      <div className="interText700">Sign in</div>
+      <Grid container className="mt-2" gap={1}>
+        <Grid item>
+          <div className="interBody mb-4">Don't have an account?</div>
+        </Grid>
+        <Grid item>
+          <Link
+            component="button"
+            className="interBody"
+            onClick={() => {
+              dispatch(openRegisterForm());
+            }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={signInFrm.handleChange}
-              onBlur={signInFrm.handleBlur}
-              size="small"
-            />
-            <p className=" text-red-900">
-              {signInFrm.errors.email && signInFrm.errors.email}
-            </p>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={signInFrm.handleChange}
-              onBlur={signInFrm.handleBlur}
-              size="small"
-            />
-            <p className=" text-red-900">
-              {signInFrm.errors.password && signInFrm.errors.password}
-            </p>
+            Join us now
+          </Link>
+        </Grid>
+      </Grid>
+      <Box
+        width="100%"
+        component="form"
+        onSubmit={signInFrm.handleSubmit}
+        noValidate
+      >
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Email Address"
+          name="email"
+          autoComplete="email"
+          autoFocus
+          onChange={signInFrm.handleChange}
+          onBlur={signInFrm.handleBlur}
+          size="small"
+        />
+        <p className=" text-red-900">
+          {signInFrm.errors.email && signInFrm.errors.email}
+        </p>
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          onChange={signInFrm.handleChange}
+          onBlur={signInFrm.handleBlur}
+          size="small"
+        />
+        <p className=" text-red-900">
+          {signInFrm.errors.password && signInFrm.errors.password}
+        </p>
 
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              
-              type="submit"
-              color="success"
-              fullWidth
-              variant="contained"
-              sx={{width: 400, height: 50, alignSelf: "center", marginTop: 2, backgroundColor: `rgb(20 83 45)`, borderRadius: 8 }}
-              disableElevation
-            >
-              Sign in
-            </Button>
-          </Box>
+        <FormControlLabel
+          control={<Checkbox value="remember" color="primary" />}
+          label="Remember me"
+          sx={{display: "block"}}
+        />
+        <Button
+          type="submit"
+          color="success"
+          fullWidth
+          variant="contained"
+          sx={{
+            width: 400,
+            height: 50,
+            alignSelf: "center",
+            marginTop: 2,
+            backgroundColor: `rgb(20 83 45)`,
+            borderRadius: 8,
+          }}
+          disableElevation
+        >
+          Sign in
+        </Button>
+      </Box>
     </DialogContent>
   );
 };

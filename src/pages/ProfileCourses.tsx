@@ -11,6 +11,7 @@ import React from "react";
 import { HiredJobs } from "../models/BookedJobs";
 import axios from "axios";
 import { http } from "../util/config";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
 job?: HiredJobs
@@ -19,16 +20,18 @@ deleteJobs: (id:number|null) => Promise<void>
 
 export const ProfileCourses = ({job, deleteJobs}: Props) => {
 
-
+  const navigate = useNavigate();
+const handleClick = (id :number | null) => {
+  navigate(`/detail/${id}`);
+}
 
 return (
   <div>
-    <Card  elevation={0} sx={{ maxWidth: 800, display:"flex", direction:'row', gap: 2, border: "solid", borderColor:`rgb(226 232 240)`,borderRadius: 4   }} className="mt-4 pr-2" >
-      <div></div>
+    <Card  elevation={0} sx={{ maxWidth: 800, gap: 2, border: "solid", borderColor:`rgb(226 232 240)`,borderRadius: 4, display: { xs: "flex", md: "flex" }, flexDirection : { xs: 'column', md: 'row'} }} className="mt-4 pr-2" >
       <CardMedia
         component="img"
         alt="green iguana"
-        sx={{ width: 240, borderRadius: 6, backgroundSize: "cover"}}
+        sx={{ width: "100%", borderRadius: 6, backgroundSize: "cover"}}
         image={job?.congViec.hinhAnh}
         className="py-2"
       />
@@ -42,12 +45,11 @@ return (
         </Typography>
       </CardContent>
       <CardActions className="justify-end mb-2">
-        <Button disableElevation size="small" variant="contained" color="success" sx={{borderRadius: 8}}>View details</Button>
+        <Button disableElevation size="small" variant="contained" color="success" sx={{borderRadius: 8}} onClick={()=>{handleClick((job?.id)? job?.id : null)}}>View details</Button>
         <Button size="small" variant="outlined">Edit</Button>
         <Button size="small" variant="outlined" color="error" onClick={()=>{deleteJobs((job?.id)? job?.id : null)}}>Delete</Button>
       </CardActions>
       </Box>
-
     </Card>
   </div>
 );
