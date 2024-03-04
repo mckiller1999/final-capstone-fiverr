@@ -64,10 +64,10 @@ const Profile = (props: Props) => {
 
   return (
     <div>
-          <Box className="bg-gray-100 py-8" sx={{ md:{paddingX: 14}, sx: {paddingX: 8}}}>
+          <Box className="bg-gray-100 py-8" sx={{ md:{paddingX: 14}, sm: {paddingX: 8}}}>
       <UserProfileEdit />
       <Grid container columnGap={4} className="flex justify-center">
-        <Grid item md={3} xs={12}>
+        <Grid item md={3} sm={12}>
           <Container
             className="bg-white py-6"
             sx={{

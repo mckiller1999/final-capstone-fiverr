@@ -27,7 +27,7 @@ const handleClick = (id :number | null) => {
 
 return (
   <div>
-    <Card  elevation={0} sx={{ maxWidth: 800, gap: 2, border: "solid", borderColor:`rgb(226 232 240)`,borderRadius: 4, display: { xs: "flex", md: "flex" }, flexDirection : { xs: 'column', md: 'row'} }} className="mt-4 pr-2" >
+    <Card  elevation={0} sx={{ maxWidth: 800, gap: 2, border: "solid", borderColor:`rgb(226 232 240)`,borderRadius: 4, display: { sm: "flex", md: "flex" }, flexDirection : { sm: 'column', md: 'row'} }} className="mt-4 pr-2" >
       <CardMedia
         component="img"
         alt="green iguana"

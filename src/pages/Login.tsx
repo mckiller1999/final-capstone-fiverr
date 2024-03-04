@@ -60,9 +60,9 @@ const Login = (props: Props) => {
       >
         <Box
           style={{ height: 760 }}
-          sx={{ display: { xs: "flex", md: "flex" } }}
+          sx={{ display: { xs: "flex", sm: "flex", md: "flex" } }}
         >
-          <Box className="w-1/2" sx={{ display: { xs: "none", md: "block" } }}>
+          <Box className="w-1/2" sx={{ display: { xs: "none", sm: "none", md: "block" } }}>
             <div
               className="slider-container"
               style={{ width: "100%", height: "100%" }}
