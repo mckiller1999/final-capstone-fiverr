@@ -1,6 +1,3 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { ACCESS_TOKEN_CYBER } from "../util/config";
 import {
   Box,
   Button,
@@ -12,38 +9,21 @@ import {
 } from "@mui/material";
 import { PlayCircleFilled } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
-import { JobModelByName } from "./Search";
+import useAxios from "../hooks/useAxios";
+import URL from "../constants/url";
 
-type Props = {};
-
-const Job = (props: Props) => {
-  const [arrProduct, setArrProduct] = useState<JobModelByName[]>([]);
+const Job = () => {
   const param = useParams();
-  const getAllProdApi = async () => {
-    try {
-      const token = ACCESS_TOKEN_CYBER;
-      const res = await axios({
-        headers: {
-          tokenCybersoft: ` ${token}`,
-        },
-        url: `https://fiverrnew.cybersoft.edu.vn/api/cong-viec/lay-cong-viec-theo-chi-tiet-loai/${param.id}`,
-        method: "GET",
-      });
-      setArrProduct(res.data.content);
-    } catch (error) {
-      console.log("Lỗi khi truy xuất dữ liệu:", error);
-    }
-  };
 
-  useEffect(() => {
-    getAllProdApi();
-  }, [param.id]);
+  const { data, error, loading } = useAxios({ url: URL.JOB_BY_MENU(param?.id), method: 'get' })
+
+  console.log({ data, error, loading });
 
   return <div>
     <div className="container mx-auto mt-5">
       <div>
         <div className="bg-gray-600 py-5 text-center rounded-lg">
-          <h1>{arrProduct?.[0]?.tenLoaiCongViec}</h1>
+          <h1>{data?.[0]?.tenLoaiCongViec}</h1>
           <p>desc</p>
           <Button variant="outlined" color="success">
             <PlayCircleFilled fontSize='small' className="mr-1" />
@@ -51,10 +31,9 @@ const Job = (props: Props) => {
         </div>
       </div>
       <div>
-        {arrProduct.map((index) => {
-          return <div key={index.congViec.maChiTietLoaiCongViec}>
+        {data?.map((index: any) => {
+          return <div key={index?.id}>
             <Card elevation={0} sx={{ maxWidth: 800, display: "flex", direction: 'row', gap: 2, border: "solid", borderColor: `rgb(226 232 240)`, borderRadius: 4 }} className="mt-4 pr-2" >
-              <div></div>
               <CardMedia
                 component="img"
                 alt="green iguana"

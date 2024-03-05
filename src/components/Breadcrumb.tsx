@@ -1,25 +1,22 @@
 import { Breadcrumb } from 'antd';
-import { JobModelByName } from '../pages/Search';
+import { useSelector } from 'react-redux';
 
-type Props = {
-    prod: JobModelByName[]
-};
-
-const BreadcrumbComponent = ({ prod }: Props) => {
-    const data = prod;
+const BreadcrumbComponent = () => {
+    const jobDetail = useSelector((state:any)=>state?.jobDetailReducer?.jobDetail);
+    
     return (
         <div>
             <Breadcrumb
                 separator=">"
                 items={[
                     {
-                        title: `${data[0].tenLoaiCongViec}`,
+                        title: `${jobDetail[0].tenLoaiCongViec}`,
                     },
                     {
-                        title: `${data[0].tenNhomChiTietLoai}`,
+                        title: `${jobDetail[0].tenNhomChiTietLoai}`,
                     },
                     {
-                        title: `${data[0].tenChiTietLoai}`,
+                        title: `${jobDetail[0].tenChiTietLoai}`,
                     },
                 ]}
             />

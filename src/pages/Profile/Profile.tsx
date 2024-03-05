@@ -46,6 +46,16 @@ const Profile = (props: Props) => {
     }
   };
 
+    const deleteJobs = async (id:number|null) => {
+    try {
+      const res =  await http.delete(`thue-cong-viec/${id}`)
+      alert (res.data.message)
+      getApiBookedJobs()
+    } catch (err) {
+      alert(err)
+    }
+  }
+
   useEffect(() => {
     getApiBookedJobs();
   }, []);
@@ -53,10 +63,11 @@ const Profile = (props: Props) => {
   const dispatch: AppDispatch = useDispatch();
 
   return (
-    <div className="bg-gray-100 py-8 px-14 ">
+    <div>
+          <Box className="bg-gray-100 py-8" sx={{ md:{paddingX: 14}, sm: {paddingX: 8}}}>
       <UserProfileEdit />
       <Grid container columnGap={4} className="flex justify-center">
-        <Grid item xs={3}>
+        <Grid item md={3} sm={12}>
           <Container
             className="bg-white py-6"
             sx={{
@@ -147,6 +158,7 @@ const Profile = (props: Props) => {
               Log out
             </Button>
           </Container>
+          {/* Stack */}
           <Container className="bg-white mt-6 py-10" sx={{ borderRadius: 8 }}>
             <Stack
               direction="row"
@@ -331,15 +343,17 @@ const Profile = (props: Props) => {
           </Container>
         </Grid>
         <Grid item>
-        <Container sx={{width:800}}>
+        <Container sx={{width:"100%"}}>
             {(bookedJobs.length == 0) ? <EmptyJobs /> : (bookedJobs?.map((job: HiredJobs) => {
-              return <ProfileCourses key={job.id} job={job} />;
+              return <ProfileCourses key={job.id} job={job} deleteJobs={deleteJobs} />;
             }))}
 
           </Container>
         </Grid>
       </Grid>
+    </Box>
     </div>
+
   );
 };
 

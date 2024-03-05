@@ -37,18 +37,20 @@ const CatogeryTab = (props: Props) => {
         arrProductJob?.map((prod: JobCategoryModel) => (
             {
                 label: `${prod.tenLoaiCongViec}`,
-                key: `${prod.id}`,
+                key: `/${prod.id}`,
                 children:
                     prod.dsNhomChiTietLoai.map((item) => (
                         {
                             type: 'group',
                             label: `${item.tenNhom}`,
-                            key: `${item.id}`,
+                            key: `${prod.id}/${item.id}`,
+                            id: `${item.id}`,
                             children:
-                                prod.dsNhomChiTietLoai[0]?.dsChiTietLoai.map((item) => (
+                                prod.dsNhomChiTietLoai[0]?.dsChiTietLoai.map((detail) => (
                                     {
-                                        label: `${item.tenChiTiet}`,
-                                        key: `${item.id}`
+                                        label: `${detail.tenChiTiet}`,
+                                        key: `${prod.id}-${item.tenNhom}/${detail.id}`,
+                                        id: `${detail.id}`
                                     }
                                 )),
                         }
@@ -57,8 +59,8 @@ const CatogeryTab = (props: Props) => {
         ))
         ;
     const onClick: MenuProps['onClick'] = (e) => {
-        setCurrent(e.key);
-        navigate(`/job/${e.key}`)
+        setCurrent(e.key?.split('/')?.[1]);
+        navigate(`/job/${e.key?.split('/')?.[1]}`)
     };
 
     return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;
