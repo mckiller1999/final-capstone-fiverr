@@ -42,15 +42,15 @@ const Search = () => {
       method: "GET",
     });
     setArrProduct(res.data.content);
-    console.log(keywords);
-    console.log(arrProduct);
+    //console.log(keywords);
+    //console.log(arrProduct);
   };
   useEffect(() => {
     getProductByKeyword();
   }, [keywords]);
 
   return (
-    <div className="mt-5">
+    <div className=" mt-40">
       <form
         className="container mx-auto w-1/2"
         onSubmit={formSearch.handleSubmit}

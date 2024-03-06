@@ -14,9 +14,8 @@ import RegisterForm from "./RegisterForm";
 import React, { Component } from "react";
 import Slider from "react-slick";
 
-
-import "../index.css"
-import "../style.css"
+import "../index.css";
+import "../style.css";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -50,13 +49,15 @@ const Login = (props: Props) => {
 
   return (
     <div>
-
-
-      <Dialog open={isLoginFormOpen} maxWidth="lg" PaperProps={{
-        style: {
-          borderRadius: 16,
-        },
-      }}>
+      <Dialog
+        open={isLoginFormOpen}
+        maxWidth="lg"
+        PaperProps={{
+          style: {
+            borderRadius: 16,
+          },
+        }}
+      >
         <div className="flex flex-row" style={{ height: 760 }}>
           <Box className="w-1/2">
             <div
@@ -75,7 +76,10 @@ const Login = (props: Props) => {
                         height: "760px",
                       }}
                     >
-                      <div className="text-center pt-10 px-8 interText500">Hire <span className="fraunces500">top talent</span> and get your projects done</div>
+                      <div className="text-center pt-10 px-8 interText500">
+                        Hire <span className="fraunces500">top talent</span> and
+                        get your projects done
+                      </div>
                     </div>
                   </div>
 
@@ -89,10 +93,11 @@ const Login = (props: Props) => {
                         height: "760px",
                       }}
                     >
-                      <div className="text-white text-center pt-10 px-8 interText500" >Connect with skilled freelancers. Bring your projects <span className="fraunces500">to life.</span></div>
-
+                      <div className="text-white text-center pt-10 px-8 interText500">
+                        Connect with skilled freelancers. Bring your projects{" "}
+                        <span className="fraunces500">to life.</span>
+                      </div>
                     </div>
-                    
                   </div>
                   <div>
                     <div
@@ -104,8 +109,11 @@ const Login = (props: Props) => {
                         height: "760px",
                       }}
                     >
-                      <div className="text-white text-center pt-10 px-8 interText500">From design to coding, find the <span className="fraunces500">perfect freelancer</span> for you</div>
-
+                      <div className="text-white text-center pt-10 px-8 interText500">
+                        From design to coding, find the{" "}
+                        <span className="fraunces500">perfect freelancer</span>{" "}
+                        for you
+                      </div>
                     </div>
                   </div>
                 </Slider>
@@ -119,7 +127,6 @@ const Login = (props: Props) => {
               onClick={() => {
                 dispatch(closeLoginForm());
               }}
-              
             >
               <CloseOutlinedIcon />
             </IconButton>

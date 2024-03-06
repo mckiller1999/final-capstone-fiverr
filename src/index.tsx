@@ -26,6 +26,7 @@ import UserMangement from "./pages/Admin/UserMangement";
 import ProductMangement from "./pages/Admin/ProductMangement";
 import Mangement from "./pages/Admin/Mangement";
 import UserDetail from "./pages/Admin/UserDetail";
+import MangementDetail from "./pages/Admin/MangementDetail";
 
 export const history: any = createBrowserHistory();
 
@@ -45,6 +46,7 @@ root.render(
             <Route path=":id" element={<Detail />} />
           </Route>
           <Route path="search" element={<Search />} />
+
           <Route path="job" element={<Job />} />
           <Route path="*" element={<Navigate to={"/"} />}></Route>
         </Route>
@@ -55,6 +57,9 @@ root.render(
             <Route path=":id" element={<UserDetail />} />
           </Route>
           <Route path="orders" element={<Mangement />}></Route>
+          <Route path="job-detail">
+            <Route path=":id" element={<MangementDetail />} />
+          </Route>
           <Route path="product" element={<ProductMangement />}></Route>
           <Route path="*" element={<Navigate to={"/"} />}></Route>
         </Route>
