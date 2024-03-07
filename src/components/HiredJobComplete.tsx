@@ -5,10 +5,11 @@ import { history } from "./../index";
 import { notify } from "../constants/alert";
 import { useDispatch, useSelector } from "react-redux";
 import { setShowing } from "../redux/reducer/loadingReducer";
+import { Steps } from "antd";
 
 const HiredJobComplete = () => {
-const jobHired = useSelector((state:any)=>state?.jobDetailReducer?.jobHired);
-const dispatch = useDispatch();
+  const jobHired = useSelector((state: any) => state?.jobDetailReducer?.jobHired);
+  const dispatch = useDispatch();
   const completeHiredJob = async () => {
     if (localStorage.getItem(ACCESS_TOKEN)) {
       try {
@@ -40,16 +41,51 @@ const dispatch = useDispatch();
             <span className="font-bold text-blue-600 text-xl uppercase">Finish & Payment</span>
           </div>
           <hr className="my-3" />
-          <div className="ml-5 mt-5">
-            <h1 className="my-3">Hired Date: {jobHired?.ngayThue}</h1>
-            <h1>Price: {jobHired?.congViec.giaTien}</h1>
-          </div>
+          <div className="my-5"></div>
+          {(jobHired.hoanThanh === true) ? <Steps
+            direction="vertical"
+            current={3}
+            items={[
+              {
+                title: 'Finished',
+                description: `Hired ${jobHired.ngayThue}`,
+              },
+              {
+                title: 'Finished',
+                description: 'Job is working'
+              },
+              {
+                title: 'Finished',
+                description: 'Payment for job',
+              },
+            ]}
+          /> : <Steps
+            direction="vertical"
+            current={2}
+            items={[
+              {
+                title: 'Finished',
+                description: `Hired ${jobHired.ngayThue}`,
+              },
+              {
+                title: 'Finished',
+                description: 'Job is working'
+              },
+              {
+                title: 'In Progress',
+                description: 'Payment for job',
+              },
+            ]}
+          />
+          }
         </CardContent>
         <CardActions>
           <div className="mx-auto">
-            <Button variant="contained" onClick={completeHiredJob}>
+            {(jobHired.hoanThanh === true) ? <Button variant="contained" onClick={completeHiredJob} disabled>
               Complete
-            </Button>
+            </Button> : <Button variant="contained" onClick={completeHiredJob}>
+              Complete
+            </Button>}
           </div>
         </CardActions>
       </Card>

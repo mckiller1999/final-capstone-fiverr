@@ -14,8 +14,8 @@ import Login from "./pages/Login";
 // import Register from "./pages/Register";
 import Search from "./pages/Search";
 import Profile from "./pages/Profile/Profile";
-import Detail from "./pages/Detail";
-import Job from "./pages/Job";
+import Detail from "./pages/Jobs/Detail";
+import Job from "./pages/Jobs/Job";
 import HomeTemplate from "./templates/HomeTemplate";
 //redux
 import { store } from "./redux/store";
@@ -30,6 +30,7 @@ import Loading from "./components/Loading";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Details from "./pages/Profile/Details";
+import JobView from "./pages/Jobs/JobView";
 
 export const history: any = createBrowserHistory();
 
@@ -56,7 +57,11 @@ root.render(
           </Route>
           <Route path="search" element={<Search />} />
           <Route path="job">
-            <Route path=":id" element={<Job />} />
+            <Route path=":id" element={<Job />}>
+            </Route>
+          </Route>
+          <Route path="job-view" >
+            <Route path=":id" element={<JobView/>}/>
           </Route>
           <Route path="*" element={<Navigate to={"/"} />}></Route>
         </Route>

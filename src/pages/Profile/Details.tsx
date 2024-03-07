@@ -7,16 +7,14 @@ import BreadcrumbComponent from "../../components/Breadcrumb";
 import ShowJobDetails from "../../components/ShowJobDetails";
 import AddComment from "../../components/AddComment";
 import HiredJobComplete from "../../components/HiredJobComplete";
-import { useEffect } from "react";
 
 const Details = () => {
     const param = useParams();
     const dispatch = useDispatch();
     const { data } = useAxios({ url: URL.JOB_DETAIL(param?.id), method: 'get' });
     dispatch(setJobDetail(data));
-    const showComment = useSelector((state:any)=>state?.isLoadingReducer?.showing)
-    console.log(showComment);
-    
+    const showComment = useSelector((state: any) => state?.isLoadingReducer?.showing)
+
     return data ? (
         <div>
             <div className="ml-5 mt-5">
@@ -31,6 +29,7 @@ const Details = () => {
                 </div>
             </div>
             <div>
+                {(showComment === true) ? <AddComment /> : null}
             </div>
         </div>
     ) : null;
