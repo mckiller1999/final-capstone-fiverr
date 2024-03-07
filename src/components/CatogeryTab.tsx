@@ -37,7 +37,7 @@ const CatogeryTab = () => {
         ))
         ;
     const onClick: MenuProps['onClick'] = (e) => {
-        setCurrent(e.key?.split('/')?.[1]);
+        setCurrent(e.key);
         navigate(`/job-view/${e.key?.split('/')?.[1]}`)
     };
 

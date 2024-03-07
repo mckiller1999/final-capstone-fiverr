@@ -8,7 +8,6 @@ import { useParams } from 'react-router-dom'
 const JobView = () => {
     const param = useParams();
     const { data } = useAxios({ url: URL.JOB_SEARCH_ID(param.id), method: 'get' });
-    console.log(data);
     
     return ( data ? 
         <div>
