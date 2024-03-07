@@ -58,8 +58,14 @@ const Login = (props: Props) => {
           },
         }}
       >
-        <div className="flex flex-row" style={{ height: 760 }}>
-          <Box className="w-1/2">
+        <Box
+          style={{ height: 760 }}
+          sx={{ display: { xs: "flex", sm: "flex", md: "flex" } }}
+        >
+          <Box
+            className="w-1/2"
+            sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+          >
             <div
               className="slider-container"
               style={{ width: "100%", height: "100%" }}
@@ -134,7 +140,7 @@ const Login = (props: Props) => {
             {/* Login Form from here */}
             {showRegisterForm ? <RegisterForm /> : <LoginForm />}
           </DialogContent>
-        </div>
+        </Box>
       </Dialog>
     </div>
   );

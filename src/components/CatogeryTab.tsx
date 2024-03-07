@@ -4,7 +4,7 @@ import { ACCESS_TOKEN_CYBER } from "../util/config";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { JobCategoryModel } from "../models/JobDetail";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
@@ -36,22 +36,23 @@ const CatogeryTab = (props: Props) => {
   const items: MenuProps["items"] = arrProductJob?.map(
     (prod: JobCategoryModel) => ({
       label: `${prod.tenLoaiCongViec}`,
-      key: `${prod.id}`,
+      key: `/${prod.id}`,
       children: prod.dsNhomChiTietLoai.map((item) => ({
         type: "group",
         label: `${item.tenNhom}`,
-        key: `${item.id}`,
-        children: prod.dsNhomChiTietLoai[0]?.dsChiTietLoai.map((item) => ({
-          label: `${item.tenChiTiet}`,
-          key: `${item.id}`,
+        key: `${prod.id}/${item.id}`,
+        id: `${item.id}`,
+        children: prod.dsNhomChiTietLoai[0]?.dsChiTietLoai.map((detail) => ({
+          label: `${detail.tenChiTiet}`,
+          key: `${prod.id}-${item.tenNhom}/${detail.id}`,
+          id: `${detail.id}`,
         })),
       })),
     })
   );
   const onClick: MenuProps["onClick"] = (e) => {
-    setCurrent(e.key);
-    console.log(e.key);
-    navigate(`/detail/${e.key}`);
+    setCurrent(e.key?.split("/")?.[1]);
+    navigate(`/job/${e.key?.split("/")?.[1]}`);
   };
 
   return (

@@ -89,9 +89,8 @@ const Header = () => {
           <div className="">{renderLogin()}</div>
         </div>
       </nav>
-      <div style={{ backgroundColor: isTop ? "transparent" : "#fff" }}>
-        {!hideCategoryTab && <CatogeryTab />}
-      </div>
+
+      {!hideCategoryTab && <CatogeryTab />}
     </div>
   );
 };

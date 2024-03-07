@@ -26,6 +26,10 @@ import UserMangement from "./pages/Admin/UserMangement";
 import ProductMangement from "./pages/Admin/ProductMangement";
 import Mangement from "./pages/Admin/Mangement";
 import UserDetail from "./pages/Admin/UserDetail";
+import Loading from "./components/Loading";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Details from "./pages/Profile/Details";
 import MangementDetail from "./pages/Admin/MangementDetail";
 
 export const history: any = createBrowserHistory();
@@ -41,13 +45,17 @@ root.render(
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
           {/* <Route path="register" element={<Register />} /> */}
-          <Route path="profile" element={<Profile />} />
+          <Route path="profile" element={<Profile />}></Route>
+          <Route path="view-detail">
+            <Route path=":id" element={<Details />} />
+          </Route>
           <Route path="detail">
             <Route path=":id" element={<Detail />} />
           </Route>
           <Route path="search" element={<Search />} />
-
-          <Route path="job" element={<Job />} />
+          <Route path="job">
+            <Route path=":id" element={<Job />} />
+          </Route>
           <Route path="*" element={<Navigate to={"/"} />}></Route>
         </Route>
         <Route path="admin" element={<AdminTemplate />}>
@@ -65,5 +73,10 @@ root.render(
         </Route>
       </Routes>
     </HistoryRouter>
+
+    {/* Loading Page */}
+    <Loading />
+    {/* Toast Message */}
+    <ToastContainer />
   </Provider>
 );
