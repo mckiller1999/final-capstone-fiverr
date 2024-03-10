@@ -175,16 +175,8 @@ const Profile = (props: Props) => {
                   Upload avatar
                 </Button>
               </Upload>
-              <Typography variant="caption">(File must be smaller than 2MB)</Typography>
-              {/* <Button
-              variant="outlined"
-              color="success"
-              size="small"
-              startIcon={<LogoutIcon />}
-              // onClick={()=>{handleSubmitAvatar(avatar)}}
-            >
-              Submit
-            </Button> */}
+              <Typography variant="caption">(File cannot be larger than 2M)</Typography>
+
               <Divider></Divider>
               {/* Stack */}
               <Stack direction="row" spacing={1} className="flex my-2 ">
