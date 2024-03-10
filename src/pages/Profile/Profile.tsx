@@ -175,6 +175,7 @@ const Profile = (props: Props) => {
                   Upload avatar
                 </Button>
               </Upload>
+              <Typography variant="caption">(File must be smaller than 2MB)</Typography>
               {/* <Button
               variant="outlined"
               color="success"
