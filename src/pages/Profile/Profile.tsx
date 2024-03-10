@@ -45,7 +45,7 @@ const Profile = (props: Props) => {
       alert(err);
     }
   };
-
+// delete jobs
     const deleteJobs = async (id:number|null) => {
     try {
       const res =  await http.delete(`thue-cong-viec/${id}`)
