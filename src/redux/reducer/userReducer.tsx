@@ -22,6 +22,7 @@ import { closeRegisterForm } from "./registerFormReducer";
 import { setToastOpen } from "./toastMessage";
 
 export interface user {
+  avatar: "";
   email: "";
   name: "";
   id: "";
@@ -72,19 +73,6 @@ const initialState: UserReducerState = {
     skill: [],
     certification: [],
   },
-  // userEdit: {
-
-  //     email: "",
-  // name: "",
-  // id: "",
-  // password: "",
-  // phone: "",
-  // birthday: "",
-  // gender: true,
-  // role: "",
-  // skill: [],
-  // certification: []
-  //   }
 };
 
 const userReducer = createSlice({
@@ -227,10 +215,62 @@ export const updateUserProfile = (userData: user) => {
       );
       dispatch(updateProfileAction(updateProfileLatest.data.content));
       // dispatch(closeEditForm())
+      // calling login again
+      const newUserLogin: UserSignInForm = {
+        email: userData.email,
+        password: userData.password,
+      };
+
+      try {
+        const res = await axios({
+          headers: {
+            tokenCybersoft: ` ${token}`,
+          },
+          url: "https://fiverrnew.cybersoft.edu.vn/api/auth/signin",
+          method: "POST",
+          data: newUserLogin,
+        });
+
+        const action = loginAction(res.data.content);
+        dispatch(action);
+        //localstorge save
+        saveStorageJson(USERLOGIN, res.data.content);
+        saveStorage(ACCESS_TOKEN, res.data.content.token);
+      } catch (error) {
+        alert("Error during login:");
+        console.error("Error during login:", error);
+        // Xử lý lỗi ở đây nếu cần
+      }
+
+      // dispatch(singinActionApi(newUserLogin))
     } catch (err) {
       alert(err);
     } finally {
       dispatch(setBackDropClose());
+    }
+  };
+};
+
+export const reloadPage = (id: any) => {
+  return async (dispatch: AppDispatch) => {
+    console.log("testting");
+
+    const token = ACCESS_TOKEN_CYBER;
+    try {
+      const res = await axios({
+        headers: {
+          tokenCybersoft: ` ${token}`,
+        },
+        url: `https://fiverrnew.cybersoft.edu.vn/api/users/${id}`,
+        method: "GET",
+      });
+
+      const action = loginAction(res.data.content);
+      dispatch(action);
+    } catch (error) {
+      alert("Error during login:");
+      console.error("Error during login:", error);
+      // Xử lý lỗi ở đây nếu cần
     }
   };
 };

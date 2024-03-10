@@ -37,6 +37,9 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import utc from "dayjs/plugin/utc";
+import tz from "dayjs/plugin/timezone";
+import timezone from "dayjs/plugin/timezone";
 
 type Props = {};
 const ITEM_HEIGHT = 48;
@@ -51,14 +54,23 @@ const MenuProps = {
 };
 
 const UserProfileEdit = (props: Props) => {
+  // const isModalOpen = useSelector(
+  //   (state: RootState) => state.userEditFormReducer.isUserEditOpen
+  // );
+
+  dayjs.extend(utc);
+  dayjs.extend(tz);
+  dayjs.extend(timezone);
   const isModalOpen = useSelector(
     (state: RootState) => state.userEditFormReducer.isUserEditOpen
   );
+  const timeZone = dayjs.tz.guess();
 
   const { userLogin } = useSelector((state: RootState) => state.userReducer);
   const [birthday, setBirthDay] = React.useState<Dayjs | null>(
-    dayjs(userLogin?.user.birthday)
+    dayjs.utc(userLogin?.user.birthday).tz(timeZone)
   );
+  console.log("birthday", birthday);
   const [skillsList, setSkillsList] = React.useState<string[] | undefined>(
     userLogin?.user.skill
   );
@@ -106,6 +118,7 @@ const UserProfileEdit = (props: Props) => {
   };
 
   const initialValues: user = {
+    avatar: "",
     id: userLogin?.user.id || "",
     name: userLogin?.user.name || "",
     email: userLogin?.user.email || "",

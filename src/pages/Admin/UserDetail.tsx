@@ -101,6 +101,7 @@ const UserDetail = () => {
   const dispatch: Dispatch<any> = useDispatch();
 
   const initialValues: user = {
+    avatar: UserDetail?.avatar || "",
     id: UserDetail?.id || "",
     name: UserDetail?.name || "",
     email: UserDetail?.email || "",
