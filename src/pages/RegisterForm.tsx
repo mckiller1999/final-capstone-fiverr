@@ -7,6 +7,9 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import utc from 'dayjs/plugin/utc'
+import tz from 'dayjs/plugin/timezone'
+import timezone from 'dayjs/plugin/timezone'
 
 // import { http } from "../utils/Config";
 import { UserRegister, registerApiAction } from "../redux/reducer/userReducer";
@@ -82,11 +85,18 @@ export const certifications = [
 ];
 
 const RegisterForm = (props: Props) => {
+  dayjs.extend(utc)
+dayjs.extend(tz)
+dayjs.extend(timezone)
+
   const { isBackDropOpen } = useSelector(
     (state: RootState) => state.backdropReducer
   );
   const [skillsList, setSkillsList] = React.useState<string[]>([]);
   const [birthday, setBirthDay] = React.useState<Dayjs | null>(dayjs('2024-02-26'));
+
+  console.log("setbirthday", birthday)
+  
 
   const handleChangeSkill = (event: SelectChangeEvent<typeof skillsList>) => {
     const {
@@ -152,10 +162,11 @@ const RegisterForm = (props: Props) => {
 
     onSubmit: async (values) => {
       // alert(values);
-      // console.log("values,actions",values);
+      console.log("values,actions",values);
       dispatch(registerApiAction(values));
     },
   });
+  console.log("testbdayformik",formik.values.birthday)
 
   // render form and use formik & yup
   return (
@@ -294,6 +305,10 @@ const RegisterForm = (props: Props) => {
           // format="DD-MM-YYYY"
           value={birthday}
           onChange={(newValue) => {
+            console.log("newValue",newValue)
+            // const timeZone = dayjs.tz.guess()
+            // console.log("timeZone",timeZone)
+            // const sstBirthday =dayjs.utc(newValue).tz(timeZone)
             setBirthDay(newValue);
             formik.values.birthday = birthday?.toString() ? birthday?.toString() : ""
           }}

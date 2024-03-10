@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { RootState } from "../redux/store";
@@ -5,19 +6,35 @@ import { openLoginForm } from "../redux/reducer/loginFormReducer";
 import SearchTool from "./SearchTool";
 import CatogeryTab from "./CatogeryTab";
 
-type Props = {};
-
-const Header = (props: Props) => {
+const Header = () => {
+  const [isTop, setIsTop] = useState(true);
   const { userLogin } = useSelector((state: RootState) => state.userReducer);
   const dispatch = useDispatch();
+  const [hideCategoryTab, setHideCategoryTab] = useState(false);
 
-  console.log(userLogin);
+  const handleScroll = () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    setIsTop(scrollTop === 0);
+    if (scrollTop === 0) {
+      setHideCategoryTab(true);
+    } else {
+      setHideCategoryTab(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const renderLogin = () => {
     if (userLogin?.user) {
       return (
         <NavLink
           to="/profile"
-          className="block mt-4 lg:inline-block lg:mt-0 text-blue-gray-300 hover:text-white mr-4"
+          className="block mt-4 lg:inline-block text-2xl font-extrabold lg:mt-0 text-blue-gray-300 hover:text-blue-gray-100 mr-4"
         >
           {userLogin?.user.name}
         </NavLink>
@@ -26,7 +43,7 @@ const Header = (props: Props) => {
     return (
       <NavLink
         to="/login"
-        className="block mt-4 lg:inline-block lg:mt-0 text-blue-gray-300 hover:text-white mr-4"
+        className="block mt-4 lg:inline-block text-2xl font-extrabold lg:mt-0 text-blue-gray-300 hover:text-blue-gray-100 mr-4"
         onClick={() => {
           dispatch(openLoginForm());
         }}
@@ -37,14 +54,23 @@ const Header = (props: Props) => {
   };
 
   return (
-    <div>
-      <nav className="flex items-center justify-between flex-wrap bg-gray-800 p-6">
+    <div
+      style={{
+        backgroundColor: isTop ? "transparent" : "#fff",
+        position: "fixed",
+        zIndex: 110,
+        width: "100vw",
+        top: 0,
+        transition: "0.5s",
+      }}
+    >
+      <nav className="container flex items-center justify-between flex-wrap p-6">
         <div className="flex items-center flex-shrink-0  mr-6">
           <NavLink
             to={"/"}
             className="font-semibold text-xl tracking-tight text-blue-gray-200"
           >
-            NavBar
+            <img width={100} height={80} src="./img/logoFiver.png" alt="logo" />
           </NavLink>
         </div>
         <div className="block lg:hidden">
@@ -58,29 +84,13 @@ const Header = (props: Props) => {
             </svg>
           </button>
         </div>
-        <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-          <div className="text-sm lg:flex-grow">
-            <NavLink
-              to="/"
-              className="block mt-4 lg:inline-block lg:mt-0 text-blue-gray-300 hover:text-white mr-4"
-            >
-              main
-            </NavLink>
-            {renderLogin()}
-
-            <NavLink
-              to="/job"
-              className="block mt-4 lg:inline-block lg:mt-0 text-blue-gray-300 hover:text-white mr-4"
-            >
-              Job
-            </NavLink>
-          </div>
-          <div>
-            <SearchTool />
-          </div>
+        <div>{!hideCategoryTab && <SearchTool />}</div>
+        <div className="block lg:flex lg:items-center justify-between w-auto">
+          <div className="">{renderLogin()}</div>
         </div>
       </nav>
-      <CatogeryTab />
+
+      {!hideCategoryTab && <CatogeryTab />}
     </div>
   );
 };
