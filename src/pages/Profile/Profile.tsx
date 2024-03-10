@@ -36,7 +36,7 @@ type Props = {};
 
 const Profile = (props: Props) => {
   const { userLogin } = useSelector((state: RootState) => state.userReducer);
-  console.log("userLogin", userLogin);
+  // console.log("userLogin", userLogin);
   const [bookedJobs, setBookedJobs] = useState<HiredJobs[]>([]);
 
   const getApiBookedJobs = async () => {
@@ -61,9 +61,6 @@ const Profile = (props: Props) => {
 
   const [avatar, setAvatar] = useState<any>(userLogin?.user.avatar);
 
-  useEffect(() => {
-    getApiBookedJobs();
-  }, []);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -71,12 +68,17 @@ const Profile = (props: Props) => {
   const handleSubmitAvatar = async (data: any) => {
     try {
       const res = await http.post("users/upload-avatar", data);
-      console.log(res);
+      // console.log(res);
       setAvatar(res.data.content.avatar)
     } catch (err) {
       alert(err);
     }
   };
+
+
+  useEffect(() => {
+    getApiBookedJobs();
+  }, []);
 
   const imgProps: UploadProps = {
     name: "formFile",
@@ -87,15 +89,15 @@ const Profile = (props: Props) => {
     },
     onChange(info: any) {
       if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
+        // console.log(info.file, info.fileList);
       }
       if (info.file.status === "done" && info.file.originFileObj) {
         const formData = new FormData();
         formData.append("formFile", info.file.originFileObj);
         handleSubmitAvatar(formData);
         if (userLogin?.user !== undefined) {
-          console.log("usertest",userLogin?.user)
-          dispatch(reloadPage(userLogin?.user.id))
+          
+          dispatch(reloadPage(userLogin?.user.id, userLogin.tokenUser))
         }
         message.success(`${info.file.name} file uploaded successfully`);
         // setAvatar(info.file)
