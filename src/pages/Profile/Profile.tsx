@@ -94,7 +94,8 @@ const Profile = (props: Props) => {
         formData.append("formFile", info.file.originFileObj);
         handleSubmitAvatar(formData);
         if (userLogin?.user !== undefined) {
-          reloadPage(userLogin?.user)
+          console.log("usertest",userLogin?.user)
+          dispatch(reloadPage(userLogin?.user.id))
         }
         message.success(`${info.file.name} file uploaded successfully`);
         // setAvatar(info.file)

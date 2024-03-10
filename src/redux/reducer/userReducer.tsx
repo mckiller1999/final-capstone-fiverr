@@ -91,9 +91,9 @@ const userReducer = createSlice({
     updateProfileAction: (state, action: PayloadAction<user>) => {
       if (state.userLogin) {
         state.userLogin.user = action.payload;
-        }
-      },
+      }
     },
+  },
 });
 
 export const {
@@ -216,10 +216,10 @@ export const updateUserProfile = (userData: user) => {
       dispatch(updateProfileAction(updateProfileLatest.data.content));
       // dispatch(closeEditForm())
       // calling login again
-      const newUserLogin : UserSignInForm = {
+      const newUserLogin: UserSignInForm = {
         email: userData.email,
         password: userData.password,
-      }
+      };
 
       try {
         const res = await axios({
@@ -230,7 +230,7 @@ export const updateUserProfile = (userData: user) => {
           method: "POST",
           data: newUserLogin,
         });
-  
+
         const action = loginAction(res.data.content);
         dispatch(action);
         //localstorge save
@@ -242,10 +242,7 @@ export const updateUserProfile = (userData: user) => {
         // Xử lý lỗi ở đây nếu cần
       }
 
-
-
       // dispatch(singinActionApi(newUserLogin))
-      
     } catch (err) {
       alert(err);
     } finally {
@@ -254,30 +251,22 @@ export const updateUserProfile = (userData: user) => {
   };
 };
 
-
-export const reloadPage = (userData: user) => {
-  const newUserLogin : UserSignInForm = {
-    email: userData.email,
-    password: userData.password,
-  }
-
+export const reloadPage = (id: any) => {
   return async (dispatch: AppDispatch) => {
+    console.log("testting");
+
     const token = ACCESS_TOKEN_CYBER;
     try {
       const res = await axios({
         headers: {
           tokenCybersoft: ` ${token}`,
         },
-        url: "https://fiverrnew.cybersoft.edu.vn/api/auth/signin",
-        method: "POST",
-        data: newUserLogin,
+        url: `https://fiverrnew.cybersoft.edu.vn/api/users/${id}`,
+        method: "GET",
       });
 
       const action = loginAction(res.data.content);
       dispatch(action);
-      //localstorge save
-      saveStorageJson(USERLOGIN, res.data.content);
-      saveStorage(ACCESS_TOKEN, res.data.content.token);
     } catch (error) {
       alert("Error during login:");
       console.error("Error during login:", error);
