@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
-import useAxios from "../hooks/useAxios";
-import URL from "../constants/url";
+import useAxios from "../../hooks/useAxios";
+import URL from "../../constants/url";
 import { useDispatch } from "react-redux";
-import { setJobDetail } from "../redux/reducer/jobDetailReducer";
-import BreadcrumbComponent from "../components/Breadcrumb";
-import ShowJobDetails from "../components/ShowJobDetails";
-import CardRentJobs from "../components/CardRentJobs";
-import Comment from "../components/Comment";
+import { setJobDetail } from "../../redux/reducer/jobDetailReducer";
+import BreadcrumbComponent from "../../components/Breadcrumb";
+import ShowJobDetails from "../../components/ShowJobDetails";
+import CardRentJobs from "../../components/CardRentJobs";
+import Comment from "../../components/Comment";
 
 const Detail = () => {
   const param = useParams();

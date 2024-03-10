@@ -56,7 +56,7 @@ const AdminTemplate: React.FC = () => {
                 {
                   key: "3",
                   icon: <UploadOutlined />,
-                  label: "nav 3",
+                  label: <NavLink to="/admin/product">Jobs Categlory</NavLink>,
                 },
               ]}
             />

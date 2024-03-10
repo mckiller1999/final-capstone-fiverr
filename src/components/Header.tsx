@@ -70,7 +70,12 @@ const Header = () => {
             to={"/"}
             className="font-semibold text-xl tracking-tight text-blue-gray-200"
           >
-            <img width={100} height={80} src="./img/logoFiver.png" alt="logo" />
+            <img
+              src="/img/fiverr-2.svg"
+              alt="Fiverr Logo"
+              width={100}
+              height={80}
+            />
           </NavLink>
         </div>
         <div className="block lg:hidden">

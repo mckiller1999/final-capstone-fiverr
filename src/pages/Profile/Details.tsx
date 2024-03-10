@@ -7,7 +7,6 @@ import BreadcrumbComponent from "../../components/Breadcrumb";
 import ShowJobDetails from "../../components/ShowJobDetails";
 import AddComment from "../../components/AddComment";
 import HiredJobComplete from "../../components/HiredJobComplete";
-import { useEffect } from "react";
 import useAxios from "../../hooks/useAxios";
 
 const Details = () => {
@@ -18,7 +17,6 @@ const Details = () => {
   const showComment = useSelector(
     (state: any) => state?.isLoadingReducer?.showing
   );
-  //console.log(showComment);
 
   return data ? (
     <div>
@@ -33,7 +31,10 @@ const Details = () => {
           <HiredJobComplete />
         </div>
       </div>
-      <div></div>
+      <div>{showComment === true ? <AddComment /> : null}</div>
+      <div className="w-1/2 mx-auto">
+        <HiredJobComplete />
+      </div>
     </div>
   ) : null;
 };
