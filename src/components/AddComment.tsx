@@ -38,8 +38,6 @@ const AddComment = () => {
                         saoBinhLuan: vote,
                     },
                 });
-                console.log(res.data);
-
                 notify('success', 'Upload comment successfully');
             } catch (error) {
                 notify('error', 'Upload comment Fail')
@@ -54,17 +52,16 @@ const AddComment = () => {
         },
         onSubmit: values => {
             addComment(values)
-            console.log(vote);
         },
     });
 
     return (
-        <div className="w-full mx-auto">
+        <div className="w-3/4 mx-auto">
             <Card className="p-5" variant="outlined">
                 <form onSubmit={formik.handleSubmit} className="mt-3">
                     <div className="flex justify-center align-midle">
                         <div className="inline text-center">
-                            <Rate allowHalf onChange={(value) => { setVote(value) }} className="mb-4"/>
+                            <Rate onChange={(value) => { setVote(value) }} className="mb-4"/>
                             <InputFileUpload/>
                         </div>
                         <TextField

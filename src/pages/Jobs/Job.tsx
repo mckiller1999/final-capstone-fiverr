@@ -13,12 +13,11 @@ import ArrowRight from "@mui/icons-material/ArrowRight";
 const Job = () => {
   const param = useParams();
 
-  const { data, error, loading } = useAxios({ url: URL.JOB_BY_MENU(param?.id), method: 'get' });
-  console.log({ data, error, loading });
+  const { data } = useAxios({ url: URL.JOB_BY_MENU(param?.id), method: 'get' });
 
   return <div>
-    {data ? <div>
-      <div className="py-5 text-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 w-3/4 mx-auto mt-5" >
+    {data ? <div className="max-w-7xl mx-auto">
+      <div className="py-5 text-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 w-full mx-auto mt-5" >
         <h1 className="my-3 font-bold text-3xl text-white">{data[0].tenLoaiCongViec}</h1>
         <Button variant="contained" color="success">
           <PlayCircleFilled fontSize='small' className="mr-1" />

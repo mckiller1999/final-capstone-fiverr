@@ -42,8 +42,6 @@ const Search = () => {
       method: "GET",
     });
     setArrProduct(res.data.content);
-    //console.log(keywords);
-    //console.log(arrProduct);
   };
   useEffect(() => {
     getProductByKeyword();

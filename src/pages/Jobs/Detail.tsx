@@ -14,22 +14,22 @@ const Detail = () => {
   const { data } = useAxios({ url: URL.JOB_DETAIL(param?.id), method: 'get' });
   dispatch(setJobDetail(data));
 
-  return data? (
-    <div>
+  return data ? (
+    <div className="max-w-7xl mx-auto">
       <div className="ml-5 mt-5">
-                <BreadcrumbComponent />
-            </div>
-            <div className="container mx-auto mt-3 flex">
-                <div className="w-1/2">
-                    <ShowJobDetails />
-                </div>
-                <div className="w-1/2 mx-auto">
-                    <CardRentJobs />
-                </div>
-            </div>
-            <div>
-                <Comment />
-            </div>
+        <BreadcrumbComponent />
+      </div>
+      <div className="container mx-auto mt-3 flex">
+        <div className="w-1/2">
+          <ShowJobDetails />
+        </div>
+        <div className="w-1/2 mx-auto">
+          <CardRentJobs />
+        </div>
+      </div>
+      <div>
+        <Comment />
+      </div>
     </div>
   ) : null;
 };
