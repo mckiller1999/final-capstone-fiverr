@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 import { ACCESS_TOKEN_CYBER } from "../../util/config";
@@ -23,7 +23,7 @@ import {
 import { Dispatch } from "@reduxjs/toolkit";
 import { updateUserProfile, user } from "../../redux/reducer/userReducer";
 import { useFormik } from "formik";
-import * as yup from "yup";
+
 import { certifications, skills } from "../RegisterForm";
 import { useDispatch } from "react-redux";
 
@@ -40,7 +40,7 @@ const MenuProps = {
 
 const UserDetail = () => {
   const { id } = useParams<{ id?: string }>(); // Cho phép giá trị id có thể là undefined
-  const [UserDetail, setUserDetail] = useState<user | null>(null);
+  const [UserDetail] = useState<user | null>(null);
 
   const getUserById = async (userId: string) => {
     try {
@@ -101,6 +101,7 @@ const UserDetail = () => {
   const dispatch: Dispatch<any> = useDispatch();
 
   const initialValues: user = {
+    avatar: UserDetail?.avatar || "",
     id: UserDetail?.id || "",
     name: UserDetail?.name || "",
     email: UserDetail?.email || "",
@@ -135,29 +136,27 @@ const UserDetail = () => {
         <Stack direction="row" gap={2}>
           <TextField
             sx={{ width: "100%" }}
+            label="Name "
             className="form-control"
-            label="Name"
-            type="Name"
-            placeholder="Name"
-            name="Name"
+            type="text"
+            name="name"
+            required
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.name || UserDetail?.name}
-            required
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
+            value={formik.values.name || UserDetail?.name || ""}
+            error={formik.touched.name && Boolean(formik.errors.name)}
+            helperText={formik.touched.name && formik.errors.name}
           ></TextField>
           <TextField
             sx={{ width: "100%" }}
+            label="Phone Number"
             className="form-control"
-            label="Email address"
-            type="email"
-            placeholder="email@gmail.com"
+            type="text"
             name="email"
+            required
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.email || UserDetail?.email}
-            required
+            value={formik.values.email || UserDetail?.email || ""}
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
           ></TextField>
@@ -165,14 +164,14 @@ const UserDetail = () => {
         <Stack direction="row" gap={2}>
           <TextField
             sx={{ width: "100%" }}
-            label="Phone"
+            label="Phone Number"
             className="form-control"
-            type="tel"
+            type="text"
             name="phone"
             required
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.phone || UserDetail?.phone}
+            value={formik.values.phone || UserDetail?.phone || ""}
             error={formik.touched.phone && Boolean(formik.errors.phone)}
             helperText={formik.touched.phone && formik.errors.phone}
           ></TextField>
