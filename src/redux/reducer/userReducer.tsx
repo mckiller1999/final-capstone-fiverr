@@ -90,8 +90,8 @@ const userReducer = createSlice({
     },
     updateProfileAction: (state, action: PayloadAction<user>) => {
       if (state.userLogin) {
-        console.log("test")
         state.userLogin.user = action.payload;
+        console.log("test redux", state.userLogin.user)
       }
     },
   },
@@ -252,7 +252,7 @@ export const updateUserProfile = (userData: user) => {
   };
 };
 
-export const reloadPage = (id: any, userToken: "") => {
+export const reloadPage = (id: any) => {
   return async (dispatch: AppDispatch) => {
     console.log("testting");
 
@@ -266,14 +266,9 @@ export const reloadPage = (id: any, userToken: "") => {
         method: "GET",
       });
 
-      const newData : UserLogin = {
-        tokenUser: userToken,
-        user: res.data.content,
-      }
+      console.log("res",res.data.content)
+      dispatch(updateProfileAction(res.data.content))
 
-      const action = loginAction(newData);
-      // console.log("res.data.content",res.data.content)
-      dispatch(action);
     } catch (error) {
       alert("Error during login:");
       console.error("Error during login:", error);

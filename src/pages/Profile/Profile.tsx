@@ -36,7 +36,8 @@ type Props = {};
 
 const Profile = (props: Props) => {
   const { userLogin } = useSelector((state: RootState) => state.userReducer);
-  // console.log("userLogin", userLogin);
+  reloadPage(userLogin?.user.id)
+  console.log("userLogintest", userLogin);
   const [bookedJobs, setBookedJobs] = useState<HiredJobs[]>([]);
 
   const getApiBookedJobs = async () => {
@@ -97,7 +98,7 @@ const Profile = (props: Props) => {
         handleSubmitAvatar(formData);
         if (userLogin?.user !== undefined) {
           
-          dispatch(reloadPage(userLogin?.user.id, userLogin.tokenUser))
+          dispatch(reloadPage(userLogin?.user.id))
         }
         message.success(`${info.file.name} file uploaded successfully`);
         // setAvatar(info.file)
