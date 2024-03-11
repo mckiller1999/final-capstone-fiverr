@@ -41,7 +41,7 @@ const CatogeryTab = () => {
         navigate(`/job-view/${e.key?.split('/')?.[1]}`)
     };
 
-    return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;
+    return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} className="max-w-7xl mx-auto"/>;
 };
 
 export default CatogeryTab;

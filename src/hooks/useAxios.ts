@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { ACCESS_TOKEN_CYBER } from "../util/config";
+import { ACCESS_TOKEN, ACCESS_TOKEN_CYBER } from "../util/config";
 import { BASE_URL } from "../constants/config";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
@@ -14,7 +14,7 @@ type TUseAxios = {
   body?: any;
 };
 
-const useAxios = ({ url, method, body }: TUseAxios) => {
+const useAxios = ({ url, method, body}: TUseAxios) => {
   const [response, setResponse] = useState<any>(null);
   const [error, setError] = useState("");
   const [loading, setloading] = useState(true);
@@ -32,6 +32,7 @@ const useAxios = ({ url, method, body }: TUseAxios) => {
       {
         headers: {
           tokenCybersoft: ACCESS_TOKEN_CYBER,
+          token: ACCESS_TOKEN,
         },
         baseURL: BASE_URL,
       },
