@@ -36,7 +36,8 @@ type Props = {};
 
 const Profile = (props: Props) => {
   const { userLogin } = useSelector((state: RootState) => state.userReducer);
-  console.log("userLogin", userLogin);
+  reloadPage(userLogin?.user.id)
+  console.log("userLogintest", userLogin);
   const [bookedJobs, setBookedJobs] = useState<HiredJobs[]>([]);
 
   const getApiBookedJobs = async () => {
@@ -61,9 +62,6 @@ const Profile = (props: Props) => {
 
   const [avatar, setAvatar] = useState<any>(userLogin?.user.avatar);
 
-  useEffect(() => {
-    getApiBookedJobs();
-  }, []);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -71,12 +69,17 @@ const Profile = (props: Props) => {
   const handleSubmitAvatar = async (data: any) => {
     try {
       const res = await http.post("users/upload-avatar", data);
-      console.log(res);
+      // console.log(res);
       setAvatar(res.data.content.avatar)
     } catch (err) {
       alert(err);
     }
   };
+
+
+  useEffect(() => {
+    getApiBookedJobs();
+  }, []);
 
   const imgProps: UploadProps = {
     name: "formFile",
@@ -87,14 +90,14 @@ const Profile = (props: Props) => {
     },
     onChange(info: any) {
       if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
+        // console.log(info.file, info.fileList);
       }
       if (info.file.status === "done" && info.file.originFileObj) {
         const formData = new FormData();
         formData.append("formFile", info.file.originFileObj);
         handleSubmitAvatar(formData);
         if (userLogin?.user !== undefined) {
-          console.log("usertest",userLogin?.user)
+          
           dispatch(reloadPage(userLogin?.user.id))
         }
         message.success(`${info.file.name} file uploaded successfully`);
@@ -176,8 +179,16 @@ const Profile = (props: Props) => {
                   Upload avatar
                 </Button>
               </Upload>
-              <Typography variant="caption">(File cannot be larger than 2M)</Typography>
-
+              <Typography variant="caption">(File must be smaller than 2MB)</Typography>
+              {/* <Button
+              variant="outlined"
+              color="success"
+              size="small"
+              startIcon={<LogoutIcon />}
+              // onClick={()=>{handleSubmitAvatar(avatar)}}
+            >
+              Submit
+            </Button> */}
               <Divider></Divider>
               {/* Stack */}
               <Stack direction="row" spacing={1} className="flex my-2 ">
