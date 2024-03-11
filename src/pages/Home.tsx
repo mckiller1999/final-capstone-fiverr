@@ -1,29 +1,19 @@
-import React, { useEffect, useState } from "react";
-import ProductJob from "../components/ProductJob";
-import { JobModel } from "../models/Jobs";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { ACCESS_TOKEN_CYBER } from "../util/config";
-import {
-  DsChiTietLoai,
-  DsNhomChiTietLoai,
-  JobCategoryModel,
-} from "../models/JobDetail";
+import { JobCategoryModel } from "../models/JobDetail";
 import ProductJobCat from "./ProductJobCat";
 import Slider from "react-slick";
 import type { SearchProps } from "antd/es/input/Search";
 import { Carousel, Input } from "antd";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { CheckCircleOutlined } from "@mui/icons-material";
 
 type Props = {};
 const { Search } = Input;
 
 const Home = (props: Props) => {
-  const onChange = (currentSlide: number) => {
-    console.log(currentSlide);
-  };
-
   const navigate = useNavigate();
   const frm = useFormik({
     initialValues: {
@@ -35,20 +25,10 @@ const Home = (props: Props) => {
     },
   });
 
-  const frmType = useFormik({
-    initialValues: {
-      keyword: "",
-    },
-    onSubmit: ({ keyword }) => {
-      //history.push(`/search?keyword=${keyword}`)
-      navigate(`/search-cate?keyword=${keyword}`);
-    },
-  });
-
   const onSearch: SearchProps["onSearch"] = (value, _e, info) => {
     frm.handleSubmit();
   };
-  const [arrProduct, setArrProduct] = useState<JobModel[]>([]);
+
   const [arrProductJob, setArrProductJob] = useState<JobCategoryModel[]>([]);
   //console.log(arrProduct);
   let settings = {
@@ -59,22 +39,6 @@ const Home = (props: Props) => {
     autoplay: true,
   };
 
-  const getAllProdApi = async () => {
-    try {
-      const token = ACCESS_TOKEN_CYBER;
-      const res = await axios({
-        headers: {
-          tokenCybersoft: ` ${token}`,
-        },
-        url: "https://fiverrnew.cybersoft.edu.vn/api/cong-viec",
-        method: "GET",
-      });
-      //console.log(res);
-      setArrProduct(res.data.content);
-    } catch (error) {
-      console.log("Lỗi khi truy xuất dữ liệu:", error);
-    }
-  };
   const getAllProdCateApi = async () => {
     try {
       const token = ACCESS_TOKEN_CYBER;
@@ -92,13 +56,13 @@ const Home = (props: Props) => {
     }
   };
   useEffect(() => {
-    getAllProdApi();
     getAllProdCateApi();
   }, []);
 
   const handleCardClick = (key: string) => {
-    frmType.setFieldValue("keyword", key);
-    frmType.handleSubmit();
+    // setCurrent(key);
+    console.log(key);
+    navigate(`/job/${key}`);
   };
 
   return (
@@ -115,7 +79,7 @@ const Home = (props: Props) => {
           className=""
         >
           <h1 style={{ color: "#fff", fontSize: "45px", fontWeight: "bold" }}>
-            Find the right freelance
+            Find the right <span className="fraunces500">freelance</span>
             <br />
             service, right away
           </h1>
@@ -287,16 +251,6 @@ const Home = (props: Props) => {
             </Slider>
           </div>
         </div>
-
-        <div className="container">
-          <div className={`grid grid-rows-8 grid-flow-col gap-4`}>
-            {/* {arrProduct?.map((prod: JobModel) => (
-              <div className="col-2 m-5" key={prod.id}>
-                <ProductJob prod={prod} />
-              </div>
-            ))} */}
-          </div>
-        </div>
       </div>
       <div
         className="container bg-blue-50 flex justify-center items-center "
@@ -360,31 +314,181 @@ const Home = (props: Props) => {
           </div>
         </div>
       </div>
+      <Carousel effect="fade" className="container">
+        <div className="container">
+          <div className="p-20 container flex flex-row items-center justify-between">
+            <div className="p-10">
+              <video controls width={1100}>
+                <source src="./img/demo2.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div>
+              <div className="flex items-center text-gray-400">
+                <h3 className=" text-3xl font-semibold">
+                  Kay Kim, Co-Founder{" "}
+                </h3>
+                <span className="testimonial-logo ">
+                  <img
+                    alt="Company logo"
+                    src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/rooted-logo-x2.7da3bc9.png"
+                    loading="lazy"
+                  />
+                </span>
+              </div>
 
-      <div className="p-20 container flex items-center justify-between">
-        <div className="p-10">
-          <video controls width={1100}>
-            <source src="./img/demo2.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        <div>
-          <div className="flex items-center text-gray-400">
-            <h3 className=" text-3xl font-semibold">Kay Kim, Co-Founder </h3>
-            <span className="testimonial-logo ">
-              <img
-                alt="Company logo"
-                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/rooted-logo-x2.7da3bc9.png"
-                loading="lazy"
-              />
-            </span>
+              <p className=" w-fit text-xl">
+                "It's extremely exciting that Fiverr has freelancers from all
+                over the world — it broadens the talent pool. One of the best
+                things about Fiverr is that while we're sleeping, someone's
+                working."
+              </p>
+            </div>
           </div>
+        </div>
+        <div className="container">
+          <div className="p-20 container flex flex-row items-center justify-between">
+            <div className="p-10">
+              <video controls width={1100}>
+                <source src="./img/demo4.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div>
+              <div className="flex items-center text-gray-400">
+                <h3 className=" text-3xl font-semibold">
+                  Brighid Gannon (DNP, PMHNP-BC), Co-Founder{" "}
+                </h3>
+                <span className="testimonial-logo ">
+                  <img
+                    alt="Company logo"
+                    src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/lavender-logo-x2.3fff9e7.png"
+                    loading="lazy"
+                  />
+                </span>
+              </div>
 
-          <p className=" w-fit text-xl">
-            "It's extremely exciting that Fiverr has freelancers from all over
-            the world — it broadens the talent pool. One of the best things
-            about Fiverr is that while we're sleeping, someone's working."
-          </p>
+              <p className=" w-fit text-xl">
+                "We used Fiverr for SEO, our logo, website, copy, animated
+                videos — literally everything. It was like working with a human
+                right next to you versus being across the world."
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="container">
+          <div className="p-20 container flex flex-row items-center justify-between">
+            <div className="p-10">
+              <video controls width={1100}>
+                <source src="./img/demo3.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div>
+              <div className="flex items-center text-gray-400">
+                <h3 className=" text-3xl font-semibold">
+                  Caitlin Tormey, Chief Commercial Officer
+                </h3>
+                <span className="testimonial-logo ">
+                  <img
+                    alt="Company logo"
+                    src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/naadam-logo-x2.a79031d.png"
+                    loading="lazy"
+                  />
+                </span>
+              </div>
+
+              <p className=" w-fit text-xl">
+                "We've used Fiverr for Shopify web development, graphic design,
+                and backend web development. Working with Fiverr makes my job a
+                little easier every day."
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="container">
+          <div className="p-20 container flex flex-row items-center justify-between">
+            <div className="p-10">
+              <video controls width={1100}>
+                <source src="./img/demo5.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div>
+              <div className="flex items-center text-gray-400">
+                <h3 className=" text-3xl font-semibold">
+                  Tim and Dan Joo, Co-Founders{" "}
+                </h3>
+                <span className="testimonial-logo ">
+                  <img
+                    alt="Company logo"
+                    src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/haerfest-logo-x2.934ab63.png"
+                    loading="lazy"
+                  />
+                </span>
+              </div>
+
+              <p className=" w-fit text-xl">
+                "When you want to create a business bigger than yourself, you
+                need a lot of help. That's what Fiverr does."
+              </p>
+            </div>
+          </div>
+        </div>
+      </Carousel>
+
+      <div className="my-20  ">
+        <h3 className="my-20 font-bold text-4xl">You need it, we've got it</h3>
+        <div className="container flex justify-center">
+          <div className={`container grid grid-col-8 grid-flow-col gap-40`}>
+            <NavLink to="/job/1">
+              <img
+                width={50}
+                height={50}
+                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/graphics-design.91dfe44.svg"
+                alt=""
+              />
+              <p>Graphics & Design</p>
+            </NavLink>
+            <NavLink to="/job/2">
+              <img
+                width={50}
+                height={50}
+                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/online-marketing.a3e9794.svg"
+                alt=""
+              />
+              <p>Digital Marketing</p>
+            </NavLink>
+            <NavLink to={"/job/3"}>
+              <img
+                width={50}
+                height={50}
+                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/writing-translation.a787f2f.svg"
+                alt=""
+              />
+              <p>Writing & Translation</p>
+            </NavLink>
+
+            <NavLink to={"/job/4"}>
+              <img
+                width={50}
+                height={50}
+                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/video-animation.1356999.svg"
+                alt=""
+              />
+              <p>Video & Animation</p>
+            </NavLink>
+
+            <NavLink to={"/job/5"}>
+              <img
+                width={50}
+                height={50}
+                src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/music-audio.ede4c90.svg"
+                alt=""
+              />
+              <p>Music & Audio</p>
+            </NavLink>
+          </div>
         </div>
       </div>
     </div>

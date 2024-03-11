@@ -40,7 +40,7 @@ const ProductDetail = () => {
     }
   }, [id]);
 
-  if (!job) return <div>Loading...</div>; // Hiển thị "Loading..." trong quá trình tải dữ liệu
+  if (!job) return <div>Loading...</div>;
 
   return (
     <div>

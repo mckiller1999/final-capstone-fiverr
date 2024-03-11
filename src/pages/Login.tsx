@@ -16,6 +16,7 @@ import Slider from "react-slick";
 
 import "../index.css";
 import "../style.css";
+import { useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -37,6 +38,7 @@ export interface UserSignInForm {
 }
 
 const Login = (props: Props) => {
+  const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 
   const isLoginFormOpen = useSelector(
@@ -132,6 +134,7 @@ const Login = (props: Props) => {
               color="default"
               onClick={() => {
                 dispatch(closeLoginForm());
+                navigate(`/`);
               }}
             >
               <CloseOutlinedIcon />
