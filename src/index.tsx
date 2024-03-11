@@ -28,9 +28,10 @@ import Mangement from "./pages/Admin/Mangement";
 import UserDetail from "./pages/Admin/UserDetail";
 import Loading from "./components/Loading";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import Details from "./pages/Profile/Details";
 import JobView from "./pages/Jobs/JobView";
+import MangementDetail from "./pages/Admin/MangementDetail";
 
 export const history: any = createBrowserHistory();
 
@@ -39,29 +40,25 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-
     <HistoryRouter history={history}>
       <Routes>
         <Route path="" element={<HomeTemplate />}>
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
           {/* <Route path="register" element={<Register />} /> */}
-          <Route path="profile" element={<Profile />}>
-            
-          </Route>
+          <Route path="profile" element={<Profile />}></Route>
           <Route path="view-detail">
-              <Route path=":id" element={<Details/>}/>
-            </Route>
+            <Route path=":id" element={<Details />} />
+          </Route>
           <Route path="detail">
             <Route path=":id" element={<Detail />} />
           </Route>
           <Route path="search" element={<Search />} />
           <Route path="job">
-            <Route path=":id" element={<Job />}>
-            </Route>
+            <Route path=":id" element={<Job />}></Route>
           </Route>
-          <Route path="job-view" >
-            <Route path=":id" element={<JobView/>}/>
+          <Route path="job-view">
+            <Route path=":id" element={<JobView />} />
           </Route>
           <Route path="*" element={<Navigate to={"/"} />}></Route>
         </Route>
@@ -72,6 +69,9 @@ root.render(
             <Route path=":id" element={<UserDetail />} />
           </Route>
           <Route path="orders" element={<Mangement />}></Route>
+          <Route path="job-detail">
+            <Route path=":id" element={<MangementDetail />} />
+          </Route>
           <Route path="product" element={<ProductMangement />}></Route>
           <Route path="*" element={<Navigate to={"/"} />}></Route>
         </Route>

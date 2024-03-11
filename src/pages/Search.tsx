@@ -48,7 +48,7 @@ const Search = () => {
   }, [keywords]);
 
   return (
-    <div className="mt-5 max-w-7xl mx-auto">
+    <div className=" mt-40">
       <form
         className="container mx-auto w-1/2"
         onSubmit={formSearch.handleSubmit}

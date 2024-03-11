@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Space, Table } from "antd";
+import { Space, Table, Input } from "antd";
 import type { TableProps } from "antd";
 import axios from "axios";
 import { ACCESS_TOKEN_CYBER } from "../../util/config";
@@ -12,6 +12,8 @@ interface DataType {
   email: string;
   date: string;
 }
+
+const { Search } = Input;
 
 const columns: TableProps<DataType>["columns"] = [
   {
@@ -57,6 +59,7 @@ const columns: TableProps<DataType>["columns"] = [
 
 const UserMangement: React.FC = () => {
   const [users, setUsers] = useState<DataType[]>([]); // Cập nhật kiểu dữ liệu cho users
+  const [searchValue, setSearchValue] = useState<string>(""); // Thêm state mới để lưu trữ giá trị ô tìm kiếm
 
   const getUsersAPI = async () => {
     try {
@@ -78,11 +81,30 @@ const UserMangement: React.FC = () => {
     getUsersAPI();
   }, []);
 
+  // Xử lý sự kiện tìm kiếm
+  const handleSearch = (value: string) => {
+    setSearchValue(value);
+  };
+
+  // Lọc người dùng theo từ khóa tìm kiếm
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
   return (
-    <Table
-      columns={columns}
-      dataSource={users.map((user) => ({ ...user, key: user.id }))} // Thêm key cho mỗi user
-    />
+    <div>
+      <Search
+        placeholder="input search text"
+        allowClear
+        enterButton="Search"
+        size="large"
+        onSearch={handleSearch} // Gọi hàm handleSearch khi người dùng nhấn nút tìm kiếm hoặc nhấn enter
+      />
+      <Table
+        columns={columns}
+        dataSource={filteredUsers.map((user) => ({ ...user, key: user.id }))}
+      />
+    </div>
   );
 };
 
