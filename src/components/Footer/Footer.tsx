@@ -214,15 +214,15 @@ const Footer = () => {
 
     const socialIcons = [
         {
-            to: "https://twitter.com/AsiughuE",
+            to: "https://www.twitter.com/",
             icon: <Twitter/>,
         },
         {
-            to: "https://web.facebook.com/?_rdc=1&_rdr",
+            to: "https://www.facebook.com/",
             icon: <Facebook/>,
         },
         {
-            to: "https://www.linkedin.com/in/efe-gift-109120241/",
+            to: "https://www.linkedin.com/",
             icon: <LinkedIn/>,
         },
         {
