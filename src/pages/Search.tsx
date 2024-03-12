@@ -48,9 +48,9 @@ const Search = () => {
   }, [keywords]);
 
   return (
-    <div className=" mt-40">
+    <div className="mt-5 mx-auto max-w-7xl">
       <form
-        className="container mx-auto w-1/2"
+        className="container mx-auto w-3/4 lg:w-1/2 "
         onSubmit={formSearch.handleSubmit}
       >
         <label
@@ -102,7 +102,7 @@ const Search = () => {
         </h3>
       </div>
       <div className="container mx-auto my-3">
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 md:grid-cols-3">
           {arrProduct?.map((prod: JobModelByName) => (
             <div className="m-5" key={prod.id}>
               <CardJob prod={prod} />

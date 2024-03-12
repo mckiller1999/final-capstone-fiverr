@@ -49,7 +49,7 @@ const Comment = () => {
       <div>
         {(localStorage.getItem(ACCESS_TOKEN)) ? <AddComment /> : null}
       </div>
-      <div className='w-3/4 mx-auto my-5'>
+      <div className='w-11/12 lg:w-3/4 mx-auto my-5'>
         {data ? <List
           itemLayout="vertical"
           size="large"
@@ -79,7 +79,7 @@ const Comment = () => {
                 // </span>
               ]}
               extra={
-                <Rate disabled defaultValue={item.rate} />
+                <Rate disabled defaultValue={item.rate} className='text-sm md:text-base'/>
               }
             >
               <List.Item.Meta

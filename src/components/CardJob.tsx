@@ -8,7 +8,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import Rating from '@mui/material/Rating';
 import { useNavigate } from 'react-router-dom';
 import { JobModelByName } from '../pages/Search';
 import { useEffect, useState } from 'react';
@@ -17,6 +16,7 @@ import axios from 'axios';
 import Box from '@mui/material/Box';
 import { JobModel } from '../models/Jobs';
 import { CardActionArea } from '@mui/material';
+import { Rate } from 'antd';
 
 type Props = {
     prod?: JobModelByName;
@@ -77,10 +77,10 @@ const CardJob = ({ prod, data }: Props) => {
                         {prod?.congViec.tenCongViec}
                     </Typography>
                     <div className='mt-3 flex'>
-                        <Box>
-                            <Rating name="half-rating-read" value={prod?.congViec.saoCongViec} precision={0.5} readOnly getLabelText={() => 'star'} />
-                        </Box>
-                        <span className='ml-2 text-gray-600'>({prod?.congViec.danhGia})</span>
+                        <Rate disabled value={prod?.congViec.saoCongViec} className='text-sm sm:text-lg my-0 py-0' />
+                        <div>
+                        <span className='ml-2 text-gray-600 text-sm algin-middle hidden xl:inline-block'>({prod?.congViec.danhGia})</span>
+                        </div>
                     </div>
                 </CardContent>
             </CardActionArea>

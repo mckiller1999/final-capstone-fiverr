@@ -56,16 +56,16 @@ const AddComment = () => {
     });
 
     return (
-        <div className="w-3/4 mx-auto">
-            <Card className="p-5" variant="outlined">
-                <form onSubmit={formik.handleSubmit} className="mt-3">
+        <div className="w-11/12 mx-auto">
+            <Card className="p-3" variant="outlined">
+                <form onSubmit={formik.handleSubmit}>
                     <div className="flex justify-center align-midle">
-                        <div className="inline text-center">
+                        <div className="text-center">
                             <Rate onChange={(value) => { setVote(value) }} className="mb-4"/>
                             <InputFileUpload/>
                         </div>
                         <TextField
-                            sx={{ width: "75%" }}
+                            sx={{ width: "80%" }}
                             className="form-control"
                             label="Comment"
                             type="text"
@@ -81,7 +81,7 @@ const AddComment = () => {
                             rows={2}
                         ></TextField>
                     </div>
-                    <div className="mx-5 pr-5 mt-5 text-end">
+                    <div className="mx-5 pr-5 mt-2 text-end">
                         <Button variant="contained" type="submit" endIcon={<SendIcon />}>
                             Send
                         </Button>

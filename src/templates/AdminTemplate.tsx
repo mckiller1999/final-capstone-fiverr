@@ -11,7 +11,7 @@ import { NavLink, Navigate, Outlet } from "react-router-dom";
 import * as jwt from "jwt-decode";
 import { useSelector } from "react-redux";
 import { ACCESS_TOKEN } from "../util/config";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer/Footer";
 
 const { Header, Sider, Content } = Layout;
 

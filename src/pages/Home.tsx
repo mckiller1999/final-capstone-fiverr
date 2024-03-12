@@ -110,7 +110,7 @@ const Home = (props: Props) => {
             position: "absolute",
             top: 200,
             left: 50,
-            zIndex: 100,
+            zIndex: 10,
           }}
           className=""
         >

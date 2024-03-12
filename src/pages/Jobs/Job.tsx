@@ -17,13 +17,13 @@ const Job = () => {
 
   return <div>
     {data ? <div className="max-w-7xl mx-auto">
-      <div className="py-5 text-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 w-full mx-auto mt-5" >
+      <div className="py-5 text-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 w-11/12 mx-auto mt-5" >
         <h1 className="my-3 font-bold text-3xl text-white">{data[0].tenLoaiCongViec}</h1>
         <Button variant="contained" color="success">
           <PlayCircleFilled fontSize='small' className="mr-1" />
           How Fiverr Works</Button>
       </div>
-      <div>
+      <div className="my-3">
         <Tabs
           defaultActiveKey="1"
           centered
@@ -32,13 +32,13 @@ const Job = () => {
               label: <span className="text-lg">{index.tenNhom}</span>,
               key: index.id,
               children: <div className="mx-auto">
-                <Card elevation={0} sx={{ maxWidth: 800, gap: 2, border: "solid", borderColor: `rgb(226 232 240)`, borderRadius: 4, display: { sm: "flex", md: "flex" }, flexDirection: { sm: 'column', md: 'row' } }} className="mt-4 mx-auto p-2" >
+                <Card elevation={0} sx={{ maxWidth: 800, gap: 2, border: "solid", borderColor: `rgb(226 232 240)`, borderRadius: 4, display: { sm: "flex", md: "flex" }, flexDirection: { sm: 'column', md: 'row' } }} className="my-3 mx-auto p-2 w-11/12" >
                   <CardMedia
                     component="img"
                     alt="green iguana"
-                    sx={{ width: "60%", borderRadius: 8, backgroundSize: "center" }}
+                    sx={{ width: { sm:"90%", md:"60%" }, borderRadius: 8, backgroundSize: "center" }}
                     image={index.hinhAnh}
-                    className="p-2"
+                    className="p-2 mx-auto"
                   />
                   <Box>
                     <CardContent>
