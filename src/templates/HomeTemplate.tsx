@@ -14,7 +14,9 @@ const HomeTemplate = (props: Props) => {
         <section style={{ minHeight: 550 }}>
           <Outlet />
         </section>
-        <Footer />
+        <div className="container max-w-full">
+          <Footer />
+        </div>
       </div>
     </div>
   );

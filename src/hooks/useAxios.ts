@@ -14,7 +14,7 @@ type TUseAxios = {
   body?: any;
 };
 
-const useAxios = ({ url, method, body}: TUseAxios) => {
+const useAxios = ({ url, method, body }: TUseAxios) => {
   const [response, setResponse] = useState<any>(null);
   const [error, setError] = useState("");
   const [loading, setloading] = useState(true);

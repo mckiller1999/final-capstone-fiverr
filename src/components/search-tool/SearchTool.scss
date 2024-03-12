@@ -1,0 +1,9 @@
+#default-search {
+  width: 50rem;
+}
+
+@media only screen and (max-width: 768px) {
+  #default-search {
+    width: 15rem;
+  }
+}
