@@ -32,12 +32,18 @@ import "react-toastify/dist/ReactToastify.css";
 import Details from "./pages/Profile/Details";
 import JobView from "./pages/Jobs/JobView";
 import MangementDetail from "./pages/Admin/MangementDetail";
+import CreateJob from "./pages/CreateJob";
+import { JobModel } from "./models/Jobs";
 
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+const handleCreateJob = (newJob: JobModel) => {
+  // Xử lý logic khi tạo công việc mới ở đây
+  console.log("New job:", newJob);
+};
 root.render(
   <Provider store={store}>
     <HistoryRouter history={history}>
@@ -47,6 +53,11 @@ root.render(
           <Route path="login" element={<Login />} />
           {/* <Route path="register" element={<Register />} /> */}
           <Route path="profile" element={<Profile />}></Route>
+          <Route
+            path="create-job"
+            element={<CreateJob onCreateJob={handleCreateJob} />}
+          ></Route>
+
           <Route path="view-detail">
             <Route path=":id" element={<Details />} />
           </Route>

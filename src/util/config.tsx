@@ -6,6 +6,10 @@ export const USERLOGIN = "userLogin";
 
 export const ACCESS_TOKEN = "tokenUser";
 
+export const getTokenFromLocalStorage = () => {
+  return localStorage.getItem(ACCESS_TOKEN);
+};
+
 export const { saveStorage, getStorage, saveStorageJson, getStorageJson } = {
   saveStorage: (storeName: string, data: string): void => {
     localStorage.setItem(storeName, data);

@@ -1,30 +1,23 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
+
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Formik, useFormik } from "formik";
+
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import * as yup from "yup";
 import { singinActionApi } from "../redux/reducer/userReducer";
-import { Alert, Dialog, DialogContent, IconButton } from "@mui/material";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { closeLoginForm } from "../redux/reducer/loginFormReducer";
+import { Alert, DialogContent } from "@mui/material";
+
 import { openRegisterForm } from "../redux/reducer/registerFormReducer";
 import CheckIcon from "@mui/icons-material/Check";
+import { useFormik } from "formik";
 
 // TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
 
 type Props = {};
 
@@ -125,7 +118,7 @@ const LoginForm = (props: Props) => {
         <FormControlLabel
           control={<Checkbox value="remember" color="primary" />}
           label="Remember me"
-          sx={{display: "block"}}
+          sx={{ display: "block" }}
         />
         <Button
           type="submit"

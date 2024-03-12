@@ -45,7 +45,7 @@ const CardRentJobs = () => {
   const text = jobDetail[0].congViec.moTaNgan.split('\r\n');
 
   return (
-    <div className="w-3/4 mx-auto mr-0">
+    <div className="w-3/4 mx-auto md:mr-0">
       <Card>
         <CardContent>
           <div className="mx-auto text-center">

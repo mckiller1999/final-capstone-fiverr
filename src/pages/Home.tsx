@@ -42,7 +42,7 @@ const Home = (props: Props) => {
   };
   let settings2 = {
     infinite: true,
-    speed: 500,
+    speed: 550,
     slidesToShow: 2,
     slidesToScroll: 1,
     autoplay: true,
@@ -95,7 +95,7 @@ const Home = (props: Props) => {
             position: "absolute",
             top: 200,
             left: 50,
-            zIndex: 100,
+            zIndex: 10,
           }}
           className=""
         >
@@ -223,63 +223,55 @@ const Home = (props: Props) => {
         <div className=" flex">
           <img
             src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/meta.12b5e5c.png"
-            width={50}
-            height={50}
+            width={30}
+            height={30}
             className="mx-5"
             alt=""
           />
           <img
             src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/google.61e78c8.png"
-            width={50}
-            height={50}
+            width={30}
+            height={30}
             className="mx-5"
             alt=""
           />
           <img
             src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/netflix.96c5e3f.png"
-            width={50}
-            height={50}
+            width={30}
+            height={30}
             className="mx-5"
             alt=""
           />
           <img
             src="./img/pnglogo.png"
-            width={50}
-            height={50}
-            className="mx-5"
-            alt=""
-          />
-          <img
-            src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/paypal.305e264.png"
-            width={50}
-            height={50}
+            width={30}
+            height={30}
             className="mx-5"
             alt=""
           />
         </div>
       </div>
 
-      <div className="max-w-full my-44 container">
-        <div className="container my-4">
-          <h3 className=" font-bold text-4xl">Popular professional services</h3>
-          <div className="container" style={{ maxWidth: "100vw" }}>
-            <Slider {...settings}>
-              {arrProductJob?.map((prod: JobCategoryModel) => (
-                <div className="ml-12" key={prod.id}>
-                  <ProductJobCat prod={prod} onCardClick={handleCardClick} />
-                </div>
-              ))}
-            </Slider>
-          </div>
+      <div className=" my-44 container">
+        <h3 className=" font-bold text-4xl">Popular professional services</h3>
+        <div className="container" style={{ maxWidth: "85vw" }}>
+          <Slider {...settings}>
+            {arrProductJob?.map((prod: JobCategoryModel) => (
+              <div className="ml-12" key={prod.id}>
+                <ProductJobCat prod={prod} onCardClick={handleCardClick} />
+              </div>
+            ))}
+          </Slider>
         </div>
       </div>
+
       <div
         className="container  bg-blue-50 flex justify-center items-center "
         style={{ height: 900, maxWidth: "100vw" }}
       >
         <div className="container">
           <div className="sm:flex sm:flex-col items-center justify-between md:flex md:flex-row items-center justify-between">
-            <div className="flex flex-col w-80">
+            <div className="flex flex-col p-10">
               <h1 className=" my-10 sm:text-3xl font-bold lg:text-3xl font-bold">
                 The best part? Everything.
               </h1>
@@ -326,7 +318,7 @@ const Home = (props: Props) => {
                 </li>
               </ul>
             </div>
-            <div className=" p-20">
+            <div className=" p-10">
               <div className=" mt-5 position-relative ">
                 <div>
                   <video controls width={700}>
@@ -339,18 +331,18 @@ const Home = (props: Props) => {
           </div>
         </div>
       </div>
-      <div className="container">
+      <div className="container ">
         <Carousel effect="fade" className="container">
           <div className="container">
-            <div className="sm:flex sm:flex-col items-center justify-between md:flex md:flex-row items-center justify-between">
+            <div className="sm:flex sm:flex-col-reverse items-center justify-between md:flex md:flex-row items-center justify-between">
               <div className="p-10">
                 <video controls width={1100}>
                   <source src="./img/demo2.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
-              <div>
-                <div className="container flex items-center text-gray-400">
+              <div className="p-10">
+                <div className=" container flex items-center text-gray-400">
                   <h3 className=" text-3xl font-semibold">
                     Kay Kim, Co-Founder{" "}
                   </h3>
@@ -380,7 +372,7 @@ const Home = (props: Props) => {
                   Your browser does not support the video tag.
                 </video>
               </div>
-              <div>
+              <div className="p-10">
                 <div className="container flex items-center text-gray-400">
                   <h3 className=" text-3xl font-semibold">
                     Brighid Gannon (DNP, PMHNP-BC), Co-Founder{" "}
@@ -410,7 +402,7 @@ const Home = (props: Props) => {
                   Your browser does not support the video tag.
                 </video>
               </div>
-              <div>
+              <div className="p-10">
                 <div className="container flex items-center text-gray-400">
                   <h3 className=" text-3xl font-semibold">
                     Caitlin Tormey, Chief Commercial Officer
@@ -440,7 +432,7 @@ const Home = (props: Props) => {
                   Your browser does not support the video tag.
                 </video>
               </div>
-              <div>
+              <div className="p-10">
                 <div className="container flex items-center text-gray-400">
                   <h3 className=" text-3xl font-semibold">
                     Tim and Dan Joo, Co-Founders{" "}
@@ -463,10 +455,10 @@ const Home = (props: Props) => {
           </div>
         </Carousel>
         <div className="my-32  ">
-          <h3 className="my-20 font-bold text-4xl">
+          <h3 className="my-20 font-bold text-4xl p-10">
             You need it, we've got it
           </h3>
-          <div className="container flex justify-center">
+          <div className="container flex justify-center p-16">
             <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-40">
               <NavLink
                 to="/job/1"

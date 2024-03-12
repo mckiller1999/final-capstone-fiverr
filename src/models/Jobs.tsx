@@ -3,7 +3,7 @@ export interface JobModel {
   tenCongViec: string;
   danhGia: number;
   giaTien: number;
-  nguoiTao: number;
+  nguoiTao: number | string;
   hinhAnh: string;
   moTa: string;
   maChiTietLoaiCongViec: number;

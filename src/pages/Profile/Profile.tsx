@@ -1,6 +1,5 @@
-import { Add, Delete, HomeRepairServiceOutlined } from "@mui/icons-material";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import PersonIcon from "@mui/icons-material/Person";
+import { Add } from "@mui/icons-material";
+
 import EditIcon from "@mui/icons-material/Edit";
 import LogoutIcon from "@mui/icons-material/Logout";
 import {
@@ -14,12 +13,12 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ProfileCourses } from "../ProfileCourses";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
-import axios from "axios";
-import { BookedJobs, HiredJobs } from "../../models/BookedJobs";
+
+import { HiredJobs } from "../../models/BookedJobs";
 import { ACCESS_TOKEN, ACCESS_TOKEN_CYBER, http } from "../../util/config";
 import UserProfileEdit from "./UserProfileEdit";
 import { openEditForm } from "../../redux/reducer/userEditFormReducer";
@@ -28,7 +27,7 @@ import "../../index.css";
 import "../../style.css";
 import { Tag } from "antd";
 import EmptyJobs from "../../components/EmptyJobs";
-import { UploadOutlined } from "@ant-design/icons";
+
 import type { UploadProps } from "antd";
 import { message, Upload } from "antd";
 
@@ -36,7 +35,7 @@ type Props = {};
 
 const Profile = (props: Props) => {
   const { userLogin } = useSelector((state: RootState) => state.userReducer);
-  reloadPage(userLogin?.user.id)
+  reloadPage(userLogin?.user.id);
   console.log("userLogintest", userLogin);
   const [bookedJobs, setBookedJobs] = useState<HiredJobs[]>([]);
 
@@ -62,20 +61,17 @@ const Profile = (props: Props) => {
 
   const [avatar, setAvatar] = useState<any>(userLogin?.user.avatar);
 
-
   const dispatch: AppDispatch = useDispatch();
-
 
   const handleSubmitAvatar = async (data: any) => {
     try {
       const res = await http.post("users/upload-avatar", data);
       // console.log(res);
-      setAvatar(res.data.content.avatar)
+      setAvatar(res.data.content.avatar);
     } catch (err) {
       alert(err);
     }
   };
-
 
   useEffect(() => {
     getApiBookedJobs();
@@ -97,8 +93,7 @@ const Profile = (props: Props) => {
         formData.append("formFile", info.file.originFileObj);
         handleSubmitAvatar(formData);
         if (userLogin?.user !== undefined) {
-          
-          dispatch(reloadPage(userLogin?.user.id))
+          dispatch(reloadPage(userLogin?.user.id));
         }
         message.success(`${info.file.name} file uploaded successfully`);
         // setAvatar(info.file)
@@ -179,7 +174,9 @@ const Profile = (props: Props) => {
                   Upload avatar
                 </Button>
               </Upload>
-              <Typography variant="caption">(File must be smaller than 2MB)</Typography>
+              <Typography variant="caption">
+                (File must be smaller than 2MB)
+              </Typography>
               {/* <Button
               variant="outlined"
               color="success"
@@ -321,7 +318,8 @@ const Profile = (props: Props) => {
                     Add new
                   </Button>
                 </Stack>
-                {!userLogin?.user.skill || userLogin?.user.skill.length == 0 ? (
+                {!userLogin?.user.skill ||
+                userLogin?.user.skill.length === 0 ? (
                   <Typography
                     variant="subtitle2"
                     className="text-slate-500"
@@ -387,7 +385,7 @@ const Profile = (props: Props) => {
                   </Button>
                 </Stack>
                 {(!userLogin?.user.certification ||
-                  userLogin?.user.certification.length) == 0 ? (
+                  userLogin?.user.certification.length) === 0 ? (
                   <Typography variant="subtitle2" color="text.secondary">
                     Add your certification
                   </Typography>
@@ -417,7 +415,7 @@ const Profile = (props: Props) => {
           </Grid>
           <Grid item>
             <Container sx={{ width: "100%" }}>
-              {bookedJobs.length == 0 ? (
+              {bookedJobs.length === 0 ? (
                 <EmptyJobs />
               ) : (
                 bookedJobs?.map((job: HiredJobs) => {

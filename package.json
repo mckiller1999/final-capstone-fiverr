@@ -21,6 +21,7 @@
     "@types/react": "^18.2.51",
     "@types/react-dom": "^18.2.18",
     "antd": "^5.13.3",
+    "antd-img-crop": "^4.21.0",
     "axios": "^1.6.7",
     "flowbite": "^2.2.1",
     "formik": "^2.4.5",

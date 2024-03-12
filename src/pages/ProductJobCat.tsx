@@ -10,7 +10,7 @@ type Props = {
 const { Meta } = Card;
 
 const ProductJobCat = ({ prod, onCardClick }: Props) => {
-  console.log(prod);
+  //console.log(prod);
   const handleCardClick = () => {
     onCardClick(prod.dsNhomChiTietLoai[0]?.maLoaiCongviec); // Truyền key của ProductJobCat lên Home khi card được click
   };

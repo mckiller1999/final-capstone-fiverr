@@ -1,24 +1,21 @@
-import { ErrorMessage, useFormik } from "formik";
+import { useFormik } from "formik";
 import React from "react";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import dayjs, { Dayjs } from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs, { Dayjs } from "dayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 // import { http } from "../utils/Config";
 import { UserRegister, registerApiAction } from "../redux/reducer/userReducer";
-import { AppDispatch, RootState } from "../redux/store";
+import { RootState } from "../redux/store";
 import {
-  Alert,
   Backdrop,
-  Box,
   Button,
   Checkbox,
   CircularProgress,
-  Container,
   DialogContent,
   FormControl,
   FormControlLabel,
@@ -35,12 +32,9 @@ import {
   SelectChangeEvent,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
 import { Dispatch } from "@reduxjs/toolkit";
 import { closeRegisterForm } from "../redux/reducer/registerFormReducer";
-
-import { openLoginForm } from "../redux/reducer/loginFormReducer";
 
 type Props = {};
 
@@ -86,7 +80,9 @@ const RegisterForm = (props: Props) => {
     (state: RootState) => state.backdropReducer
   );
   const [skillsList, setSkillsList] = React.useState<string[]>([]);
-  const [birthday, setBirthDay] = React.useState<Dayjs | null>(dayjs('2024-02-26'));
+  const [birthday, setBirthDay] = React.useState<Dayjs | null>(
+    dayjs("2024-02-26")
+  );
 
   const handleChangeSkill = (event: SelectChangeEvent<typeof skillsList>) => {
     const {
@@ -110,17 +106,16 @@ const RegisterForm = (props: Props) => {
     );
   };
 
-  const [gender, setGender] = React.useState('female');
+  const [gender, setGender] = React.useState("female");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGender((event.target as HTMLInputElement).value);
-    
-    const genderBool = gender === 'female' ? true : false
-    
-    formik.values.gender = genderBool
-    
+
+    const genderBool = gender === "female" ? true : false;
+
+    formik.values.gender = genderBool;
   };
-  
+
   const dispatch: Dispatch<any> = useDispatch();
   const initialValues: UserRegister = {
     id: 0,
@@ -255,7 +250,7 @@ const RegisterForm = (props: Props) => {
 
           <Stack direction="row" gap={2}>
             <TextField
-              sx={{ width: "100%", marginTop: 1}}
+              sx={{ width: "100%", marginTop: 1 }}
               label="Phone"
               className="form-control"
               type="tel"
@@ -269,39 +264,25 @@ const RegisterForm = (props: Props) => {
               size="small"
             ></TextField>
 
-            {/* <TextField
-              sx={{ width: "100%" }}
-              label="Birthday"
-              className="form-control"
-              type="text"
-              name="birthday"
-              required
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.birthday}
-              error={formik.touched.birthday && Boolean(formik.errors.birthday)}
-              helperText={formik.touched.birthday && formik.errors.birthday}
-              size="small"
-            ></TextField> */}
-
-
-<LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer sx={{ width: "100%" }} components={['DatePicker', 'DatePicker']}>
-        <DatePicker
-        slotProps={{ textField: { size: 'small' } }}
-          sx={{ width: "100%"}}
-          label="Birthday"
-          // format="DD-MM-YYYY"
-          value={birthday}
-          onChange={(newValue) => {
-            setBirthDay(newValue);
-            formik.values.birthday = birthday?.toString() ? birthday?.toString() : ""
-          }}
-        />
-      </DemoContainer>
-    </LocalizationProvider>
-
-
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer
+                sx={{ width: "100%" }}
+                components={["DatePicker", "DatePicker"]}
+              >
+                <DatePicker
+                  slotProps={{ textField: { size: "small" } }}
+                  sx={{ width: "100%" }}
+                  label="Birthday"
+                  value={birthday}
+                  onChange={(newValue) => {
+                    setBirthDay(newValue);
+                    formik.values.birthday = birthday?.toString()
+                      ? birthday?.toString()
+                      : "";
+                  }}
+                />
+              </DemoContainer>
+            </LocalizationProvider>
           </Stack>
 
           <div>
@@ -320,15 +301,9 @@ const RegisterForm = (props: Props) => {
                 control={<Radio />}
                 label="Female"
               />
-              <FormControlLabel
-                value="male"
-                control={<Radio />}
-                label="Male"
-              />
+              <FormControlLabel value="male" control={<Radio />} label="Male" />
             </RadioGroup>
           </div>
-
-          
 
           <FormControl size="small">
             <InputLabel id="demo-multiple-checkbox-label">Skills</InputLabel>
@@ -382,7 +357,14 @@ const RegisterForm = (props: Props) => {
             type="submit"
             className="btn btn-primary"
             value="Submit"
-            sx={{ width: 400, height: 50, alignSelf: "center", marginTop: 2,backgroundColor: `rgb(20 83 45)`, borderRadius: 8 }}
+            sx={{
+              width: 400,
+              height: 50,
+              alignSelf: "center",
+              marginTop: 2,
+              backgroundColor: `rgb(20 83 45)`,
+              borderRadius: 8,
+            }}
             disableElevation
           >
             Sign up

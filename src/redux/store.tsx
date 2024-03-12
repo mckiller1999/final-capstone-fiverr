@@ -7,6 +7,7 @@ import registerFormReducer from "./reducer/registerFormReducer";
 import toastMessage from "./reducer/toastMessage";
 import loadingReducer from "./reducer/loadingReducer";
 import jobDetailReducer from "./reducer/jobDetailReducer";
+import createJobReducer from "./reducer/createJobReducer";
 // ...
 
 export const store = configureStore({
@@ -18,7 +19,8 @@ export const store = configureStore({
     registerFormReducer,
     toastMessage,
     loadingReducer,
-    jobDetailReducer
+    jobDetailReducer,
+    createJobReducer,
   },
 });
 

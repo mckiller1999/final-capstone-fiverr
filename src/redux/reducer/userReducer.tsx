@@ -91,7 +91,7 @@ const userReducer = createSlice({
     updateProfileAction: (state, action: PayloadAction<user>) => {
       if (state.userLogin) {
         state.userLogin.user = action.payload;
-        console.log("test redux", state.userLogin.user)
+        console.log("test redux", state.userLogin.user);
       }
     },
   },
@@ -191,16 +191,6 @@ export const updateUserProfile = (userData: user) => {
     dispatch(setBackDropOpen());
     const token = ACCESS_TOKEN_CYBER;
     try {
-      const res = await axios({
-        headers: {
-          tokenCybersoft: ` ${token}`,
-        },
-        url: `https://fiverrnew.cybersoft.edu.vn/api/users/${userData.id}`,
-        method: "PUT",
-        data: userData,
-      });
-      alert("Your profile has been updated successfully");
-
       const updateProfileLatest = await axios({
         headers: {
           tokenCybersoft: ` ${token}`,
@@ -266,9 +256,8 @@ export const reloadPage = (id: any) => {
         method: "GET",
       });
 
-      console.log("res",res.data.content)
-      dispatch(updateProfileAction(res.data.content))
-
+      console.log("res", res.data.content);
+      dispatch(updateProfileAction(res.data.content));
     } catch (error) {
       alert("Error during login:");
       console.error("Error during login:", error);

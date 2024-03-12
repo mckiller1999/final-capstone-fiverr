@@ -31,15 +31,16 @@ const CatogeryTab = () => {
     navigate(`/job-view/${e.key?.split("/")?.[1]}`);
   };
 
-  return (
-    <Menu
+  return <div>{
+    data ? <Menu
       style={{ transition: "0.5s" }}
       onClick={onClick}
       selectedKeys={[current]}
       mode="horizontal"
       items={items}
-    />
-  );
+      className="max-w-7xl mx-auto duration-500 bg-transparent"
+    /> : null
+  }</div>
 };
 
 export default CatogeryTab;

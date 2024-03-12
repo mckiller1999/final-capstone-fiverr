@@ -1,17 +1,14 @@
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 
-import { Alert, Dialog, DialogContent, IconButton } from "@mui/material";
+import { Dialog, DialogContent, IconButton } from "@mui/material";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { closeLoginForm } from "../redux/reducer/loginFormReducer";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
-import React, { Component } from "react";
+
 import Slider from "react-slick";
 
 import "../index.css";
@@ -19,7 +16,6 @@ import "../style.css";
 import { useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
 
 var settings = {
   infinite: true,
@@ -140,7 +136,6 @@ const Login = (props: Props) => {
               <CloseOutlinedIcon />
             </IconButton>
 
-            {/* Login Form from here */}
             {showRegisterForm ? <RegisterForm /> : <LoginForm />}
           </DialogContent>
         </Box>
