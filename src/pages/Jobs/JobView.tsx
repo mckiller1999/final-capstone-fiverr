@@ -12,7 +12,7 @@ const JobView = () => {
     return ( data ? 
         <div>
             <div className="container mx-auto my-3">
-                <div className="grid grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 md:grid-cols-3">
                     {data.map((prod: JobModelByName) => (
                         <div className="m-5" key={prod.id}>
                             <CardJob prod={prod} />

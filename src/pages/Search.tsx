@@ -5,7 +5,6 @@ import { useSearchParams } from "react-router-dom";
 import { ACCESS_TOKEN_CYBER } from "../util/config";
 import CardJob from "../components/CardJob";
 import { JobModel } from "../models/Jobs";
-
 export interface JobModelByName {
   avatar: string;
   id: number;
