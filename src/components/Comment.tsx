@@ -41,7 +41,7 @@ const Comment = () => {
   },[])
 
   return (
-    <div className='my-5 container mx-auto'>
+    <div className='my-5 w-11/12 mx-auto'>
       <hr />
       <div className='my-5'>
         <h1 className='text-xl text-gray-600 font-bold mb-3'>Comments <CommentRounded /></h1>
@@ -49,7 +49,7 @@ const Comment = () => {
       <div>
         {(localStorage.getItem(ACCESS_TOKEN)) ? <AddComment /> : null}
       </div>
-      <div className='w-11/12 lg:w-3/4 mx-auto my-5'>
+      <div className='w-full lg:w-3/4 mx-auto my-5'>
         {data ? <List
           itemLayout="vertical"
           size="large"

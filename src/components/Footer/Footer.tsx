@@ -235,8 +235,8 @@ const Footer = () => {
         },
     ];
     return (
-        <footer className="border-t w-11/12 mx-auto lg:py-14 lg:pb-5 pb-3">
-            <div className="contain">
+        <footer className="border-t max-w-7xl w-11/12 mx-auto lg:py-14 lg:pb-5 pb-3">
+            <div className="contain max-w-7xl mx-auto">
                 <div className="w-full flex flex-col items-start justify-start gap-10">
                     <div className="w-full hidden sm:grid sm:grid-cols-3 lg:grid-cols-5 gap-5 items-start justify-start">
                         {footerLinks.map((item, i) => (

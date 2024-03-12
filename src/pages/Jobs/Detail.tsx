@@ -19,7 +19,7 @@ const Detail = () => {
       <div className="ml-5 mt-5">
         <BreadcrumbComponent />
       </div>
-      <div className="container mx-auto mt-3 md:flex">
+      <div className="w-full mx-auto mt-3 md:flex">
         <div className="w-11/12 mx-auto md:w-1/2">
           <ShowJobDetails />
         </div>
