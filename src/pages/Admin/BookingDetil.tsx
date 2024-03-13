@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ACCESS_TOKEN_CYBER } from "../../util/config";
 import axios from "axios";

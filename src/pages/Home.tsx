@@ -252,12 +252,12 @@ const Home = (props: Props) => {
         </div>
       </div>
 
-      <div className=" my-44 container">
+      <div className="px-5 my-44 container">
         <h3 className=" font-bold text-4xl">Popular professional services</h3>
-        <div className="container" style={{ maxWidth: "85vw" }}>
+        <div className="container" style={{ maxWidth: "100vw" }}>
           <Slider {...settings}>
             {arrProductJob?.map((prod: JobCategoryModel) => (
-              <div className="ml-12" key={prod.id}>
+              <div className="ml-10" key={prod.id}>
                 <ProductJobCat prod={prod} onCardClick={handleCardClick} />
               </div>
             ))}
@@ -272,7 +272,7 @@ const Home = (props: Props) => {
         <div className="container">
           <div className="sm:flex sm:flex-col items-center justify-between md:flex md:flex-row items-center justify-between">
             <div className="flex flex-col p-10">
-              <h1 className=" my-10 sm:text-3xl font-bold lg:text-3xl font-bold">
+              <h1 className=" my-10 text-3xl font-bold">
                 The best part? Everything.
               </h1>
               <ul className="space-y-3">

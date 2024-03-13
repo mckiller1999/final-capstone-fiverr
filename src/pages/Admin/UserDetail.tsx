@@ -19,19 +19,13 @@ import {
   SelectChangeEvent,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
 import { Dispatch } from "@reduxjs/toolkit";
-import {
-  updateUserProfile,
-  updateUserProfileAdmin,
-  user,
-} from "../../redux/reducer/userReducer";
+import { updateUserProfileAdmin, user } from "../../redux/reducer/userReducer";
 import { useFormik } from "formik";
 
 import { certifications, skills } from "../RegisterForm";
 import { useDispatch } from "react-redux";
-import { Tag } from "@mui/icons-material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AppDispatch, RootState } from "../store";
+import { AppDispatch } from "../store";
 import { UserSignInForm } from "../../pages/Login";
 // import { Dispatch } from "redux";
 import axios from "axios";
@@ -8,7 +8,6 @@ import {
   ACCESS_TOKEN_CYBER,
   USERLOGIN,
   getStorageJson,
-  getTokenFromLocalStorage,
   saveStorage,
   saveStorageJson,
 } from "../../util/config";
@@ -17,19 +16,9 @@ import { history } from "../../index";
 // import { Alert } from "@mui/material";
 import { setBackDropClose, setBackDropOpen } from "./backdropReducer";
 // import { useDispatch } from "react-redux";
-import { closeEditForm } from "./userEditFormReducer";
-import { openLoginForm } from "./loginFormReducer";
+
 import { closeRegisterForm } from "./registerFormReducer";
 import { setToastOpen } from "./toastMessage";
-import { ThunkAction } from "redux-thunk";
-import { Action } from "@reduxjs/toolkit";
-
-type DeleteUserActionType = ThunkAction<
-  void,
-  RootState,
-  unknown,
-  Action<string>
->;
 
 export interface user {
   avatar: "";

@@ -10,6 +10,7 @@ import { Layout, Menu, Button, theme } from "antd";
 import { NavLink, Navigate, Outlet } from "react-router-dom";
 import * as jwt from "jwt-decode";
 import { useSelector } from "react-redux";
+import { HomeOutlined } from "@mui/icons-material";
 
 const { Header, Sider, Content } = Layout;
 
@@ -60,6 +61,11 @@ const AdminTemplate: React.FC = () => {
                   key: "4",
                   icon: <UploadOutlined />,
                   label: <NavLink to="/admin/bookjob">Booking Jobs </NavLink>,
+                },
+                {
+                  key: "5",
+                  icon: <HomeOutlined />,
+                  label: <NavLink to="/">Return Homepage </NavLink>,
                 },
               ]}
             />

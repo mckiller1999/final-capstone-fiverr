@@ -57,14 +57,16 @@ const CardJob = ({ prod, data }: Props) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 600, width: "100%", height: 400 }}>
+    <Card sx={{ width: 300, height: 500 }}>
       <CardActionArea onClick={handleClickCard}>
-        <CardMedia
-          component="img"
-          height="194"
-          image={prod?.congViec.hinhAnh}
-          alt={prod?.congViec.hinhAnh}
-        />
+        <div className="p-5">
+          <CardMedia
+            component="img"
+            height="194"
+            image={prod?.congViec.hinhAnh}
+            alt={prod?.congViec.hinhAnh}
+          />
+        </div>
         <CardHeader
           avatar={
             <Avatar

@@ -9,8 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { HiredJobs } from "../models/BookedJobs";
-import axios from "axios";
-import { http } from "../util/config";
+
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setJobHired } from "../redux/reducer/jobDetailReducer";
@@ -80,13 +79,12 @@ export const ProfileCourses = ({ job, deleteJobs }: Props) => {
             >
               View details
             </Button>
-            <Button size="small" variant="outlined">
-              Edit
-            </Button>
+
             <Button
               size="small"
               variant="outlined"
               color="error"
+              sx={{ borderRadius: 8 }}
               onClick={() => {
                 deleteJobs(job?.id ? job?.id : null);
               }}

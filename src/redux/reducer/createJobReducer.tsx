@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { AppDispatch } from "../store";
 import {
-  ACCESS_TOKEN,
   ACCESS_TOKEN_CYBER,
   getTokenFromLocalStorage,
 } from "../../util/config";

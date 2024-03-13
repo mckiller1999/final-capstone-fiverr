@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ACCESS_TOKEN_CYBER } from "../../util/config";
 import { Rate } from "antd";
 import Loading from "../../components/Loading";

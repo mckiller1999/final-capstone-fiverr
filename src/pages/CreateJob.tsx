@@ -13,7 +13,7 @@ import { RootState } from "../redux/store";
 import axios from "axios";
 import { DsNhomChiTietLoai, DsChiTietLoai } from "../models/JobDetail";
 
-import { ACCESS_TOKEN_CYBER, getTokenFromLocalStorage } from "../util/config";
+import { ACCESS_TOKEN_CYBER } from "../util/config";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 import type { GetProp, UploadProps } from "antd";
