@@ -101,15 +101,17 @@ const Search = () => {
           - Results for '{keywords}' -{" "}
         </h3>
       </div>
-      <div className="container mx-auto my-3">
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 md:grid-cols-3">
-          {arrProduct?.map((prod: JobModelByName) => (
-            <div className="m-5" key={prod.id}>
-              <CardJob prod={prod} />
-            </div>
-          ))}
+      {arrProduct ? (
+        <div className="container mx-auto my-3">
+          <div className="flex flex-col justify-center items-center md:flex-row md:flex-wrap">
+            {arrProduct.map((prod: JobModelByName) => (
+              <div className="m-5" key={prod.id}>
+                <CardJob prod={prod} />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 };

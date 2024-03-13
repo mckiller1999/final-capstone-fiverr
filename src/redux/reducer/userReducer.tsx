@@ -55,6 +55,7 @@ export interface UserRegister {
   name: string;
   email: string;
   password: string;
+  passwordConfirm: string;
   phone: string;
   birthday: string;
   gender: boolean;
@@ -71,6 +72,7 @@ const initialState: UserReducerState = {
     name: "",
     email: "",
     password: "",
+    passwordConfirm: "",
     phone: "",
     birthday: "",
     gender: true,
@@ -99,8 +101,10 @@ const userReducer = createSlice({
     },
     updateProfileAction: (state, action: PayloadAction<user>) => {
       if (state.userLogin) {
-        state.userLogin.user = action.payload;
-        console.log("test redux", state.userLogin.user);
+        state.userLogin = {
+          ...state.userLogin,
+          user: action.payload,
+        };
       }
     },
   },
@@ -233,7 +237,6 @@ export const updateUserProfile = (userData: user) => {
           method: "POST",
           data: newUserLogin,
         });
-
         const action = loginAction(res.data.content);
         dispatch(action);
         //localstorge save

@@ -91,7 +91,7 @@ const Header = () => {
     <div
       className={`${
         pathname !== "/" ? "bg-white sticky" : "fixed duration-500"
-      } px-10`}
+      } `}
       style={{
         backgroundColor: isTop ? "transparent" : "#fff",
         width: "100%",
@@ -100,7 +100,7 @@ const Header = () => {
       }}
     >
       <div className="mx-auto ">
-        <nav className="container flex items-center justify-between flex-wrap p-6">
+        <nav className="container flex items-center justify-evenly sm:justify-between flex-wrap p-6">
           <div className="flex items-center flex-shrink-0  mr-6">
             <NavLink
               to={"/"}
@@ -114,6 +114,7 @@ const Header = () => {
               />
             </NavLink>
           </div>
+
           <div className="block lg:flex lg:items-center justify-evenly w-auto">
             {/* Hiển thị phần đăng nhập khi màn hình không nhỏ */}
             {!isSmallScreen && renderLogin()}
@@ -130,6 +131,7 @@ const Header = () => {
           {isSmallScreen && showLogin && (
             <div className="lg:hidden">{renderLogin()}</div>
           )}
+
           <div
             className={`${
               !hideCategoryTab || pathname !== "/" ? "" : "hidden"

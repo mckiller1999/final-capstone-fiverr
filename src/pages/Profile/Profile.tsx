@@ -34,8 +34,8 @@ import { message, Upload } from "antd";
 type Props = {};
 
 const Profile = (props: Props) => {
+  const dispatch: AppDispatch = useDispatch();
   const { userLogin } = useSelector((state: RootState) => state.userReducer);
-  reloadPage(userLogin?.user.id);
   console.log("userLogintest", userLogin);
   const [bookedJobs, setBookedJobs] = useState<HiredJobs[]>([]);
 
@@ -60,8 +60,6 @@ const Profile = (props: Props) => {
   };
 
   const [avatar, setAvatar] = useState<any>(userLogin?.user.avatar);
-
-  const dispatch: AppDispatch = useDispatch();
 
   const handleSubmitAvatar = async (data: any) => {
     try {

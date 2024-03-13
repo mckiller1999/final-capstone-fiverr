@@ -7,6 +7,9 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import utc from "dayjs/plugin/utc";
+import tz from "dayjs/plugin/timezone";
+import timezone from "dayjs/plugin/timezone";
 
 // import { http } from "../utils/Config";
 import { UserRegister, registerApiAction } from "../redux/reducer/userReducer";
@@ -76,13 +79,17 @@ export const certifications = [
 ];
 
 const RegisterForm = (props: Props) => {
+  dayjs.extend(utc);
+  dayjs.extend(tz);
+  dayjs.extend(timezone);
+
   const { isBackDropOpen } = useSelector(
     (state: RootState) => state.backdropReducer
   );
   const [skillsList, setSkillsList] = React.useState<string[]>([]);
-  const [birthday, setBirthDay] = React.useState<Dayjs | null>(
-    dayjs("2024-02-26")
-  );
+  const [birthday, setBirthDay] = React.useState<Dayjs | null>();
+
+  console.log("setbirthday", birthday);
 
   const handleChangeSkill = (event: SelectChangeEvent<typeof skillsList>) => {
     const {
@@ -122,6 +129,7 @@ const RegisterForm = (props: Props) => {
     name: "",
     email: "",
     password: "",
+    passwordConfirm: "",
     phone: "",
     birthday: "",
     gender: true,
@@ -134,8 +142,15 @@ const RegisterForm = (props: Props) => {
     validationSchema: yup.object({
       name: yup.string().required("Name is required"),
       email: yup.string().email("Invalid email").required("Email is required"),
-      password: yup.string().required("Password is required"),
-      // passwordConfirm: yup.string().required("Confirm password is required"),
+      password: yup
+        .string()
+        .required("Password is required")
+        .min(8, "Password is too short - should be 8 chars minimum.")
+        .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
+      passwordConfirm: yup
+        .string()
+        .required("Confirm password is required")
+        .oneOf([yup.ref("password")], "Passwords must match"),
       phone: yup.string().required("Phone is required"),
       birthday: yup.string().required("Birthday is required"),
       gender: yup.boolean().required("Gender is required"),
@@ -147,14 +162,15 @@ const RegisterForm = (props: Props) => {
 
     onSubmit: async (values) => {
       // alert(values);
-      // console.log("values,actions",values);
+      console.log("values,actions", values);
       dispatch(registerApiAction(values));
     },
   });
+  console.log("testbdayformik", formik.values.birthday);
 
   // render form and use formik & yup
   return (
-    <div>
+    <DialogContent>
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isBackDropOpen}
@@ -188,7 +204,7 @@ const RegisterForm = (props: Props) => {
           onSubmit={formik.handleSubmit}
           noValidate
         >
-          <Stack direction="row" gap={2}>
+          <Stack direction={{ md: "row", xs: "column" }} gap={2}>
             <TextField
               sx={{ width: "100%" }}
               className="form-control"
@@ -221,7 +237,7 @@ const RegisterForm = (props: Props) => {
             ></TextField>
           </Stack>
 
-          <Stack direction="row" gap={2}>
+          <Stack direction={{ md: "row", xs: "column" }} gap={2}>
             <TextField
               sx={{ width: "100%" }}
               className="form-control"
@@ -243,12 +259,22 @@ const RegisterForm = (props: Props) => {
               className="form-control"
               type="password"
               name="passwordConfirm"
+              onChange={formik.handleChange}
+              value={formik.values.passwordConfirm}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.passwordConfirm &&
+                Boolean(formik.errors.passwordConfirm)
+              }
+              helperText={
+                formik.touched.passwordConfirm && formik.errors.passwordConfirm
+              }
               required
               size="small"
             ></TextField>
           </Stack>
 
-          <Stack direction="row" gap={2}>
+          <Stack direction={{ md: "row", xs: "column" }} gap={2}>
             <TextField
               sx={{ width: "100%", marginTop: 1 }}
               label="Phone"
@@ -273,8 +299,13 @@ const RegisterForm = (props: Props) => {
                   slotProps={{ textField: { size: "small" } }}
                   sx={{ width: "100%" }}
                   label="Birthday"
+                  // format="DD-MM-YYYY"
                   value={birthday}
                   onChange={(newValue) => {
+                    console.log("newValue", newValue);
+                    // const timeZone = dayjs.tz.guess()
+                    // console.log("timeZone",timeZone)
+                    // const sstBirthday =dayjs.utc(newValue).tz(timeZone)
                     setBirthDay(newValue);
                     formik.values.birthday = birthday?.toString()
                       ? birthday?.toString()
@@ -358,7 +389,7 @@ const RegisterForm = (props: Props) => {
             className="btn btn-primary"
             value="Submit"
             sx={{
-              width: 400,
+              width: { md: 400, xs: 260 },
               height: 50,
               alignSelf: "center",
               marginTop: 2,
@@ -371,7 +402,7 @@ const RegisterForm = (props: Props) => {
           </Button>
         </form>
       </DialogContent>
-    </div>
+    </DialogContent>
   );
 };
 
