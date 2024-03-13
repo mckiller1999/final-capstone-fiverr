@@ -35,8 +35,9 @@ import { message, Upload } from "antd";
 type Props = {};
 
 const Profile = (props: Props) => {
+  const dispatch: AppDispatch = useDispatch();
   const { userLogin } = useSelector((state: RootState) => state.userReducer);
-  console.log("userLogin", userLogin);
+  console.log("userLogintest", userLogin);
   const [bookedJobs, setBookedJobs] = useState<HiredJobs[]>([]);
 
   const getApiBookedJobs = async () => {
@@ -61,22 +62,24 @@ const Profile = (props: Props) => {
 
   const [avatar, setAvatar] = useState<any>(userLogin?.user.avatar);
 
-  useEffect(() => {
-    getApiBookedJobs();
-  }, []);
 
-  const dispatch: AppDispatch = useDispatch();
+  
 
 
   const handleSubmitAvatar = async (data: any) => {
     try {
       const res = await http.post("users/upload-avatar", data);
-      console.log(res);
+      // console.log(res);
       setAvatar(res.data.content.avatar)
     } catch (err) {
       alert(err);
     }
   };
+
+
+  useEffect(() => {
+    getApiBookedJobs();
+  }, []);
 
   const imgProps: UploadProps = {
     name: "formFile",
@@ -87,14 +90,15 @@ const Profile = (props: Props) => {
     },
     onChange(info: any) {
       if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
+        // console.log(info.file, info.fileList);
       }
       if (info.file.status === "done" && info.file.originFileObj) {
         const formData = new FormData();
         formData.append("formFile", info.file.originFileObj);
         handleSubmitAvatar(formData);
         if (userLogin?.user !== undefined) {
-          reloadPage(userLogin?.user)
+          
+          dispatch(reloadPage(userLogin?.user.id))
         }
         message.success(`${info.file.name} file uploaded successfully`);
         // setAvatar(info.file)
@@ -105,6 +109,7 @@ const Profile = (props: Props) => {
   };
 
   console.log("imgProps", imgProps);
+
 
   return (
     <div>
@@ -175,6 +180,7 @@ const Profile = (props: Props) => {
                   Upload avatar
                 </Button>
               </Upload>
+              <Typography variant="caption">(File must be smaller than 2MB)</Typography>
               {/* <Button
               variant="outlined"
               color="success"
@@ -410,7 +416,7 @@ const Profile = (props: Props) => {
               </Stack>
             </Container>
           </Grid>
-          <Grid item >
+          <Grid item>
             <Container sx={{ width: "100%" }}>
               {bookedJobs.length == 0 ? (
                 <EmptyJobs />
