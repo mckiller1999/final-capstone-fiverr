@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { ACCESS_TOKEN_CYBER } from "../../util/config";
 import { Rate } from "antd";
+import Loading from "../../components/Loading";
 
 interface DataType {
   id: string;
@@ -40,7 +41,12 @@ const MangementDetail = () => {
     }
   }, [id]);
 
-  if (!job) return <div>Loading...</div>; // Hiển thị "Loading..." trong quá trình tải dữ liệu
+  if (!job)
+    return (
+      <div>
+        <Loading />
+      </div>
+    ); // Hiển thị "Loading..." trong quá trình tải dữ liệu
 
   return (
     <div>
@@ -48,7 +54,7 @@ const MangementDetail = () => {
         {" "}
         {job.tenCongViec}
       </h2>
-      <div className="flex justify-center content-center my-5 gap-20">
+      <div className="flex flex-col justify-center content-center my-5 md:flex-row md:gap-20">
         <img src={job.hinhAnh} alt="" />
         <div>
           <div>Giá tiền: {job.giaTien}</div>

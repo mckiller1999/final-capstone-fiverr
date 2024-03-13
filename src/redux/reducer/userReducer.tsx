@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AppDispatch } from "../store";
+import { AppDispatch, RootState } from "../store";
 import { UserSignInForm } from "../../pages/Login";
 // import { Dispatch } from "redux";
 import axios from "axios";
@@ -8,6 +8,7 @@ import {
   ACCESS_TOKEN_CYBER,
   USERLOGIN,
   getStorageJson,
+  getTokenFromLocalStorage,
   saveStorage,
   saveStorageJson,
 } from "../../util/config";
@@ -20,6 +21,15 @@ import { closeEditForm } from "./userEditFormReducer";
 import { openLoginForm } from "./loginFormReducer";
 import { closeRegisterForm } from "./registerFormReducer";
 import { setToastOpen } from "./toastMessage";
+import { ThunkAction } from "redux-thunk";
+import { Action } from "@reduxjs/toolkit";
+
+type DeleteUserActionType = ThunkAction<
+  void,
+  RootState,
+  unknown,
+  Action<string>
+>;
 
 export interface user {
   avatar: "";
@@ -44,6 +54,7 @@ export interface UserLogin {
 export interface UserReducerState {
   userLogin: UserLogin | null;
   userRegister: UserRegister;
+  idDelete: number;
   // userEdit: user;
 }
 
@@ -61,6 +72,7 @@ export interface UserRegister {
 }
 
 const initialState: UserReducerState = {
+  idDelete: 0,
   userLogin: getStorageJson(USERLOGIN),
   userRegister: {
     id: 0,
@@ -86,6 +98,10 @@ const userReducer = createSlice({
     logoutAction: (state) => {
       state.userLogin = null;
     },
+    deleteUser: (state, action) => {
+      state.idDelete = action.payload;
+      console.log(state.idDelete);
+    },
     registerAction: (state, action: PayloadAction<UserRegister>) => {
       state.userRegister = action.payload;
     },
@@ -103,6 +119,7 @@ export const {
   logoutAction,
   registerAction,
   updateProfileAction,
+  deleteUser,
 } = userReducer.actions;
 
 export default userReducer.reducer;
@@ -291,7 +308,27 @@ export const reloadPage = (id: any) => {
     } catch (error) {
       alert("Error during login:");
       console.error("Error during login:", error);
-      // Xử lý lỗi ở đây nếu cần
+    }
+  };
+};
+
+export const deleteUserAction = (userId: string) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const token = ACCESS_TOKEN_CYBER;
+      await axios({
+        headers: {
+          tokenCybersoft: `${token}`,
+        },
+        url: `https://fiverrnew.cybersoft.edu.vn/api/users?id=${userId}`,
+        method: "DELETE",
+      });
+
+      dispatch(deleteUser({ id: userId }));
+      alert("xóa thành công");
+    } catch (error) {
+      console.error(error);
+      // Handle errors here if needed
     }
   };
 };

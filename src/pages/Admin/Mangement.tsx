@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Space, Table, Input } from "antd";
-import type { TableProps } from "antd";
+import { Space, Table, Input, Button } from "antd";
 import axios from "axios";
-import { ACCESS_TOKEN_CYBER } from "../../util/config";
+import {
+  ACCESS_TOKEN_CYBER,
+  getTokenFromLocalStorage,
+} from "../../util/config";
 import { NavLink } from "react-router-dom";
+
 interface DataType {
   id: string;
   tenCongViec: string;
@@ -11,40 +14,13 @@ interface DataType {
   danhGia: string;
   saoCongViec: string;
 }
-const { Search } = Input;
-const columns: TableProps<DataType>["columns"] = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-  },
-  {
-    title: "Job",
-    dataIndex: "tenCongViec",
-    key: "tenCongViec",
-  },
-  {
-    title: "Price",
-    dataIndex: "giaTien",
-    key: "giaTien",
-  },
 
-  {
-    title: "Action",
-    key: "action",
-    render: (_, record) => {
-      return (
-        <Space size="middle">
-          <NavLink to={`/admin/job-detail/${record.id}`}>Detail</NavLink>
-        </Space>
-      );
-    },
-  },
-];
+const { Search } = Input;
 
 const Mangement: React.FC = () => {
-  const [jobs, setJobs] = useState<DataType[]>([]); // Cập nhật kiểu dữ liệu cho users
+  const [jobs, setJobs] = useState<DataType[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
+
   const getJobsAPI = async () => {
     try {
       const token = ACCESS_TOKEN_CYBER;
@@ -60,16 +36,70 @@ const Mangement: React.FC = () => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getJobsAPI();
-    console.log(jobs);
   }, []);
+
   const handleSearch = (value: string) => {
     setSearchValue(value);
   };
 
-  // Lọc người dùng theo từ khóa tìm kiếm
-  const filteredUsers = jobs.filter((job) =>
+  const handleDelete = async (jobId: string) => {
+    try {
+      const token = ACCESS_TOKEN_CYBER;
+      const tokenUser = getTokenFromLocalStorage();
+      await axios({
+        headers: {
+          tokenCybersoft: `${token}`,
+          token: `${tokenUser}`,
+        },
+        url: `https://fiverrnew.cybersoft.edu.vn/api/cong-viec/${jobId}`,
+        method: "DELETE",
+      });
+      // Xóa công việc khỏi danh sách sau khi xóa thành công
+      setJobs(jobs.filter((job) => job.id !== jobId));
+      alert("Xóa thành công");
+    } catch (error) {
+      console.error(error);
+      alert("Đã có lỗi xảy ra khi xóa");
+    }
+  };
+
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Job",
+      dataIndex: "tenCongViec",
+      key: "tenCongViec",
+    },
+    {
+      title: "Price",
+      dataIndex: "giaTien",
+      key: "giaTien",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (
+        _: any,
+        record: DataType // Thêm kiểu dữ liệu cho đối số _
+      ) => (
+        <Space size="middle">
+          <NavLink to={`/admin/job-detail/${record.id}`}>Detail</NavLink>
+          <Button onClick={() => handleDelete(record.id)} danger>
+            Xóa
+          </Button>
+        </Space>
+      ),
+    },
+  ];
+
+  const filteredJobs = jobs.filter((job) =>
     job.tenCongViec.toLowerCase().includes(searchValue.toLowerCase())
   );
 
@@ -80,11 +110,11 @@ const Mangement: React.FC = () => {
         allowClear
         enterButton="Search"
         size="large"
-        onSearch={handleSearch} // Gọi hàm handleSearch khi người dùng nhấn nút tìm kiếm hoặc nhấn enter
+        onSearch={handleSearch}
       />
       <Table
         columns={columns}
-        dataSource={filteredUsers.map((job) => ({ ...job, key: job.id }))}
+        dataSource={filteredJobs.map((job) => ({ ...job, key: job.id }))}
       />
     </div>
   );

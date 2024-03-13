@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Space, Table, Input } from "antd";
-import type { TableProps } from "antd";
+import { Space, Table, Input, Button } from "antd";
 import axios from "axios";
 import { ACCESS_TOKEN_CYBER } from "../../util/config";
 import { NavLink } from "react-router-dom";
@@ -15,37 +14,9 @@ interface DataType {
 
 const { Search } = Input;
 
-const columns: TableProps<DataType>["columns"] = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-  },
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-  },
-
-  {
-    title: "Action",
-    key: "action",
-    render: (_, record) => {
-      //console.log(record.id); // Xác minh rằng record.id là giá trị bạn mong muốn.
-      return (
-        <Space size="middle">
-          <NavLink to={`/admin/user-detail/${record.id}`}>
-            Detail {record.name}
-          </NavLink>
-        </Space>
-      );
-    },
-  },
-];
-
-const UserMangement: React.FC = () => {
-  const [users, setUsers] = useState<DataType[]>([]); // Cập nhật kiểu dữ liệu cho users
-  const [searchValue, setSearchValue] = useState<string>(""); // Thêm state mới để lưu trữ giá trị ô tìm kiếm
+const UserManagement: React.FC = () => {
+  const [users, setUsers] = useState<DataType[]>([]);
+  const [searchValue, setSearchValue] = useState<string>("");
 
   const getUsersAPI = async () => {
     try {
@@ -67,12 +38,56 @@ const UserMangement: React.FC = () => {
     getUsersAPI();
   }, []);
 
-  // Xử lý sự kiện tìm kiếm
   const handleSearch = (value: string) => {
     setSearchValue(value);
   };
 
-  // Lọc người dùng theo từ khóa tìm kiếm
+  const handleDelete = async (userId: string) => {
+    try {
+      const token = ACCESS_TOKEN_CYBER;
+      await axios({
+        headers: {
+          tokenCybersoft: `${token}`,
+        },
+        url: `https://fiverrnew.cybersoft.edu.vn/api/users?id=${userId}`,
+        method: "DELETE",
+      });
+      // Xóa người dùng khỏi danh sách sau khi xóa thành công
+      setUsers(users.filter((user) => user.id !== userId));
+      alert("Xóa người dùng thành công");
+    } catch (error) {
+      console.error(error);
+      alert("Đã có lỗi xảy ra khi xóa người dùng");
+    }
+  };
+
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_: any, record: DataType) => (
+        <Space size="middle">
+          <NavLink to={`/admin/user-detail/${record.id}`}>
+            Detail {record.name}
+          </NavLink>
+          <Button onClick={() => handleDelete(record.id)} danger>
+            Delete
+          </Button>
+        </Space>
+      ),
+    },
+  ];
+
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchValue.toLowerCase())
   );
@@ -84,7 +99,7 @@ const UserMangement: React.FC = () => {
         allowClear
         enterButton="Search"
         size="large"
-        onSearch={handleSearch} // Gọi hàm handleSearch khi người dùng nhấn nút tìm kiếm hoặc nhấn enter
+        onSearch={handleSearch}
       />
       <Table
         columns={columns}
@@ -94,4 +109,4 @@ const UserMangement: React.FC = () => {
   );
 };
 
-export default UserMangement;
+export default UserManagement;

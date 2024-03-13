@@ -1,49 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Space, Table, Input } from "antd";
-import type { TableProps } from "antd";
+import { Space, Table, Input, Button } from "antd";
 import axios from "axios";
-import { ACCESS_TOKEN_CYBER } from "../../util/config";
+import {
+  ACCESS_TOKEN_CYBER,
+  getTokenFromLocalStorage,
+} from "../../util/config";
 import { NavLink } from "react-router-dom";
 
 interface DataType {
   id: number;
   tenLoaiCongViec: string;
+  ngayThue: string;
 }
+
 const { Search } = Input;
 
-const columns: TableProps<DataType>["columns"] = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-  },
-
-  {
-    title: "Ngày thuê",
-    dataIndex: "ngayThue",
-    key: "ngayThue",
-  },
-
-  {
-    title: "Action",
-    key: "action",
-    render: (_, record) => {
-      //console.log(record.id);
-      return (
-        <Space size="middle">
-          <NavLink to={`/admin/booking-detail/${record.id}`}>
-            Detail {record.id}
-          </NavLink>
-        </Space>
-      );
-    },
-  },
-];
 const BookingJob: React.FC = () => {
-  const [users, setUsers] = useState<DataType[]>([]); // Cập nhật kiểu dữ liệu cho users
-  const [searchValue, setSearchValue] = useState<string>(""); // Thêm state mới để lưu trữ giá trị ô tìm kiếm
+  const [jobs, setJobs] = useState<DataType[]>([]);
+  const [searchValue, setSearchValue] = useState<string>("");
 
-  const getUsersAPI = async () => {
+  const getJobsAPI = async () => {
     try {
       const token = ACCESS_TOKEN_CYBER;
       const res = await axios({
@@ -53,39 +29,87 @@ const BookingJob: React.FC = () => {
         url: "https://fiverrnew.cybersoft.edu.vn/api/thue-cong-viec",
         method: "GET",
       });
-      setUsers(res.data.content);
-      console.log(users);
+      setJobs(res.data.content);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getUsersAPI();
+    getJobsAPI();
   }, []);
 
-  // Xử lý sự kiện tìm kiếm
   const handleSearch = (value: string) => {
     setSearchValue(value);
   };
 
-  // Lọc người dùng theo từ khóa tìm kiếm
-  const filteredUsers = users.filter((user) =>
-    user.id.toString().toLowerCase().includes(searchValue.toLowerCase())
+  const filteredJobs = jobs.filter((job) =>
+    job.id.toString().toLowerCase().includes(searchValue.toLowerCase())
   );
+
+  const handleDelete = async (jobId: number) => {
+    try {
+      const tokenUser = getTokenFromLocalStorage();
+      const token = ACCESS_TOKEN_CYBER;
+      await axios({
+        headers: {
+          token: `${tokenUser}`,
+          tokenCybersoft: `${token}`,
+        },
+        url: `https://fiverrnew.cybersoft.edu.vn/api/thue-cong-viec/${jobId}`,
+        method: "DELETE",
+      });
+      // Xóa công việc khỏi danh sách sau khi xóa thành công
+      setJobs(jobs.filter((job) => job.id !== jobId));
+      alert("Xóa thành công");
+    } catch (error) {
+      console.error(error);
+      alert("Đã có lỗi xảy ra khi xóa");
+    }
+  };
+
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Ngày thuê",
+      dataIndex: "ngayThue",
+      key: "ngayThue",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (
+        _: any,
+        record: DataType // Thêm kiểu dữ liệu cho record
+      ) => (
+        <Space size="middle">
+          <NavLink to={`/admin/booking-detail/${record.id}`}>
+            Chi tiết {record.id}
+          </NavLink>
+          <Button onClick={() => handleDelete(record.id)} danger>
+            Xóa
+          </Button>
+        </Space>
+      ),
+    },
+  ];
 
   return (
     <div>
       <Search
-        placeholder="input search text"
+        placeholder="Nhập từ khóa tìm kiếm"
         allowClear
-        enterButton="Search"
+        enterButton="Tìm kiếm"
         size="large"
         onSearch={handleSearch}
       />
       <Table
         columns={columns}
-        dataSource={filteredUsers.map((user) => ({ ...user, key: user.id }))}
+        dataSource={filteredJobs.map((job) => ({ ...job, key: job.id }))}
       />
     </div>
   );
