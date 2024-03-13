@@ -18,7 +18,6 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 import type { GetProp, UploadProps } from "antd";
 import { createJobActionApi } from "../redux/reducer/createJobReducer";
-import { notify } from "../constants/alert";
 
 export interface CreateJobProps {
   onCreateJob: (newJob: JobModel) => void;
@@ -155,7 +154,6 @@ const CreateJob: React.FC<CreateJobProps> = ({ onCreateJob }) => {
       saoCongViec: 0,
     });
     console.log(newJob);
-    notify("success", "Hired Successfully");
   };
 
   const uploadButton = (

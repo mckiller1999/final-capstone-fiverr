@@ -335,8 +335,8 @@ const Home = (props: Props) => {
         <Carousel effect="fade" className="container">
           <div className="container">
             <div className="sm:flex sm:flex-col-reverse items-center justify-between md:flex md:flex-row items-center justify-between">
-              <div className="p-10">
-                <video controls width={1100}>
+              <div className="p-4">
+                <video controls width={1600} className="p-10">
                   <source src="./img/demo2.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
@@ -344,7 +344,7 @@ const Home = (props: Props) => {
               <div className="p-10">
                 <div className=" container flex items-center text-gray-400">
                   <h3 className=" text-3xl font-semibold">
-                    Kay Kim, Co-Founder{" "}
+                    Kay Kim, Co-Founder
                   </h3>
                   <span className="testimonial-logo ">
                     <img
@@ -366,8 +366,8 @@ const Home = (props: Props) => {
           </div>
           <div className="container">
             <div className="sm:flex sm:flex-col items-center justify-between md:flex md:flex-row items-center justify-between">
-              <div className="p-10">
-                <video controls width={1100}>
+              <div className="p-4">
+                <video controls width={1400} className="p-10">
                   <source src="./img/demo4.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
@@ -375,7 +375,7 @@ const Home = (props: Props) => {
               <div className="p-10">
                 <div className="container flex items-center text-gray-400">
                   <h3 className=" text-3xl font-semibold">
-                    Brighid Gannon (DNP, PMHNP-BC), Co-Founder{" "}
+                    Brighid Gannon, Co-Founder{" "}
                   </h3>
                   <span className="testimonial-logo ">
                     <img
@@ -396,8 +396,8 @@ const Home = (props: Props) => {
           </div>
           <div className="container">
             <div className="sm:flex sm:flex-col items-center justify-between md:flex md:flex-row items-center justify-between">
-              <div className="p-10">
-                <video controls width={1100}>
+              <div className="p-4">
+                <video controls width={1300} className="p-10">
                   <source src="./img/demo3.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
@@ -426,8 +426,8 @@ const Home = (props: Props) => {
           </div>
           <div className="container">
             <div className="sm:flex sm:flex-col items-center justify-between md:flex md:flex-row items-center justify-between">
-              <div className="p-10">
-                <video controls width={1100}>
+              <div className="p-4">
+                <video controls width={800} className="p-10">
                   <source src="./img/demo5.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>

@@ -3,6 +3,8 @@ import { AppDispatch } from "../store";
 import { UserSignInForm } from "../../pages/Login";
 // import { Dispatch } from "redux";
 import axios from "axios";
+import { Alert, Space } from "antd";
+
 import {
   ACCESS_TOKEN,
   ACCESS_TOKEN_CYBER,
@@ -19,6 +21,7 @@ import { setBackDropClose, setBackDropOpen } from "./backdropReducer";
 
 import { closeRegisterForm } from "./registerFormReducer";
 import { setToastOpen } from "./toastMessage";
+import { notify } from "../../constants/alert";
 
 export interface user {
   avatar: "";
@@ -134,9 +137,10 @@ export const singinActionApi = (userLoginForm: UserSignInForm) => {
       saveStorageJson(USERLOGIN, res.data.content);
       saveStorage(ACCESS_TOKEN, res.data.content.token);
       history.push("/");
+      notify("success", "Login Successfully");
     } catch (error) {
-      alert("Error during login:");
-      console.error("Error during login:", error);
+      notify("error", "Something Wrong, please try again");
+
       // Xử lý lỗi ở đây nếu cần
     }
   };
@@ -182,9 +186,10 @@ export const registerApiAction = (userRegister: UserRegister) => {
       // alert("Register successfully")
       dispatch(closeRegisterForm());
       dispatch(setToastOpen());
+      notify("success", "Hired Successfully");
     } catch (err: any) {
-      if (err.response?.status === 404) {
-        alert("something wrong please try again");
+      if (err.response?.status === 404 || err.response?.status === 400) {
+        notify("error", "Signin Fail, Please try again");
       }
     } finally {
       dispatch(setBackDropClose());

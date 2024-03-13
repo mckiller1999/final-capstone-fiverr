@@ -7,6 +7,7 @@ import {
 } from "../../util/config";
 import axios from "axios";
 import { JobModel } from "../../models/Jobs";
+import { notify } from "../../constants/alert";
 
 export interface JobReducerState {
   createJob: JobModel;
@@ -62,9 +63,10 @@ export const createJobActionApi = (createJobForm: JobModel) => {
 
       // Dispatch action để cập nhật state
       dispatch(createJobAction(res.data.content));
+      notify("success", "Create Job Successfully!");
       //localstorge save
     } catch (error) {
-      alert("Error during login:");
+      notify("error", "Create Fail, please try again!");
       console.error("Error during login:", error);
       // Xử lý lỗi ở đây nếu cần
     }

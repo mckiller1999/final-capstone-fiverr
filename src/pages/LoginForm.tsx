@@ -126,7 +126,7 @@ const LoginForm = (props: Props) => {
           fullWidth
           variant="contained"
           sx={{
-            width: 400,
+            width: 250,
             height: 50,
             alignSelf: "center",
             marginTop: 2,
