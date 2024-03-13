@@ -90,8 +90,10 @@ const userReducer = createSlice({
     },
     updateProfileAction: (state, action: PayloadAction<user>) => {
       if (state.userLogin) {
-        state.userLogin.user = action.payload;
-        console.log("test redux", state.userLogin.user)
+        state.userLogin = {
+          ...state.userLogin,
+          user: action.payload
+        }
       }
     },
   },
