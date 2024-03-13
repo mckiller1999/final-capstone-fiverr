@@ -49,10 +49,11 @@ const ProductMangement: React.FC = () => {
         headers: {
           tokenCybersoft: `${token}`,
         },
-        url: "https://fiverrnew.cybersoft.edu.vn/api/loai-cong-viec",
+        url: "https://fiverrnew.cybersoft.edu.vn/api/cong-viec/lay-menu-loai-cong-viec",
         method: "GET",
       });
       setUsers(res.data.content);
+      console.log(users);
     } catch (error) {
       console.log(error);
     }
@@ -79,7 +80,7 @@ const ProductMangement: React.FC = () => {
         allowClear
         enterButton="Search"
         size="large"
-        onSearch={handleSearch} // Gọi hàm handleSearch khi người dùng nhấn nút tìm kiếm hoặc nhấn enter
+        onSearch={handleSearch}
       />
       <Table
         columns={columns}

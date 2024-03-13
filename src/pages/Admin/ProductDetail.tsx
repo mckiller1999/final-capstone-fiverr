@@ -1,66 +1,105 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@mui/material";
+import { PlayCircleFilled } from "@mui/icons-material";
 import { NavLink, useParams } from "react-router-dom";
-import { ACCESS_TOKEN_CYBER } from "../../util/config";
-import { Rate } from "antd";
+import useAxios from "../../hooks/useAxios";
+import URL from "../../constants/url";
+import { DsChiTietLoai, DsNhomChiTietLoai } from "../../models/JobDetail";
+import { Tabs } from "antd";
+import ArrowRight from "@mui/icons-material/ArrowRight";
 
-interface DataType {
-  id: string;
-  tenCongViec: string;
-  giaTien: string;
-  danhGia: string;
-  saoCongViec: number;
-  hinhAnh: string;
-  moTa: string;
-}
+const ProductMangement = () => {
+  const param = useParams();
 
-const ProductDetail = () => {
-  const { id } = useParams<{ id?: string }>();
-  const [job, setJob] = useState<DataType | null>(null);
-
-  const getJobAPI = async (JobId: string) => {
-    try {
-      const token = ACCESS_TOKEN_CYBER;
-      const res = await axios({
-        headers: {
-          tokenCybersoft: `${token}`,
-        },
-        url: `https://fiverrnew.cybersoft.edu.vn/api/cong-viec/${JobId}`,
-        method: "GET",
-      });
-      setJob(res.data.content); // Lấy phần tử đầu tiên trong mảng
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (id) {
-      getJobAPI(id);
-    }
-  }, [id]);
-
-  if (!job) return <div>Loading...</div>;
+  const { data } = useAxios({ url: URL.JOB_BY_MENU(param?.id), method: "get" });
 
   return (
     <div>
-      <h2 className="text-4xl text-center font-extrabold">
-        {" "}
-        {job.tenCongViec}
-      </h2>
-      <div className="flex justify-center content-center my-5 gap-20">
-        <img src={job.hinhAnh} alt="" />
-        <div>
-          <div>Giá tiền: {job.giaTien}</div>
-          <div>Đánh giá: {job.danhGia}</div>
-          <Rate disabled allowHalf defaultValue={job.saoCongViec} />
+      {data ? (
+        <div className="max-w-7xl mx-auto">
+          <div className="py-5 text-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 w-11/12 mx-auto mt-5">
+            <h1 className="my-3 font-bold text-3xl text-white">
+              {data[0].tenLoaiCongViec}
+            </h1>
+            <Button variant="contained" color="success">
+              <PlayCircleFilled fontSize="small" className="mr-1" />
+              How Fiverr Works
+            </Button>
+          </div>
+          <div className="my-3">
+            <Tabs
+              defaultActiveKey="1"
+              centered
+              items={data[0].dsNhomChiTietLoai.map(
+                (index: DsNhomChiTietLoai) => {
+                  return {
+                    label: <span className="text-lg">{index.tenNhom}</span>,
+                    key: index.id,
+                    children: (
+                      <div className="mx-auto">
+                        <Card
+                          elevation={0}
+                          sx={{
+                            maxWidth: 800,
+                            gap: 2,
+                            border: "solid",
+                            borderColor: `rgb(226 232 240)`,
+                            borderRadius: 4,
+                            display: { sm: "flex", md: "flex" },
+                            flexDirection: { sm: "column", md: "row" },
+                          }}
+                          className="my-3 mx-auto p-2 w-11/12"
+                        >
+                          <CardMedia
+                            component="img"
+                            alt="green iguana"
+                            sx={{
+                              width: { sm: "90%", md: "60%" },
+                              borderRadius: 8,
+                              backgroundSize: "center",
+                            }}
+                            image={index.hinhAnh}
+                            className="p-2 mx-auto"
+                          />
+                          <Box>
+                            <CardContent>
+                              {index.dsChiTietLoai.map(
+                                (item: DsChiTietLoai) => (
+                                  <div className="my-3">
+                                    <Typography
+                                      variant="h6"
+                                      color="text.secondary"
+                                    >
+                                      <NavLink
+                                        to={`/admin/job-view-detail/${item.id}`}
+                                      >
+                                        <ArrowRight />
+                                        {item.tenChiTiet}
+                                      </NavLink>
+                                    </Typography>
+                                  </div>
+                                )
+                              )}
+                            </CardContent>
+                          </Box>
+                        </Card>
+                      </div>
+                    ),
+                  };
+                }
+              )}
+            />
+          </div>
         </div>
-      </div>
-
-      <p className="text-3xl underline">Detail:</p>
-      <p className="text-2xl">{job.moTa}</p>
+      ) : null}
     </div>
   );
 };
 
-export default ProductDetail;
+export default ProductMangement;

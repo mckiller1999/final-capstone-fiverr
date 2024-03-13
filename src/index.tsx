@@ -34,6 +34,10 @@ import JobView from "./pages/Jobs/JobView";
 import MangementDetail from "./pages/Admin/MangementDetail";
 import CreateJob from "./pages/CreateJob";
 import { JobModel } from "./models/Jobs";
+import ProductDetail from "./pages/Admin/ProductDetail";
+import ViewJobDetail from "./pages/Admin/ViewJobDetail";
+import BookingJob from "./pages/Admin/BookingJob";
+import BookingDetil from "./pages/Admin/BookingDetil";
 
 export const history: any = createBrowserHistory();
 
@@ -84,7 +88,17 @@ root.render(
             <Route path=":id" element={<MangementDetail />} />
           </Route>
           <Route path="product" element={<ProductMangement />}></Route>
+          <Route path="product-detail">
+            <Route path=":id" element={<ProductDetail />} />
+          </Route>
+          <Route path="job-view-detail">
+            <Route path=":id" element={<ViewJobDetail />} />
+          </Route>
           <Route path="*" element={<Navigate to={"/"} />}></Route>
+          <Route path="bookjob" element={<BookingJob />}></Route>
+          <Route path="booking-detail">
+            <Route path=":id" element={<BookingDetil />} />
+          </Route>
         </Route>
       </Routes>
     </HistoryRouter>

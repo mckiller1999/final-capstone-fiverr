@@ -21,11 +21,7 @@ import {
 } from "@mui/material";
 import { Dispatch } from "@reduxjs/toolkit";
 import React from "react";
-import {
-  UserRegister,
-  updateUserProfile,
-  user,
-} from "../../redux/reducer/userReducer";
+import { updateUserProfile, user } from "../../redux/reducer/userReducer";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { certifications, skills } from "../RegisterForm";
@@ -240,20 +236,6 @@ const UserProfileEdit = (props: Props) => {
                 helperText={formik.touched.phone && formik.errors.phone}
                 size="small"
               ></TextField>
-
-              {/* <TextField
-              sx={{width:"100%"}}
-                label="Birthday"
-                className="form-control"
-                type="text"
-                name="birthday"
-                required
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.birthday}
-                error={formik.touched.birthday && Boolean(formik.errors.birthday)}
-                helperText={formik.touched.birthday && formik.errors.birthday}
-              ></TextField> */}
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer

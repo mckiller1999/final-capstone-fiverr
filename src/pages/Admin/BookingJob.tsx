@@ -4,73 +4,74 @@ import type { TableProps } from "antd";
 import axios from "axios";
 import { ACCESS_TOKEN_CYBER } from "../../util/config";
 import { NavLink } from "react-router-dom";
+
 interface DataType {
-  id: string;
-  tenCongViec: string;
-  giaTien: string;
-  danhGia: string;
-  saoCongViec: string;
+  id: number;
+  tenLoaiCongViec: string;
 }
 const { Search } = Input;
+
 const columns: TableProps<DataType>["columns"] = [
   {
     title: "ID",
     dataIndex: "id",
     key: "id",
   },
+
   {
-    title: "Job",
-    dataIndex: "tenCongViec",
-    key: "tenCongViec",
-  },
-  {
-    title: "Price",
-    dataIndex: "giaTien",
-    key: "giaTien",
+    title: "Ngày thuê",
+    dataIndex: "ngayThue",
+    key: "ngayThue",
   },
 
   {
     title: "Action",
     key: "action",
     render: (_, record) => {
+      //console.log(record.id);
       return (
         <Space size="middle">
-          <NavLink to={`/admin/job-detail/${record.id}`}>Detail</NavLink>
+          <NavLink to={`/admin/booking-detail/${record.id}`}>
+            Detail {record.id}
+          </NavLink>
         </Space>
       );
     },
   },
 ];
+const BookingJob: React.FC = () => {
+  const [users, setUsers] = useState<DataType[]>([]); // Cập nhật kiểu dữ liệu cho users
+  const [searchValue, setSearchValue] = useState<string>(""); // Thêm state mới để lưu trữ giá trị ô tìm kiếm
 
-const Mangement: React.FC = () => {
-  const [jobs, setJobs] = useState<DataType[]>([]); // Cập nhật kiểu dữ liệu cho users
-  const [searchValue, setSearchValue] = useState<string>("");
-  const getJobsAPI = async () => {
+  const getUsersAPI = async () => {
     try {
       const token = ACCESS_TOKEN_CYBER;
       const res = await axios({
         headers: {
           tokenCybersoft: `${token}`,
         },
-        url: "https://fiverrnew.cybersoft.edu.vn/api/cong-viec",
+        url: "https://fiverrnew.cybersoft.edu.vn/api/thue-cong-viec",
         method: "GET",
       });
-      setJobs(res.data.content);
+      setUsers(res.data.content);
+      console.log(users);
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
-    getJobsAPI();
-    console.log(jobs);
+    getUsersAPI();
   }, []);
+
+  // Xử lý sự kiện tìm kiếm
   const handleSearch = (value: string) => {
     setSearchValue(value);
   };
 
   // Lọc người dùng theo từ khóa tìm kiếm
-  const filteredUsers = jobs.filter((job) =>
-    job.tenCongViec.toLowerCase().includes(searchValue.toLowerCase())
+  const filteredUsers = users.filter((user) =>
+    user.id.toString().toLowerCase().includes(searchValue.toLowerCase())
   );
 
   return (
@@ -80,14 +81,14 @@ const Mangement: React.FC = () => {
         allowClear
         enterButton="Search"
         size="large"
-        onSearch={handleSearch} // Gọi hàm handleSearch khi người dùng nhấn nút tìm kiếm hoặc nhấn enter
+        onSearch={handleSearch}
       />
       <Table
         columns={columns}
-        dataSource={filteredUsers.map((job) => ({ ...job, key: job.id }))}
+        dataSource={filteredUsers.map((user) => ({ ...user, key: user.id }))}
       />
     </div>
   );
 };
 
-export default Mangement;
+export default BookingJob;

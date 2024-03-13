@@ -169,7 +169,7 @@ const CreateJob: React.FC<CreateJobProps> = ({ onCreateJob }) => {
     <div className="py-14">
       <form
         onSubmit={handleSubmit}
-        className=" sm:flex sm:flex-col justify-evenly md:flex md:flex-row justify-evenly"
+        className="p-2 sm:flex sm:flex-col justify-evenly md:flex md:flex-row justify-evenly"
       >
         <div className="flex flex-col">
           <h3 style={{ fontSize: "32px", fontWeight: "bold" }}>
@@ -216,7 +216,7 @@ const CreateJob: React.FC<CreateJobProps> = ({ onCreateJob }) => {
             onChange={handleChangePict}
           >
             {imageUrl ? (
-              <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
+              <img src={imageUrl} alt="avatar" style={{ width: "50%" }} />
             ) : (
               uploadButton
             )}{" "}

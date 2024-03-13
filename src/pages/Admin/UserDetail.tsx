@@ -19,13 +19,19 @@ import {
   SelectChangeEvent,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import { Dispatch } from "@reduxjs/toolkit";
-import { updateUserProfile, user } from "../../redux/reducer/userReducer";
+import {
+  updateUserProfile,
+  updateUserProfileAdmin,
+  user,
+} from "../../redux/reducer/userReducer";
 import { useFormik } from "formik";
 
 import { certifications, skills } from "../RegisterForm";
 import { useDispatch } from "react-redux";
+import { Tag } from "@mui/icons-material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -40,7 +46,7 @@ const MenuProps = {
 
 const UserDetail = () => {
   const { id } = useParams<{ id?: string }>(); // Cho phép giá trị id có thể là undefined
-  const [UserDetail] = useState<user | null>(null);
+  const [UserDetail, setUserDetail] = useState<user | null>(null);
 
   const getUserById = async (userId: string) => {
     try {
@@ -52,7 +58,7 @@ const UserDetail = () => {
         url: `https://fiverrnew.cybersoft.edu.vn/api/users/${userId}`,
         method: "GET",
       });
-      // setUserDetail(res.data.content); // Đừng set UserDetail ở đây
+      setUserDetail(res.data.content); // Đừng set UserDetail ở đây
       formik.setValues((prevValues) => ({
         ...prevValues,
         id: res.data.content.id || prevValues.id,
@@ -74,12 +80,13 @@ const UserDetail = () => {
   useEffect(() => {
     if (id) {
       getUserById(id);
-      console.log(UserDetail);
+      console.log(UserDetail?.skill);
     }
   }, [id]);
   const [skillsList, setSkillsList] = React.useState<string[]>(
     UserDetail?.skill || []
   );
+  console.log(skillsList);
 
   const handleChangeSkill = (event: SelectChangeEvent<typeof skillsList>) => {
     const {
@@ -121,7 +128,7 @@ const UserDetail = () => {
     onSubmit: async (values: user) => {
       console.log("Initial formik values: ", formik.values);
 
-      dispatch(updateUserProfile(values));
+      dispatch(updateUserProfileAdmin(values));
     },
   });
 
@@ -149,7 +156,7 @@ const UserDetail = () => {
           ></TextField>
           <TextField
             sx={{ width: "100%" }}
-            label="Phone Number"
+            label="Email"
             className="form-control"
             type="text"
             name="email"
@@ -219,11 +226,12 @@ const UserDetail = () => {
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
           multiple
-          value={skillsList || UserDetail?.skill || ""}
+          value={(formik.values.skill = skillsList ? skillsList : [])}
           onChange={handleChangeSkill}
           input={<OutlinedInput label="Tag" />}
           renderValue={(selected) => selected.join(", ")}
           MenuProps={MenuProps}
+          size="small"
         >
           {skills.map((name) => (
             <MenuItem key={name} value={name}>
@@ -232,6 +240,7 @@ const UserDetail = () => {
             </MenuItem>
           ))}
         </Select>
+
         <InputLabel id="demo-multiple-checkbox-label">
           Certifications
         </InputLabel>
@@ -239,11 +248,12 @@ const UserDetail = () => {
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
           multiple
-          value={certList || UserDetail?.certification || ""}
+          value={(formik.values.certification = certList ? certList : [])}
           onChange={handleChangeCert}
           input={<OutlinedInput label="Tag" />}
           renderValue={(selected) => selected.join(", ")}
           MenuProps={MenuProps}
+          size="small"
         >
           {certifications.map((name) => (
             <MenuItem key={name} value={name}>
@@ -259,6 +269,18 @@ const UserDetail = () => {
           </Button>
         </DialogActions>
       </form>
+      <div className="flex flex-col justify-start text-2xl ">
+        <div className="py-5">
+          <p>Skill</p>
+
+          <h3>{UserDetail?.skill}</h3>
+        </div>
+        <div className="py-5">
+          <p>Certifications:</p>
+
+          <h3>{UserDetail?.certification}</h3>
+        </div>
+      </div>
     </div>
   );
 };

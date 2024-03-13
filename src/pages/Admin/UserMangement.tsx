@@ -26,21 +26,7 @@ const columns: TableProps<DataType>["columns"] = [
     dataIndex: "name",
     key: "name",
   },
-  {
-    title: "Role",
-    dataIndex: "role",
-    key: "role",
-  },
-  {
-    title: "Email",
-    dataIndex: "email",
-    key: "email",
-  },
-  {
-    title: "Date",
-    key: "birthday",
-    dataIndex: "birthday",
-  },
+
   {
     title: "Action",
     key: "action",

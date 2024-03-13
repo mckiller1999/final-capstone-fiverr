@@ -10,8 +10,6 @@ import { Layout, Menu, Button, theme } from "antd";
 import { NavLink, Navigate, Outlet } from "react-router-dom";
 import * as jwt from "jwt-decode";
 import { useSelector } from "react-redux";
-import { ACCESS_TOKEN } from "../util/config";
-import Footer from "../components/Footer/Footer";
 
 const { Header, Sider, Content } = Layout;
 
@@ -30,7 +28,7 @@ const AdminTemplate: React.FC = () => {
   } else {
     const verify_login: any = jwt.jwtDecode(tokenUser);
     const role = verify_login.role;
-    console.log(tokenUser);
+    //console.log(tokenUser);
     if (role !== "ADMIN") {
       return <Navigate to={"/"} />;
     } else {
@@ -57,6 +55,11 @@ const AdminTemplate: React.FC = () => {
                   key: "3",
                   icon: <UploadOutlined />,
                   label: <NavLink to="/admin/product">Jobs Categlory</NavLink>,
+                },
+                {
+                  key: "4",
+                  icon: <UploadOutlined />,
+                  label: <NavLink to="/admin/bookjob">Booking Jobs </NavLink>,
                 },
               ]}
             />

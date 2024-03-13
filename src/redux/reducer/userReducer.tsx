@@ -38,6 +38,7 @@ export interface user {
 export interface UserLogin {
   tokenUser: "";
   user: user;
+  accessToken: any;
 }
 
 export interface UserReducerState {
@@ -187,7 +188,7 @@ export const registerApiAction = (userRegister: UserRegister) => {
 
 export const updateUserProfile = (userData: user) => {
   return async (dispatch: AppDispatch) => {
-    console.log("dataput", userData);
+    console.log("dataput", userData.id);
     dispatch(setBackDropOpen());
     const token = ACCESS_TOKEN_CYBER;
     try {
@@ -234,6 +235,35 @@ export const updateUserProfile = (userData: user) => {
       }
 
       // dispatch(singinActionApi(newUserLogin))
+    } catch (err) {
+      alert(err);
+    } finally {
+      dispatch(setBackDropClose());
+    }
+  };
+};
+
+export const updateUserProfileAdmin = (userData: user) => {
+  return async (dispatch: AppDispatch) => {
+    console.log("dataput", userData.id);
+    dispatch(setBackDropOpen());
+    const token = ACCESS_TOKEN_CYBER;
+    try {
+      const updateProfileLatest = await axios({
+        headers: {
+          tokenCybersoft: ` ${token}`,
+        },
+        url: `https://fiverrnew.cybersoft.edu.vn/api/users/${userData.id}`,
+        method: "PUT",
+        data: userData, // Thay thế newUserLogin bằng userData
+      });
+
+      console.log(
+        "updateProfileLatest.data.content",
+        updateProfileLatest.data.content
+      );
+      dispatch(updateProfileAction(updateProfileLatest.data.content));
+      alert("Cập nhật thành công");
     } catch (err) {
       alert(err);
     } finally {

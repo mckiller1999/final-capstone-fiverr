@@ -177,42 +177,31 @@ const Profile = (props: Props) => {
               <Typography variant="caption">
                 (File must be smaller than 2MB)
               </Typography>
-              {/* <Button
-              variant="outlined"
-              color="success"
-              size="small"
-              startIcon={<LogoutIcon />}
-              // onClick={()=>{handleSubmitAvatar(avatar)}}
-            >
-              Submit
-            </Button> */}
+
               <Divider></Divider>
-              {/* Stack */}
+
               <Stack direction="row" spacing={1} className="flex my-2 ">
                 <Stack direction="row" spacing={2}>
-                  {/* <LocationOnIcon /> */}
                   <Typography variant="body2" color="text.secondary">
                     From:
                   </Typography>
                 </Stack>
                 <Typography variant="subtitle2">Vietnam</Typography>
               </Stack>
-              {/* Stack */}
-              {/* Stack */}
+
               <Stack
                 direction="row"
                 spacing={1}
                 className="flex justify-between my-2"
               >
                 <Stack direction="row" spacing={1}>
-                  {/* <PersonIcon /> */}
                   <Typography variant="body2" color="text.secondary">
                     Member since:
                   </Typography>
                 </Stack>
                 <Typography variant="subtitle2">May 2021</Typography>
               </Stack>
-              {/* Stack */}
+
               <Divider></Divider>
               <Button
                 variant="outlined"
@@ -226,7 +215,7 @@ const Profile = (props: Props) => {
                 Log out
               </Button>
             </Container>
-            {/* Stack */}
+
             <Container className="bg-white mt-6 py-10" sx={{ borderRadius: 8 }}>
               <Stack
                 direction="row"
