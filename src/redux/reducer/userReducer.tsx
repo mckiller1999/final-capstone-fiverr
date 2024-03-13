@@ -51,6 +51,7 @@ export interface UserRegister {
   name: string;
   email: string;
   password: string;
+  passwordConfirm: string;
   phone: string;
   birthday: string;
   gender: boolean;
@@ -66,6 +67,7 @@ const initialState: UserReducerState = {
     name: "",
     email: "",
     password: "",
+    passwordConfirm: "",
     phone: "",
     birthday: "",
     gender: true,

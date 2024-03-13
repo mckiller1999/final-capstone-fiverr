@@ -410,7 +410,7 @@ const Profile = (props: Props) => {
               </Stack>
             </Container>
           </Grid>
-          <Grid item>
+          <Grid item >
             <Container sx={{ width: "100%" }}>
               {bookedJobs.length == 0 ? (
                 <EmptyJobs />

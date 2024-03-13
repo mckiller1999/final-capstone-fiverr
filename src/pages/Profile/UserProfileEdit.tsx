@@ -54,6 +54,7 @@ const MenuProps = {
 };
 
 const UserProfileEdit = (props: Props) => {
+  
 
   dayjs.extend(utc)
   dayjs.extend(tz)
@@ -132,8 +133,7 @@ const UserProfileEdit = (props: Props) => {
     validationSchema: yup.object({
       name: yup.string().required("Name is required"),
       email: yup.string().email("Invalid email").required("Email is required"),
-      password: yup.string().required("Password is required"),
-      // passwordConfirm: yup.string().required("Confirm password is required"),
+      password: yup.string().required("Password is required").min(8, 'Password is too short - should be 8 chars minimum.').matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
       phone: yup.string().required("Phone is required"),
       birthday: yup.string().required("Birthday is required"),
       gender: yup.boolean().required("Gender is required"),
@@ -151,7 +151,7 @@ const UserProfileEdit = (props: Props) => {
 
   return (
     <div>
-      <Dialog open={Boolean(isModalOpen)}>
+      <Dialog open={Boolean(isModalOpen)} sx={{width: { md: '800' , xs: '400'}}}>
         <DialogTitle>Edit Your Profile</DialogTitle>
         <DialogContent>
           <form
@@ -160,7 +160,7 @@ const UserProfileEdit = (props: Props) => {
             onSubmit={formik.handleSubmit}
             noValidate
           >
-            <Stack direction="row" gap={2}>
+            <Stack  direction={{ md: 'row', xs: 'column' }} gap={2}>
               <TextField
                 sx={{ width: "100%" }}
                 className="form-control"
@@ -193,7 +193,7 @@ const UserProfileEdit = (props: Props) => {
               ></TextField>
             </Stack>
 
-            <Stack direction="row" gap={2}>
+            <Stack direction={{ md: 'row', xs: 'column' }} gap={2}>
               <TextField
                 sx={{ width: "100%" }}
                 className="form-control"
@@ -210,19 +210,9 @@ const UserProfileEdit = (props: Props) => {
                 helperText={formik.touched.password && formik.errors.password}
                 size="small"
               ></TextField>
-
-              <TextField
-                sx={{ width: "100%" }}
-                label="Password confirm"
-                className="form-control"
-                type="password"
-                name="passwordConfirm"
-                required
-                size="small"
-              ></TextField>
             </Stack>
 
-            <Stack direction="row" gap={2}>
+            <Stack direction={{ md: 'row', xs: 'column' }} gap={2}>
               <TextField
                 sx={{ width: "100%" }}
                 label="Phone"

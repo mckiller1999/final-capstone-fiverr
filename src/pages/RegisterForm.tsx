@@ -93,7 +93,7 @@ dayjs.extend(timezone)
     (state: RootState) => state.backdropReducer
   );
   const [skillsList, setSkillsList] = React.useState<string[]>([]);
-  const [birthday, setBirthDay] = React.useState<Dayjs | null>(dayjs('2024-02-26'));
+  const [birthday, setBirthDay] = React.useState<Dayjs | null>();
 
   console.log("setbirthday", birthday)
   
@@ -137,6 +137,7 @@ dayjs.extend(timezone)
     name: "",
     email: "",
     password: "",
+    passwordConfirm: "",
     phone: "",
     birthday: "",
     gender: true,
@@ -149,8 +150,9 @@ dayjs.extend(timezone)
     validationSchema: yup.object({
       name: yup.string().required("Name is required"),
       email: yup.string().email("Invalid email").required("Email is required"),
-      password: yup.string().required("Password is required"),
-      // passwordConfirm: yup.string().required("Confirm password is required"),
+      password: yup.string().required("Password is required").min(8, 'Password is too short - should be 8 chars minimum.').matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
+      passwordConfirm: yup.string().required("Confirm password is required")
+      .oneOf([yup.ref('password')], 'Passwords must match'),
       phone: yup.string().required("Phone is required"),
       birthday: yup.string().required("Birthday is required"),
       gender: yup.boolean().required("Gender is required"),
@@ -170,7 +172,7 @@ dayjs.extend(timezone)
 
   // render form and use formik & yup
   return (
-    <div>
+    <DialogContent>
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isBackDropOpen}
@@ -204,7 +206,7 @@ dayjs.extend(timezone)
           onSubmit={formik.handleSubmit}
           noValidate
         >
-          <Stack direction="row" gap={2}>
+          <Stack direction={{ md: 'row', xs: 'column' }} gap={2}>
             <TextField
               sx={{ width: "100%" }}
               className="form-control"
@@ -237,7 +239,7 @@ dayjs.extend(timezone)
             ></TextField>
           </Stack>
 
-          <Stack direction="row" gap={2}>
+          <Stack direction={{ md: 'row', xs: 'column' }} gap={2}>
             <TextField
               sx={{ width: "100%" }}
               className="form-control"
@@ -259,12 +261,17 @@ dayjs.extend(timezone)
               className="form-control"
               type="password"
               name="passwordConfirm"
+              onChange={formik.handleChange}
+              value={formik.values.passwordConfirm}
+              onBlur={formik.handleBlur}
+              error={formik.touched.passwordConfirm && Boolean(formik.errors.passwordConfirm)}
+              helperText={formik.touched.passwordConfirm && formik.errors.passwordConfirm}
               required
               size="small"
             ></TextField>
           </Stack>
 
-          <Stack direction="row" gap={2}>
+          <Stack direction={{ md: 'row', xs: 'column' }} gap={2}>
             <TextField
               sx={{ width: "100%", marginTop: 1}}
               label="Phone"
@@ -279,21 +286,6 @@ dayjs.extend(timezone)
               helperText={formik.touched.phone && formik.errors.phone}
               size="small"
             ></TextField>
-
-            {/* <TextField
-              sx={{ width: "100%" }}
-              label="Birthday"
-              className="form-control"
-              type="text"
-              name="birthday"
-              required
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.birthday}
-              error={formik.touched.birthday && Boolean(formik.errors.birthday)}
-              helperText={formik.touched.birthday && formik.errors.birthday}
-              size="small"
-            ></TextField> */}
 
 
 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -397,14 +389,14 @@ dayjs.extend(timezone)
             type="submit"
             className="btn btn-primary"
             value="Submit"
-            sx={{ width: 400, height: 50, alignSelf: "center", marginTop: 2,backgroundColor: `rgb(20 83 45)`, borderRadius: 8 }}
+            sx={{ width: {md: 400, xs: 260}, height: 50, alignSelf: "center", marginTop: 2,backgroundColor: `rgb(20 83 45)`, borderRadius: 8 }}
             disableElevation
           >
             Sign up
           </Button>
         </form>
       </DialogContent>
-    </div>
+    </DialogContent>
   );
 };
 

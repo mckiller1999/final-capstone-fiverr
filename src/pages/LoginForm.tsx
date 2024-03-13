@@ -88,6 +88,7 @@ const LoginForm = (props: Props) => {
         component="form"
         onSubmit={signInFrm.handleSubmit}
         noValidate
+        alignItems={"center"}
       >
         <TextField
           margin="normal"
@@ -128,12 +129,14 @@ const LoginForm = (props: Props) => {
           sx={{display: "block"}}
         />
         <Button
+          
           type="submit"
           color="success"
           fullWidth
           variant="contained"
           sx={{
-            width: 400,
+
+            width: {md: 400, xs:260 },
             height: 50,
             alignSelf: "center",
             marginTop: 2,
